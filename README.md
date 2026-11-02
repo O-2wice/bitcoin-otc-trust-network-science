@@ -16,7 +16,7 @@ We define positive ratings as directed edges from rater to rated user, analyse t
 
 Use Python 3.12. Install the packages in `requirements.txt`, download the source file as described above, and run the notebooks in `notebooks/` from the repository root. The [first notebook](notebooks/01_network_concepts_and_data.ipynb) explains the data and graph definitions and performs source checks.
 
-Run the structural analysis with `python scripts/structural_analysis.py`, then open [the structure and model notebook](notebooks/02_structure_and_models.ipynb). The generated tables and figure are in `outputs/structure/`.
+Run the structural analysis with `python scripts/structural_analysis.py`, then open [the structure and model notebook](notebooks/02_structure_and_models.ipynb). The generated tables and figure are in `outputs/structure/`. Run `python scripts/export_cytoscape.py` to generate signed, directed Cytoscape GraphML files locally in `outputs/cytoscape/`; the smaller view deliberately emphasizes highly rated users and is not a random sample. These GraphML files are generated from the SNAP download and are not distributed in the repository.
 
 On Linux or macOS, create the notebook environment with:
 

@@ -4,3 +4,4 @@ __pycache__/
 report/
 Network Science Project Work 2026.pdf
 data/*.gz
+outputs/cytoscape/*.graphml
