@@ -1,0 +1,6 @@
+.ipynb_checkpoints/
+__pycache__/
+.venv/
+report/
+Network Science Project Work 2026.pdf
+data/*.gz

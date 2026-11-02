@@ -1,0 +1,1 @@
+Download `soc-sign-bitcoinotc.csv.gz` from https://snap.stanford.edu/data/soc-sign-bitcoin-otc.html and place it in this directory. The source file is kept out of Git until redistribution terms are confirmed. Keep its checksum in the analysis record.
