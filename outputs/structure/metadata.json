@@ -1,0 +1,17 @@
+{
+  "source_rows": 35592,
+  "source_sha256": "6424ac981dad3a019f697fc1b9fcd85c19d8d9f039797758e9ffb6fea100c373",
+  "positive_directed_edges": 32029,
+  "projection_edges": 18591,
+  "reciprocal_positive_pairs_collapsed": 13438,
+  "ba_links_per_new_node": 3,
+  "ba_edge_count_mismatch_fraction": -0.051476520897208326,
+  "model_replicates": 10,
+  "betweenness_source_sample": 64,
+  "path_source_sample": 32,
+  "louvain_community_count": 341,
+  "louvain_modularity": 0.5042161383443475,
+  "seed": 2026,
+  "largest_observed_component_diameter_exact": 14,
+  "diameter_method": "NetworkX diameter with usebounds=True on the largest positive undirected component"
+}

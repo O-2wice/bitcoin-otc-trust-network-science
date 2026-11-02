@@ -1,6 +1,6 @@
-# Evolution of Trust in Bitcoin OTC
+# The Bitcoin OTC Trust Network: Structure and Rating Patterns
 
-How did positive trust ratings accumulate in the Bitcoin OTC trading community, and did users who had already received many positive ratings attract a disproportionate share of new ones?
+How are positive and negative trust ratings organized among Bitcoin OTC users, and how well do standard network models explain the observed structure?
 
 ## Data
 
@@ -10,11 +10,13 @@ Download `soc-sign-bitcoinotc.csv.gz` from SNAP and place it in `data/`. The exp
 
 ## Approach
 
-We define positive ratings as directed edges from rater to rated user, analyse the network's structure and communities, and compare it with matched random and Barabási–Albert networks. The focused study tracks rating accumulation and hub concentration across time. We will use Cytoscape for selected network figures and Python for reproducible measurements and plots. Methods and assumptions are detailed in [PLAN.md](PLAN.md).
+We define positive ratings as directed edges from rater to rated user, analyse the network's structure and communities, and compare its undirected positive projection with matched random and Barabási–Albert networks. The deeper phenomenon is still to be selected. We will use Cytoscape for selected network figures and Python for reproducible measurements and plots. Methods and assumptions are detailed in [PLAN.md](PLAN.md).
 
 ## Reproduce
 
 Use Python 3.12. Install the packages in `requirements.txt`, download the source file as described above, and run the notebooks in `notebooks/` from the repository root. The [first notebook](notebooks/01_network_concepts_and_data.ipynb) explains the data and graph definitions and performs source checks.
+
+Run the structural analysis with `python scripts/structural_analysis.py`, then open [the structure and model notebook](notebooks/02_structure_and_models.ipynb). The generated tables and figure are in `outputs/structure/`.
 
 On Linux or macOS, create the notebook environment with:
 
