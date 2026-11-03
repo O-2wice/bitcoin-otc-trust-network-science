@@ -10,11 +10,13 @@ Download `soc-sign-bitcoinotc.csv.gz` from SNAP and place it in `data/`. The exp
 
 ## Approach
 
-We define positive ratings as directed edges from rater to rated user, analyse the network's structure and communities, and compare its undirected positive projection with matched random and Barabási–Albert networks. We also compare random node removal with removal of the highest-degree users. The focused investigation tests changes in incoming-rating concentration over time and compares later target choices with a uniform eligible-target benchmark. [Cytoscape](cytoscape/README.md) provides a signed, directed subnetwork figure. Methods and assumptions are detailed in [PLAN.md](PLAN.md).
+We define positive ratings as directed edges from rater to rated user, analyse the network's structure and communities, and compare its undirected positive projection with matched random and Barabási–Albert networks. We also compare random node removal with removal of the highest-degree users. The focused investigation tests changes in incoming-rating concentration over time and compares later target choices with a uniform eligible-target benchmark. [Cytoscape](cytoscape/README.md) provides a styled signed network figure and a short rating-timeline video. Methods and assumptions are detailed in [PLAN.md](PLAN.md).
 
 The [reconstruction guide](REPRODUCIBILITY.md) traces a source rating through user IDs, filtering, directed edge construction, graph projection, and analysis.
 
 The [code walkthrough](CODE_WALKTHROUGH.md) explains each script and the harder target-choice calculation in plain language.
+
+View the [styled Cytoscape spotlight](outputs/cytoscape/bitcoin_otc_spotlight.png) and [2011–2015 rating timeline](outputs/cytoscape/bitcoin_otc_spotlight_timeline.mp4). These show a deliberately selected set of prominent users; the full-network results come from the analysis scripts.
 
 ## Reproduce
 

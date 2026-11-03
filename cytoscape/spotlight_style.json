@@ -1,0 +1,55 @@
+{
+  "title": "Bitcoin OTC spotlight v2",
+  "defaults": [
+    {"visualProperty": "NETWORK_BACKGROUND_PAINT", "value": "#0B1423"},
+    {"visualProperty": "NODE_FILL_COLOR", "value": "#183D52"},
+    {"visualProperty": "NODE_BORDER_PAINT", "value": "#58DDD0"},
+    {"visualProperty": "NODE_BORDER_WIDTH", "value": 2.5},
+    {"visualProperty": "NODE_SIZE", "value": 28},
+    {"visualProperty": "NODE_LABEL_COLOR", "value": "#F8F4E8"},
+    {"visualProperty": "NODE_LABEL_FONT_SIZE", "value": 18},
+    {"visualProperty": "EDGE_WIDTH", "value": 2.2},
+    {"visualProperty": "EDGE_TRANSPARENCY", "value": 180},
+    {"visualProperty": "EDGE_TARGET_ARROW_SHAPE", "value": "DELTA"},
+    {"visualProperty": "EDGE_TARGET_ARROW_SIZE", "value": 4},
+    {"visualProperty": "EDGE_STROKE_UNSELECTED_PAINT", "value": "#58DDD0"}
+  ],
+  "mappings": [
+    {
+      "mappingType": "discrete",
+      "mappingColumn": "sign",
+      "mappingColumnType": "String",
+      "visualProperty": "EDGE_STROKE_UNSELECTED_PAINT",
+      "map": [
+        {"key": "positive", "value": "#58DDD0"},
+        {"key": "negative", "value": "#FF6B87"}
+      ]
+    },
+    {
+      "mappingType": "continuous",
+      "mappingColumn": "positive_in_degree",
+      "mappingColumnType": "Long",
+      "visualProperty": "NODE_SIZE",
+      "points": [
+        {"value": 0, "lesser": 27, "equal": 27, "greater": 27},
+        {"value": 535, "lesser": 64, "equal": 64, "greater": 64}
+      ]
+    },
+    {
+      "mappingType": "discrete",
+      "mappingColumn": "sign",
+      "mappingColumnType": "String",
+      "visualProperty": "EDGE_TARGET_ARROW_UNSELECTED_PAINT",
+      "map": [
+        {"key": "positive", "value": "#58DDD0"},
+        {"key": "negative", "value": "#FF6B87"}
+      ]
+    },
+    {
+      "mappingType": "passthrough",
+      "mappingColumn": "display_label",
+      "mappingColumnType": "String",
+      "visualProperty": "NODE_LABEL"
+    }
+  ]
+}

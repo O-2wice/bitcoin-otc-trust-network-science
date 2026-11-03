@@ -9,6 +9,12 @@
     "edges": 772,
     "bias": "selected for high received positive ratings; not a representative network sample"
   },
+  "spotlight_view": {
+    "selection": "top 25 users by full-data positive in-degree, tie-break by ascending user ID; edges among them with absolute rating at least 5; hide users isolated by this edge filter",
+    "nodes": 22,
+    "edges": 76,
+    "bias": "selected using full-data degree and strong ratings; not representative or a historical cohort"
+  },
   "node_attributes": [
     "positive_in_degree",
     "positive_out_degree"
