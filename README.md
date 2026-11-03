@@ -12,6 +12,8 @@ Download `soc-sign-bitcoinotc.csv.gz` from SNAP and place it in `data/`. The exp
 
 We define positive ratings as directed edges from rater to rated user, analyse the network's structure and communities, and compare its undirected positive projection with matched random and Barabási–Albert networks. We also compare random node removal with removal of the highest-degree users. The focused investigation tests changes in incoming-rating concentration over time and compares later target choices with a uniform eligible-target benchmark. [Cytoscape](cytoscape/README.md) provides a signed, directed subnetwork figure. Methods and assumptions are detailed in [PLAN.md](PLAN.md).
 
+The [reconstruction guide](REPRODUCIBILITY.md) traces a source rating through user IDs, filtering, directed edge construction, graph projection, and analysis.
+
 ## Reproduce
 
 Use Python 3.12. Install the packages in `requirements.txt`, download the source file as described above, and run the notebooks in `notebooks/` from the repository root. The analysis package pins match the versions used for the recorded results. The [first notebook](notebooks/01_network_concepts_and_data.ipynb) explains the data and graph definitions and performs source checks.
