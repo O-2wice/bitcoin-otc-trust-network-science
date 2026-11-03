@@ -2,9 +2,9 @@
 
 ## Scope and research question
 
-**Main question:** How are Bitcoin OTC trust ratings organized, and how well do standard network models explain the observed structure?
+**Main question:** How are Bitcoin OTC trust ratings organized, how well do standard network models reproduce the observed structure, and how did incoming positive ratings become concentrated over time?
 
-**Focused phenomenon (brief part D):** To be selected after the structural baseline. Temporal rating evolution and hub-targeted robustness are candidate investigations, not agreed requirements.
+**Focused phenomenon (brief part D):** temporal accumulation of incoming positive ratings. This is a team working choice based on the dataset's timestamps, not a compulsory topic in the brief. Hub-targeted robustness remains optional further work.
 
 **Unit of observation:** a timestamped directed rating from source to target. Primary graph: positive ratings (`rating > 0`); retain negative ratings for descriptive and sensitivity analyses. Directed in-degree is the number of distinct positive raters a user received. Rating magnitude is a separate attribute, not silently converted to edge multiplicity.
 
@@ -14,7 +14,7 @@
 2. **Define graphs.** Build the full directed signed graph, the primary positive directed graph, and a clearly labelled undirected positive projection only where a method requires it. State whether negative-only users remain as isolates.
 3. **Describe structure.** Degree distributions and mean degree; density; clustering; component sizes; shortest paths and diameter on a specified component; selected centralities; detected communities. Explain each projection and the consequences of disconnectedness.
 4. **Compare models.** Use a matched Erdos--Renyi baseline and a Barabasi--Albert growth baseline on the positive projection. Match node count and approximate edge count, repeat with fixed seeds, and report variability. Compare degree heterogeneity, clustering, path lengths, and component structure. Model similarity is not evidence of a causal mechanism.
-5. **Choose and investigate one focused phenomenon.** Candidate A: temporal rating accumulation using cumulative and fixed-count snapshots, with an event-level test of whether pre-existing in-degree predicts later positive ratings. Candidate B: hub-targeted robustness versus random node removal. Select one with the team after checking baseline results, then define its null model, uncertainty, and sensitivity analysis.
+5. **Investigate one focused phenomenon.** Use year-end cumulative positive-rating snapshots for concentration and an event-level uniform eligible-target benchmark for the association between prior in-degree and later ratings. Repeat concentration using ratings at least +5. Interpret this as observed rating accumulation, not causal preferential attachment.
 6. **Sensitivity.** Repeat key findings at different snapshot widths and with alternate positive-edge definitions. Keep uncertainty from random baselines and note observational limits.
 7. **Visuals.** Export documented representative subnetworks and a few cumulative snapshots to Cytoscape; use a fixed node set/layout for comparable panels. Generate statistical charts in Python. Preserve source data, generation code, and Cytoscape session/style.
 8. **Write and defend.** Fill the LaTeX report from verified outputs, cite dataset and methods, prepare a 10--15 minute presentation, and practise explaining definitions, choices, results, and limitations.
@@ -26,7 +26,7 @@
 | A: construction and processing | Source audit, graph definitions, cleaning log, Cytoscape subnetwork figure |
 | B: structure and communities | Metrics table, distribution figures, component-aware path metrics, community analysis |
 | C: two models/concepts | Matched ER and BA comparisons with repeated seeds and limitations |
-| D: one focused investigation | One team-selected phenomenon, tested beyond simple summary metrics |
+| D: one focused investigation | Temporal rating concentration and event-level target-choice comparison |
 | E: critical reflection | Sensitivity, observation limits, finite-size/model limits, real-world interpretation |
 | Deliverables | One GitHub repo, 10--15 page PDF report, notebook/code, figures, AI disclosure, presentation/demo |
 

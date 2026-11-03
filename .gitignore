@@ -5,3 +5,6 @@ report/
 Network Science Project Work 2026.pdf
 data/*.gz
 outputs/cytoscape/*.graphml
+outputs/cytoscape/*.cys
+.deck_build/
+.codex-finalizer/

@@ -1,0 +1,20 @@
+{
+  "source_sha256": "6424ac981dad3a019f697fc1b9fcd85c19d8d9f039797758e9ffb6fea100c373",
+  "positive_ratings": 32029,
+  "full_years": [
+    2011,
+    2012,
+    2013,
+    2014,
+    2015
+  ],
+  "timestamp_ties": 0,
+  "event_order": "SNAP file order for equal timestamps",
+  "null": "uniform eligible active target at each positive-rating event, excluding the rater and users already rated positively by that rater",
+  "limits": "descriptive association; activity, tenure, and unobserved platform membership may confound target choice",
+  "eligible_existing_target_events": 27133,
+  "first_time_target_events_excluded": 4896,
+  "insufficient_candidate_events_excluded": 0,
+  "expected_sum": 27132.999999999774,
+  "observed_sum": 27133
+}

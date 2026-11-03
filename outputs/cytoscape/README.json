@@ -4,9 +4,9 @@
     "edges": 35592
   },
   "hub_view": {
-    "selection": "top 101 users by positive in-degree, tie-break by ascending numeric user ID; induced signed directed edges",
-    "nodes": 101,
-    "edges": 2384,
+    "selection": "top 41 users by positive in-degree, tie-break by ascending numeric user ID; induced signed directed edges",
+    "nodes": 41,
+    "edges": 772,
     "bias": "selected for high received positive ratings; not a representative network sample"
   },
   "node_attributes": [

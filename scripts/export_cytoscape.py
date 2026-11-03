@@ -10,7 +10,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "soc-sign-bitcoinotc.csv.gz"
 OUT = ROOT / "outputs" / "cytoscape"
-HUB_VIEW_NODES = 101
+HUB_VIEW_NODES = 41
 
 
 def main():
@@ -33,7 +33,7 @@ def main():
             str(row.source), str(row.target),
             rating=int(row.rating),
             sign="positive" if row.rating > 0 else "negative" if row.rating < 0 else "zero",
-            time_unix=int(row.time),
+            time_unix=float(row.time),
         )
 
     # A deliberate high-reputation view, not a representative random sample.
@@ -43,11 +43,11 @@ def main():
     hub_view = graph.subgraph(keep).copy()
     OUT.mkdir(parents=True, exist_ok=True)
     nx.write_graphml(graph, OUT / "bitcoin_otc_full_signed_directed.graphml")
-    nx.write_graphml(hub_view, OUT / "bitcoin_otc_top101_induced.graphml")
+    nx.write_graphml(hub_view, OUT / "bitcoin_otc_hub_induced.graphml")
     metadata = {
         "full_graph": {"nodes": len(graph), "edges": graph.number_of_edges()},
         "hub_view": {
-            "selection": "top 101 users by positive in-degree, tie-break by ascending numeric user ID; induced signed directed edges",
+            "selection": "top 41 users by positive in-degree, tie-break by ascending numeric user ID; induced signed directed edges",
             "nodes": len(hub_view),
             "edges": hub_view.number_of_edges(),
             "bias": "selected for high received positive ratings; not a representative network sample",
