@@ -14,9 +14,11 @@ We define positive ratings as directed edges from rater to rated user, analyse t
 
 ## Reproduce
 
-Use Python 3.12. Install the packages in `requirements.txt`, download the source file as described above, and run the notebooks in `notebooks/` from the repository root. The [first notebook](notebooks/01_network_concepts_and_data.ipynb) explains the data and graph definitions and performs source checks.
+Use Python 3.12. Install the packages in `requirements.txt`, download the source file as described above, and run the notebooks in `notebooks/` from the repository root. The analysis package pins match the versions used for the recorded results. The [first notebook](notebooks/01_network_concepts_and_data.ipynb) explains the data and graph definitions and performs source checks.
 
 Run `python scripts/structural_analysis.py`, `python scripts/temporal_analysis.py`, and `python scripts/node_removal.py`, then open the [structure and model notebook](notebooks/02_structure_and_models.ipynb) and [temporal notebook](notebooks/03_temporal_rating_accumulation.ipynb). Their tables and figures are in `outputs/structure/`, `outputs/temporal/`, and `outputs/robustness/`. Run `python scripts/export_cytoscape.py` to generate signed, directed GraphML files locally; the smaller view deliberately emphasizes highly rated users and is not a random sample. GraphML files are not distributed in the repository.
+
+Run `python scripts/verify_reproduction.py` after the three analysis scripts. It checks the source SHA-256 and headline values against the reported results. The [Cytoscape guide](cytoscape/README.md) describes the manual import, style, and layout steps needed to recreate that figure. The LaTeX report is maintained locally and is not part of this repository yet.
 
 On Linux or macOS, create the notebook environment with:
 
