@@ -36,6 +36,8 @@ def load_graphs():
     directed.add_weighted_edges_from(
         positive[["source", "target", "rating"]].itertuples(index=False, name=None)
     )
+    # The source score is retained as an edge attribute. Reported structural
+    # measures and shortest paths use unweighted links (weight=None).
     projection = nx.Graph()
     projection.add_nodes_from(nodes)
     projection.add_edges_from(
