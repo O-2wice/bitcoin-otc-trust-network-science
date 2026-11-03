@@ -4,7 +4,7 @@
 
 **Main question:** How are Bitcoin OTC trust ratings organized, how well do standard network models reproduce the observed structure, and how did incoming positive ratings become concentrated over time?
 
-**Focused phenomenon (brief part D):** temporal accumulation of incoming positive ratings. This is a team working choice based on the dataset's timestamps, not a compulsory topic in the brief. Hub-targeted robustness remains optional further work.
+**Focused phenomenon (brief part D):** temporal accumulation of incoming positive ratings. This is a team working choice based on the dataset's timestamps, not a compulsory topic in the brief. A separate node-removal experiment probes connectivity sensitivity.
 
 **Unit of observation:** a timestamped directed rating from source to target. Primary graph: positive ratings (`rating > 0`); retain negative ratings for descriptive and sensitivity analyses. Directed in-degree is the number of distinct positive raters a user received. Rating magnitude is a separate attribute, not silently converted to edge multiplicity.
 
@@ -15,8 +15,8 @@
 3. **Describe structure.** Degree distributions and mean degree; density; clustering; component sizes; shortest paths and diameter on a specified component; selected centralities; detected communities. Explain each projection and the consequences of disconnectedness.
 4. **Compare models.** Use a matched Erdos--Renyi baseline and a Barabasi--Albert growth baseline on the positive projection. Match node count and approximate edge count, repeat with fixed seeds, and report variability. Compare degree heterogeneity, clustering, path lengths, and component structure. Model similarity is not evidence of a causal mechanism.
 5. **Investigate one focused phenomenon.** Use year-end cumulative positive-rating snapshots for concentration and an event-level uniform eligible-target benchmark for the association between prior in-degree and later ratings. Repeat concentration using ratings at least +5. Interpret this as observed rating accumulation, not causal preferential attachment.
-6. **Sensitivity.** Repeat key findings at different snapshot widths and with alternate positive-edge definitions. Keep uncertainty from random baselines and note observational limits.
-7. **Visuals.** Export documented representative subnetworks and a few cumulative snapshots to Cytoscape; use a fixed node set/layout for comparable panels. Generate statistical charts in Python. Preserve source data, generation code, and Cytoscape session/style.
+6. **Sensitivity and intervention.** Repeat concentration with the +5 positive-edge definition. Compare random node removal with removal of the highest-degree users on the positive projection. Keep variation from random baselines and note observational limits.
+7. **Visuals.** Export a documented high-in-degree induced subnetwork to Cytoscape. Generate statistical charts in Python. Preserve source data, generation code, and Cytoscape session/style locally.
 8. **Write and defend.** Fill the LaTeX report from verified outputs, cite dataset and methods, prepare a 10--15 minute presentation, and practise explaining definitions, choices, results, and limitations.
 
 ## Assignment mapping

@@ -10,13 +10,13 @@ Download `soc-sign-bitcoinotc.csv.gz` from SNAP and place it in `data/`. The exp
 
 ## Approach
 
-We define positive ratings as directed edges from rater to rated user, analyse the network's structure and communities, and compare its undirected positive projection with matched random and Barabási–Albert networks. The focused investigation tests changes in incoming-rating concentration over time and compares later target choices with a uniform eligible-target benchmark. [Cytoscape](cytoscape/README.md) provides a signed, directed subnetwork figure. Methods and assumptions are detailed in [PLAN.md](PLAN.md).
+We define positive ratings as directed edges from rater to rated user, analyse the network's structure and communities, and compare its undirected positive projection with matched random and Barabási–Albert networks. We also compare random node removal with removal of the highest-degree users. The focused investigation tests changes in incoming-rating concentration over time and compares later target choices with a uniform eligible-target benchmark. [Cytoscape](cytoscape/README.md) provides a signed, directed subnetwork figure. Methods and assumptions are detailed in [PLAN.md](PLAN.md).
 
 ## Reproduce
 
 Use Python 3.12. Install the packages in `requirements.txt`, download the source file as described above, and run the notebooks in `notebooks/` from the repository root. The [first notebook](notebooks/01_network_concepts_and_data.ipynb) explains the data and graph definitions and performs source checks.
 
-Run `python scripts/structural_analysis.py` and `python scripts/temporal_analysis.py`, then open the [structure and model notebook](notebooks/02_structure_and_models.ipynb) and [temporal notebook](notebooks/03_temporal_rating_accumulation.ipynb). Their tables and figures are in `outputs/structure/` and `outputs/temporal/`. Run `python scripts/export_cytoscape.py` to generate signed, directed GraphML files locally; the smaller view deliberately emphasizes highly rated users and is not a random sample. GraphML files are not distributed in the repository.
+Run `python scripts/structural_analysis.py`, `python scripts/temporal_analysis.py`, and `python scripts/node_removal.py`, then open the [structure and model notebook](notebooks/02_structure_and_models.ipynb) and [temporal notebook](notebooks/03_temporal_rating_accumulation.ipynb). Their tables and figures are in `outputs/structure/`, `outputs/temporal/`, and `outputs/robustness/`. Run `python scripts/export_cytoscape.py` to generate signed, directed GraphML files locally; the smaller view deliberately emphasizes highly rated users and is not a random sample. GraphML files are not distributed in the repository.
 
 On Linux or macOS, create the notebook environment with:
 
