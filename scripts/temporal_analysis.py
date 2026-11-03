@@ -30,6 +30,7 @@ def bucket(degree):
 
 
 def gini(values):
+    """Return 0 for equal incoming counts and larger values for more inequality."""
     values = np.asarray(values, dtype=float)
     if len(values) == 0 or values.sum() == 0:
         return float("nan")
@@ -78,13 +79,19 @@ def target_choice(positive):
     new_target_events = 0
     insufficient_events = 0
     for source, target, year in positive[["source", "target", "year"]].itertuples(index=False, name=None):
+        # Use the network as it looked BEFORE this rating. This avoids giving
+        # the target credit for the current rating when measuring prior degree.
         if target in active:
+            # Available targets = previously seen users, except the rater and
+            # users whom this rater already rated positively.
             choices = len(active) - int(source in active) - len(rated_targets[source])
             if choices:
                 eligible_events += 1
                 unavailable_by_degree = Counter(indegree[v] for v in rated_targets[source])
                 for degree, count in counts.items():
                     available = count - int(source in active and indegree[source] == degree) - unavailable_by_degree[degree]
+                    # If choice were uniform, this fraction is the chance of
+                    # selecting someone with this prior in-degree.
                     increment = available / choices
                     expected[bucket(degree)] += increment
                     yearly_expected[year][bucket(degree)] += increment
@@ -94,6 +101,7 @@ def target_choice(positive):
                 insufficient_events += 1
         else:
             new_target_events += 1
+        # Update the network AFTER recording the observed and expected counts.
         for node in (source, target):
             if node not in active:
                 active.add(node)

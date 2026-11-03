@@ -28,6 +28,7 @@ def main():
     _, _, graph = load_graphs()
     n = len(graph)
     nodes = np.array(sorted(graph), dtype=int)
+    # Rank users once using degree in the original graph. Ties use user ID.
     ranked = [u for u, _ in sorted(graph.degree(), key=lambda item: (-item[1], item[0]))]
     rng = np.random.default_rng(SEED)
     rows = []
@@ -39,6 +40,7 @@ def main():
                      "removed_nodes": k, "removed_fraction": k / n,
                      "largest_component_fraction_original_nodes": largest_share(targeted, n)})
         for replicate in range(REPLICATES):
+            # Start from a fresh copy for each random draw.
             random_graph = graph.copy()
             random_graph.remove_nodes_from(rng.choice(nodes, size=k, replace=False))
             rows.append({"strategy": "uniform_random", "replicate": replicate + 1,
