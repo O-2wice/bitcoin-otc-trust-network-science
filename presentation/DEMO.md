@@ -1,6 +1,6 @@
 # Presentation and code demonstration
 
-Twelve slides are designed for about 12–15 minutes, followed by a short live code demonstration. Team members should divide the slides only after each person can explain every method and limitation.
+The 12 main slides are designed for about 12–15 minutes, followed by a short live code demonstration. Slide 13 holds references for questions. Team members should divide the slides only after each person can explain every method and limitation.
 
 | Slides | Topic | Time |
 | --- | --- | ---: |
@@ -13,6 +13,7 @@ Twelve slides are designed for about 12–15 minutes, followed by a short live c
 | 10 | Interpretation and limits | 1 min |
 | 11 | Random and targeted node removal | 1 min |
 | 12 | Conclusion and demo transition | 0.5 min |
+| 13 | Sources and reproduction (backup) | For questions |
 
 ## Live demo
 
