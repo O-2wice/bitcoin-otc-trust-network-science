@@ -26,6 +26,7 @@ From the repository root, after installing `requirements.txt` into a Python 3.12
 
 ```bash
 python scripts/structural_analysis.py
+python scripts/full_network_overview.py
 python scripts/temporal_analysis.py
 python scripts/node_removal.py
 python scripts/flagship_checks.py

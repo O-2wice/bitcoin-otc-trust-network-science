@@ -1,19 +1,20 @@
 # Presentation and code demonstration
 
-The 12 main slides are designed for about 12–15 minutes, followed by a short live code demonstration. Slide 13 holds references for questions. Team members should divide the slides only after each person can explain every method and limitation.
+The 13 main slides are designed for about 12–15 minutes, followed by a short live code demonstration. Slide 14 holds references for questions. Team members should divide the slides only after each person can explain every method and limitation.
 
 | Slides | Topic | Time |
 | --- | --- | ---: |
 | 1–2 | Question, system, and source | 1.5 min |
 | 3 | Directed signed graph and undirected projection | 1.5 min |
 | 4 | ER, BA, and degree-preserving comparisons | 2 min |
-| 5 | Styled Cytoscape view, short timeline video, and selection bias | 1 min |
-| 6–8 | Temporal concentration, uniform benchmark, and matched benchmark | 3 min |
-| 9 | Changing clustering, reciprocity, and connectivity | 1 min |
-| 10 | Interpretation and limits | 1 min |
-| 11 | Random and targeted node removal | 1 min |
-| 12 | Conclusion and demo transition | 0.5 min |
-| 13 | Sources and reproduction (backup) | For questions |
+| 5 | Full positive network overview | 0.5 min |
+| 6 | Styled Cytoscape view, short timeline video, and selection bias | 1 min |
+| 7–9 | Temporal concentration, uniform benchmark, and matched benchmark | 3 min |
+| 10 | Changing clustering, reciprocity, and connectivity | 1 min |
+| 11 | Interpretation and limits | 1 min |
+| 12 | Random and targeted node removal | 1 min |
+| 13 | Conclusion and demo transition | 0.5 min |
+| 14 | Sources and reproduction (backup) | For questions |
 
 ## Live demo
 

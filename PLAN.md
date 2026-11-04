@@ -16,14 +16,14 @@
 4. **Compare models.** Use matched Erdos--Renyi and Barabasi--Albert baselines, then a degree-preserving rewire of the positive projection. Repeat with fixed seeds and report variability. Compare degree heterogeneity, clustering, path lengths, and component structure. Model similarity is not evidence of a causal mechanism.
 5. **Investigate one focused phenomenon.** Use year-end cumulative positive-rating snapshots for concentration and network shape. Compare event-level target choices with both uniform eligible-target and observed-tenure/recent-activity-matched benchmarks. Repeat concentration using ratings at least +5. Interpret this as observed rating accumulation, not causal preferential attachment.
 6. **Sensitivity and intervention.** Repeat concentration with the +5 positive-edge definition. Compare random node removal with removal of the highest-degree users on the positive projection. Keep variation from random baselines and note observational limits.
-7. **Visuals.** Export a documented high-in-degree induced subnetwork to Cytoscape. Generate statistical charts in Python. Preserve source data, generation code, and Cytoscape session/style locally.
+7. **Visuals.** Draw the full positive projection with a degree-ranked shell layout and export a documented high-in-degree induced signed subnetwork to Cytoscape. Generate statistical charts in Python. Preserve source data, generation code, and Cytoscape session/style locally.
 8. **Write and defend.** Fill the LaTeX report from verified outputs, cite dataset and methods, prepare a 10--15 minute presentation, and practise explaining definitions, choices, results, and limitations.
 
 ## Assignment mapping
 
 | Requirement | Planned evidence |
 | --- | --- |
-| A: construction and processing | Source audit, graph definitions, cleaning log, Cytoscape subnetwork figure |
+| A: construction and processing | Source audit, graph definitions, cleaning log, full-network overview, Cytoscape subnetwork figure |
 | B: structure and communities | Metrics table, distribution figures, component-aware path metrics, community analysis |
 | C: two models/concepts | Matched ER and BA comparisons with repeated seeds and limitations |
 | D: one focused investigation | Temporal rating concentration and event-level target-choice comparison |

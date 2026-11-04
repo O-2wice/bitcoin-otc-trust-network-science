@@ -13,6 +13,7 @@ Start with one rule: a row `6,2,4,time` means **user 6 gave user 2 a positive ra
 | `scripts/verify_reproduction.py` | Did the main results regenerate? | Checks the source checksum and selected published numbers. | A `PASS` message or an error |
 
 `scripts/export_cytoscape.py` is a separate visual export. It saves GraphML for Cytoscape; it does not calculate the report's statistics.
+`scripts/full_network_overview.py` draws every user and positive projected link in degree-ranked shells. Its rings are a layout choice, not communities or time periods.
 
 ## Follow one calculation
 
