@@ -1,0 +1,11 @@
+{
+  "source_sha256": "6424ac981dad3a019f697fc1b9fcd85c19d8d9f039797758e9ffb6fea100c373",
+  "edge_rule": "One directed positive rating per observed ordered pair; score > 0",
+  "annual_users": "Users appearing as source or target in that UTC calendar year's positive ratings, including zero incoming counts",
+  "annual_rating_denominator": "All positive ratings recorded within that UTC calendar year only",
+  "fixed_cohort": "All users appearing in a positive rating by 2011 UTC year end; cumulative incoming ratings from any source",
+  "fixed_cohort_size": 1631,
+  "fixed_cohort_rating_denominator": "Cumulative positive ratings received by members of the fixed cohort, not all ratings in the network",
+  "top_group": "Ceiling of 1% of each specified user population; highest incoming counts reselected at each snapshot",
+  "limits": "Annual samples differ across years; fixed cohort is selected early and does not represent later entrants. Neither view identifies active trust relationships or a causal mechanism."
+}

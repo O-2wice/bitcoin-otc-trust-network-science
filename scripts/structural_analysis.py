@@ -33,9 +33,13 @@ def load_graphs():
     positive = ratings[ratings.rating > 0]
     directed = nx.DiGraph()
     directed.add_nodes_from(nodes)
-    directed.add_weighted_edges_from(
-        positive[["source", "target", "rating"]].itertuples(index=False, name=None)
-    )
+    for row in positive.itertuples(index=False):
+        directed.add_edge(
+            row.source, row.target,
+            rating=int(row.rating),
+            weight=int(row.rating),
+            time_unix=float(row.time),
+        )
     # The source score is retained as an edge attribute. Reported structural
     # measures and shortest paths use unweighted links (weight=None).
     projection = nx.Graph()

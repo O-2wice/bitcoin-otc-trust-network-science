@@ -1,0 +1,14 @@
+Annual-only ratings:
+ year  users_in_denominator  incoming_ratings_in_denominator  top_group_size  top_1_percent_incoming_share  incoming_degree_gini
+ 2011                  1618                             7603              17                        0.1527                0.6083
+ 2012                  1823                             8622              19                        0.1967                0.6568
+ 2013                  2480                            11138              25                        0.2096                0.6490
+ 2014                   916                             3555              10                        0.1437                0.6256
+ 2015                   323                              929               4                        0.1130                0.5728
+Fixed 2011 cohort:
+ year_end  users_in_denominator  incoming_ratings_in_denominator  top_group_size  top_1_percent_incoming_share  incoming_degree_gini  share_of_all_cumulative_ratings_received_by_cohort
+     2011                  1631                             7745              17                        0.1551                0.6115                                              1.0000
+     2012                  1631                            10526              17                        0.1881                0.6698                                              0.6431
+     2013                  1631                            12090              17                        0.2143                0.6950                                              0.4396
+     2014                  1631                            12587              17                        0.2196                0.7028                                              0.4052
+     2015                  1631                            12739              17                        0.2218                0.7054                                              0.3982

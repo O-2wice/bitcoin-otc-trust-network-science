@@ -1,6 +1,6 @@
 # The Bitcoin OTC Trust Network: Structure and Rating Patterns
 
-How are trust ratings organized among Bitcoin OTC users, how well do standard network models reproduce the observed structure, and how did incoming positive ratings become concentrated over time?
+How did positive ratings become concentrated among Bitcoin OTC users, and how sensitive is the apparent advantage of already highly rated users to the comparison benchmark?
 
 ## Data
 
@@ -10,21 +10,25 @@ Download `soc-sign-bitcoinotc.csv.gz` from SNAP and place it in `data/`. The exp
 
 ## Approach
 
-We define positive ratings as directed edges from rater to rated user, analyse the network's structure and communities, and compare its undirected positive projection with matched random, Barabási–Albert, and degree-preserving rewired networks. We also compare random node removal with removal of the highest-degree users. The focused investigation tests changes in incoming-rating concentration over time and compares later target choices with both a uniform eligible-target benchmark and a benchmark matched by observed tenure and recent rating activity. Year-end snapshots also show changes in clustering, reciprocity, and connectivity. [Cytoscape](cytoscape/README.md) provides a styled signed network figure and a short rating-timeline video. Methods and assumptions are detailed in [PLAN.md](PLAN.md).
+We define positive ratings as directed edges from rater to recipient, analyse the network's structure and communities, and compare an undirected projection with random, Barabási–Albert, and degree-preserving rewired networks. The temporal investigation distinguishes ratings accumulated so far, ratings issued within each year, and a fixed cohort of users. It then compares recipient choices with uniform and tenure/activity-matched benchmarks. Random and targeted node removal provide a separate connectivity experiment. [Cytoscape](cytoscape/README.md) supplies a signed network spotlight and a timeline of its recorded ratings.
+
+Accumulated incoming ratings become more unequal: the top 1% share rises from 15.5% in 2011 to 23.5% in 2015, and also rises within a fixed 2011 cohort. New yearly ratings differ: their top 1% share peaks at 21.0% in 2013 and falls to 11.3% in 2015 as volume declines. The 32+ prior-rating group has an observed/expected ratio of 12.70 under uniform choice, falling to 1.65 after matching by observed tenure and recent activity. These are descriptive findings, not evidence of a causal preference or current trust.
 
 The [reconstruction guide](REPRODUCIBILITY.md) traces a source rating through user IDs, filtering, directed edge construction, graph projection, and analysis.
 
 The [code walkthrough](CODE_WALKTHROUGH.md) explains each script and the harder target-choice calculation in plain language.
 
-View the [full positive-network overview](outputs/structure/full_positive_network.png), [styled Cytoscape spotlight](outputs/cytoscape/bitcoin_otc_spotlight.png), and [2011–2015 rating timeline](outputs/cytoscape/bitcoin_otc_spotlight_timeline.mp4). The overview shows every observed user and positive projected link using degree-ranked shells. The Cytoscape view and video show a deliberately selected set of prominent users; the full-network results come from the analysis scripts.
+View the [positive-network overview](outputs/structure/full_positive_network_force.png), [annual versus cumulative comparison](outputs/sensitivity/annual_vs_cumulative_concentration.png), [community profiles](outputs/sensitivity/community_link_profiles.png), [Cytoscape spotlight](outputs/cytoscape/bitcoin_otc_spotlight.png), and [rating timeline](outputs/cytoscape/bitcoin_otc_spotlight_timeline.mp4). The seeded spring overview separates the main component from smaller pieces and the 308 users isolated by positive filtering. The Cytoscape view and video show a selected set of prominent users; whole-network findings come from the numerical analyses.
 
 ## Reproduce
 
-Use Python 3.12. Install the packages in `requirements.txt`, download the source file as described above, and run the notebooks in `notebooks/` from the repository root. The analysis package pins match the versions used for the recorded results. The [first notebook](notebooks/01_network_concepts_and_data.ipynb) explains the data and graph definitions and performs source checks.
+Use Python 3.12. Install the packages in `requirements.txt`, download the source file as described above, and run the notebooks in `notebooks/` from the repository root. The current environment was tested with Python 3.12.13; package versions and execution details are recorded in `outputs/reproduction/run_manifest.json`. The [first notebook](notebooks/01_network_concepts_and_data.ipynb) explains the data and graph definitions and performs source checks.
 
-Run `python scripts/structural_analysis.py`, `python scripts/temporal_analysis.py`, `python scripts/node_removal.py`, and `python scripts/flagship_checks.py`, then open the [structure and model notebook](notebooks/02_structure_and_models.ipynb), [temporal notebook](notebooks/03_temporal_rating_accumulation.ipynb), and [follow-up checks notebook](notebooks/04_flagship_checks.ipynb). Their tables and figures are in `outputs/structure/`, `outputs/temporal/`, `outputs/robustness/`, and `outputs/flagship/`. Run `python scripts/full_network_overview.py` after the structural script to redraw the full positive projection. Run `python scripts/export_cytoscape.py` to generate signed, directed GraphML files locally; the smaller view deliberately emphasizes highly rated users and is not a random sample. GraphML files are not distributed in the repository.
+Run `python scripts/reproduce.py` to execute the six numerical analyses in order, then `python scripts/verify_reproduction.py --check-manifest` to validate the stored headline values and the recorded script, environment, and output hashes. The manifest covers the current numerical run; the network layout, Cytoscape media, report, and slides have separate build steps.
 
-Run `python scripts/verify_reproduction.py` after the four analysis scripts. It checks the source SHA-256 and headline values against the reported results. The [Cytoscape guide](cytoscape/README.md) describes the manual import, style, and layout steps needed to recreate that figure. The LaTeX report is maintained locally and is not part of this repository yet.
+The [structure notebook](notebooks/02_structure_and_models.ipynb), [temporal notebook](notebooks/03_temporal_rating_accumulation.ipynb), and [follow-up checks notebook](notebooks/04_flagship_checks.ipynb) contain small worked calculations as well as the recorded results. Numerical outputs are in `outputs/structure/`, `outputs/temporal/`, `outputs/robustness/`, `outputs/flagship/`, and `outputs/sensitivity/`. Run `python scripts/full_network_force.py` after the structural script to regenerate the seeded network layout; coordinates and layout parameters are saved alongside its figure. Run `python scripts/export_cytoscape.py` to generate signed, directed GraphML files locally. GraphML files are not distributed in the repository.
+
+The checker validates the source, stored headline results, and optionally the execution manifest; it does not independently establish scientific correctness. The [Cytoscape guide](cytoscape/README.md) describes the manual import, style, and layout steps for the spotlight and movie. The LaTeX report is maintained locally and is not part of this repository yet.
 
 On Linux or macOS, create the notebook environment with:
 

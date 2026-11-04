@@ -1,0 +1,118 @@
+{
+  "scope": "Six numerical analysis scripts; separate visual, document, and presentation builds are excluded",
+  "started_utc": "2026-11-04T22:26:19.265886+00:00",
+  "complete": true,
+  "python_version": "3.12.13",
+  "python_executable": "python",
+  "package_versions": {
+    "pandas": "3.1.0",
+    "numpy": "2.4.6",
+    "networkx": "3.7",
+    "matplotlib": "3.11.2",
+    "scipy": "1.15.3",
+    "notebook": "7.6.4",
+    "ipykernel": "7.4.0"
+  },
+  "requirements_sha256": "2ee61768dbc8eee918f4df06e0784ecb71535c56dea812921ec492e8d0962a68",
+  "source": "data/soc-sign-bitcoinotc.csv.gz",
+  "source_sha256": "6424ac981dad3a019f697fc1b9fcd85c19d8d9f039797758e9ffb6fea100c373",
+  "steps": [
+    {
+      "script": "scripts/structural_analysis.py",
+      "script_sha256": "13f6fb0cf006c516f3ca3ec47f314bd7638f7a32700c8036d1ce29024b078ac4",
+      "started_utc": "2026-11-04T22:26:19.276089+00:00",
+      "log": "outputs/reproduction/logs/structural_analysis.log",
+      "finished_utc": "2026-11-04T22:27:09.346311+00:00",
+      "elapsed_seconds": 50.068,
+      "exit_code": 0,
+      "output_sha256": {
+        "outputs/structure/network_metrics.csv": "d60168c7bd5ef224f6cf1f181fd086d6d5709bb4809070a400e2d1638c0f0646",
+        "outputs/structure/directed_centrality.csv": "f9194cd89dc4cebc61645358ce6e588cb38e97436f6f0bae216ea12a88ed3e7d",
+        "outputs/structure/communities.csv": "5f69df731aaaf81e14ead92be4ab6e9c16de75c573fd40966b590e537731c523",
+        "outputs/structure/metadata.json": "f22063ed8ca82cddaae5a18d744de04197d634604243679f52d11ef360c0d969",
+        "outputs/structure/degree_distributions.png": "5f7c8c57a7c0dd2742c8e954d0fccda54cc9813f4eea0864872abc9cf1b20ff0"
+      }
+    },
+    {
+      "script": "scripts/temporal_analysis.py",
+      "script_sha256": "fa89e035f12942eae2a3dc34d2a382509433f2bfc029e2cf51b62424d032c7e1",
+      "started_utc": "2026-11-04T22:27:09.354828+00:00",
+      "log": "outputs/reproduction/logs/temporal_analysis.log",
+      "finished_utc": "2026-11-04T22:27:20.142115+00:00",
+      "elapsed_seconds": 10.787,
+      "exit_code": 0,
+      "output_sha256": {
+        "outputs/temporal/annual_snapshots.csv": "6a6f712296418e09a5d5a49f40517f0daaa41e375c6dcfb36efbaa609c8a1a18",
+        "outputs/temporal/annual_snapshots_rating_ge5.csv": "41f53165f1011305b05f16d8022cf153d1d25eee6bc5b0ecb639f116f5419429",
+        "outputs/temporal/target_choice_by_prior_degree.csv": "1c8acc67df42d0273cc8ad3fde355c53c8e849fb004985d83f2388530f1493ae",
+        "outputs/temporal/target_choice_by_year.csv": "6ca31035b3f9bc25df17073327713769ca35d9cf0b345cbe0807d112ac661995",
+        "outputs/temporal/metadata.json": "da10b39dae4d28320b1c1aadff0fea6bf0202d8cd278b44446c989a51ee0b66e",
+        "outputs/temporal/growth_and_concentration.png": "74268ba96490372b22ecd496c4d0695036405958787f4ba080eff9792127f5d1",
+        "outputs/temporal/target_choice_ratio.png": "1fa58ea41f87ee51a581d349cc669607ad60d6783604746cb88beff1b436b717"
+      }
+    },
+    {
+      "script": "scripts/node_removal.py",
+      "script_sha256": "c1c657044a5b6106387c724c8c942c4149642c650de91222ea786842fd36c56c",
+      "started_utc": "2026-11-04T22:27:20.150523+00:00",
+      "log": "outputs/reproduction/logs/node_removal.log",
+      "finished_utc": "2026-11-04T22:27:45.546874+00:00",
+      "elapsed_seconds": 25.396,
+      "exit_code": 0,
+      "output_sha256": {
+        "outputs/robustness/node_removal_summary.csv": "08ebcd4f4aac0759506b1a76167a0b4bc7421dc0fb4e044855ebda87b375448b",
+        "outputs/robustness/node_removal_replicates.csv": "c6c4fdfc0c580680f050269a722367f9ef1c336a6f285861d8e7171ecb29af9c",
+        "outputs/robustness/node_removal.png": "45a9c17433a6741fddb57187f7c8b29cae1797847faaded45b78ee0e966fbc2e"
+      }
+    },
+    {
+      "script": "scripts/flagship_checks.py",
+      "script_sha256": "1fa2fd11e5cd4fde6b613283f523d775101602d69857e5ec14dfd36c4e0f444c",
+      "started_utc": "2026-11-04T22:27:45.551958+00:00",
+      "log": "outputs/reproduction/logs/flagship_checks.log",
+      "finished_utc": "2026-11-04T22:29:01.000181+00:00",
+      "elapsed_seconds": 75.448,
+      "exit_code": 0,
+      "output_sha256": {
+        "outputs/flagship/matched_target_choice.csv": "099387ca3c1de95dcacd3fe4491a24e52a40a50e041f1bd32a75f33c93626e1c",
+        "outputs/flagship/degree_preserving_null.csv": "722cc67e9c749123b9b0d2ac6578c968c0410eec9f28bca0d2e4413755ce6fb6",
+        "outputs/flagship/structural_evolution.csv": "49dabc89cd5f57390042ddd05d1e88f8881648e7d45c04df124f8006c8f2248f",
+        "outputs/flagship/metadata.json": "342a8712e0c69172ee6b572f8be4bcd6eb760156aaef84f6071488e0bed84c7f",
+        "outputs/flagship/matched_target_choice.png": "896566aaa8ffb724deb20c7662432cd037b5feaf3b0ed2c71d1e4b85b6fa34bb",
+        "outputs/flagship/degree_preserving_null.png": "65d6387de00649515446288b3b1863e133f43101e892e85521d89b823ed19cf7",
+        "outputs/flagship/structural_evolution.png": "45beefcffcefd94309c7b7509848b76944010717688f063e7e3bf37c1aa1ec8a"
+      }
+    },
+    {
+      "script": "scripts/temporal_sensitivity.py",
+      "script_sha256": "47d6981eb2e07af8e4a169d960ceebf5c20f7dd1325ba874e5bbf8ade90bde67",
+      "started_utc": "2026-11-04T22:29:01.006746+00:00",
+      "log": "outputs/reproduction/logs/temporal_sensitivity.log",
+      "finished_utc": "2026-11-04T22:29:04.505974+00:00",
+      "elapsed_seconds": 3.499,
+      "exit_code": 0,
+      "output_sha256": {
+        "outputs/sensitivity/annual_only_concentration.csv": "b237e770747260a4f5d8d375e999c68677e743f836ab1bcc835f495f3bcd2f25",
+        "outputs/sensitivity/fixed_2011_cohort_concentration.csv": "d74f9c5ae26cf8ed042290e9a4a3011aff2505d9b3b7b2502ad184233fad1778",
+        "outputs/sensitivity/temporal_metadata.json": "be252be1d59a484f93703d1b6a2f90ab8791bca3c02cec65025d39d892085f18",
+        "outputs/sensitivity/annual_vs_cumulative_concentration.png": "835ad208cc7080983ea160b8e95e943a7297870e84c3b0342ba00a341825cd5b",
+        "outputs/sensitivity/fixed_cohort_concentration.png": "289e6570f5be0271ee14053aa7e8c3a4d3cc7d4cb71c02930e97e75c15b79525"
+      }
+    },
+    {
+      "script": "scripts/community_profiles.py",
+      "script_sha256": "467d34717f9a63c30fec171c2530996cd2d00cd9787e3743a73a937d2405abd6",
+      "started_utc": "2026-11-04T22:29:04.513526+00:00",
+      "log": "outputs/reproduction/logs/community_profiles.log",
+      "finished_utc": "2026-11-04T22:29:08.573920+00:00",
+      "elapsed_seconds": 4.06,
+      "exit_code": 0,
+      "output_sha256": {
+        "outputs/sensitivity/community_profiles.csv": "02fbf7f4c237ae7aa7346d038c4721a4adf13c627e88b7df7e1995867e7002f3",
+        "outputs/sensitivity/community_metadata.json": "e886feba422835110777747ad47aec61d734ecf8a78a830bbc7fddf8e64c4e29",
+        "outputs/sensitivity/community_link_profiles.png": "f6388d694c205b30b4b28db4c7b05422492bc580a5e1eb64a083da857fbff28b"
+      }
+    }
+  ],
+  "finished_utc": "2026-11-04T22:29:08.577797+00:00"
+}

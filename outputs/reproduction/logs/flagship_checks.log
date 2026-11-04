@@ -1,0 +1,44 @@
+prior_positive_in_degree  observed_target_events  matched_null_expected_events  observed_over_expected
+                       0                     601                       156.234                   3.847
+                       1                    3087                      3346.705                   0.922
+                     2-3                    3710                      4797.392                   0.773
+                     4-7                    4117                      5486.153                   0.750
+                    8-15                    4198                      5158.026                   0.814
+                   16-31                    3986                      3623.942                   1.100
+                     32+                    7294                      4424.548                   1.649
+{
+  "existing_target_events": 27133,
+  "first_time_target_events": 4896,
+  "matched_events": 26993,
+  "excluded_small_stratum_events": 140,
+  "coverage_of_existing_target_events": 0.9948402314524748,
+  "median_matched_candidate_count": 55.0,
+  "tenure_bins_days": [
+    "under 90",
+    "90 to 364",
+    "365 or more"
+  ],
+  "activity_bins_prior_90_days": [
+    "0",
+    "1 to 2",
+    "3 to 9",
+    "10 or more"
+  ],
+  "minimum_candidates_including_chosen_target": 5
+}
+                 network  seed  transitivity  edges
+                observed    -1        0.0570  18591
+degree_preserving_rewire  2026        0.0439  18591
+degree_preserving_rewire  2027        0.0440  18591
+degree_preserving_rewire  2028        0.0432  18591
+degree_preserving_rewire  2029        0.0438  18591
+degree_preserving_rewire  2030        0.0431  18591
+degree_preserving_rewire  2031        0.0420  18591
+degree_preserving_rewire  2032        0.0436  18591
+degree_preserving_rewire  2033        0.0407  18591
+ year_end  active_users  directed_positive_ratings  positive_projection_edges  largest_component_share_of_active  projection_transitivity  directed_reciprocity
+     2011          1631                       7745                       4339                             0.9963                   0.0460                0.8795
+     2012          3116                      16367                       9386                             0.9981                   0.0539                0.8531
+     2013          4991                      27505                      15890                             0.9964                   0.0485                0.8446
+     2014          5455                      31060                      18032                             0.9963                   0.0549                0.8389
+     2015          5571                      31989                      18571                             0.9961                   0.0569                0.8389

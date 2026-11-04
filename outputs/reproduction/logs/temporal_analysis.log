@@ -1,0 +1,49 @@
+ rating_threshold  year_end  active_positive_users  cumulative_positive_ratings  top_1_percent_incoming_share  incoming_degree_gini  top_group_size
+                1      2011                   1631                         7745                        0.1551                0.6115              17
+                1      2012                   3116                        16367                        0.1991                0.6586              32
+                1      2013                   4991                        27505                        0.2248                0.6789              50
+                1      2014                   5455                        31060                        0.2316                0.6878              55
+                1      2015                   5571                        31989                        0.2352                0.6911              56
+Sensitivity: ratings >= 5
+ rating_threshold  year_end  active_positive_users  cumulative_positive_ratings  top_1_percent_incoming_share  incoming_degree_gini  top_group_size
+                5      2011                    443                          643                        0.1633                0.5502               5
+                5      2012                    850                         1429                        0.1659                0.6216               9
+                5      2013                   1398                         2451                        0.1877                0.6614              14
+                5      2014                   1551                         2793                        0.1926                0.6660              16
+                5      2015                   1585                         2885                        0.1931                0.6694              16
+prior_positive_in_degree  observed_target_events  uniform_null_expected_events  observed_over_expected
+                       0                     601                       341.660                   1.759
+                       1                    3090                     11200.671                   0.276
+                     2-3                    3717                      7671.863                   0.484
+                     4-7                    4145                      4133.610                   1.003
+                    8-15                    4223                      2282.943                   1.850
+                   16-31                    4001                       922.895                   4.335
+                     32+                    7356                       579.358                  12.697
+ year prior_positive_in_degree  observed_target_events  uniform_null_expected_events  observed_over_expected
+ 2010                      32+                       0                         0.000                     NaN
+ 2011                      32+                     720                        63.739                  11.296
+ 2012                      32+                    2107                       162.001                  13.006
+ 2013                      32+                    2942                       243.703                  12.072
+ 2014                      32+                    1147                        86.252                  13.298
+ 2015                      32+                     419                        22.636                  18.510
+ 2016                      32+                      21                         1.028                  20.433
+{
+  "source_sha256": "6424ac981dad3a019f697fc1b9fcd85c19d8d9f039797758e9ffb6fea100c373",
+  "positive_ratings": 32029,
+  "full_years": [
+    2011,
+    2012,
+    2013,
+    2014,
+    2015
+  ],
+  "timestamp_ties": 0,
+  "event_order": "SNAP file order for equal timestamps",
+  "null": "uniform eligible active target at each positive-rating event, excluding the rater and users already rated positively by that rater",
+  "limits": "descriptive association; activity, tenure, and unobserved platform membership may confound target choice",
+  "eligible_existing_target_events": 27133,
+  "first_time_target_events_excluded": 4896,
+  "insufficient_candidate_events_excluded": 0,
+  "expected_sum": 27132.999999999774,
+  "observed_sum": 27133
+}

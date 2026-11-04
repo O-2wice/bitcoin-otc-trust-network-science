@@ -10,10 +10,12 @@ Start with one rule: a row `6,2,4,time` means **user 6 gave user 2 a positive ra
 | `scripts/temporal_analysis.py` | How did recorded ratings build up? | Takes cumulative year-end snapshots, measures how concentrated incoming ratings became, and compares each later target with a simple equal-chance benchmark. | `outputs/temporal/annual_snapshots.csv` and target-choice tables |
 | `scripts/node_removal.py` | What if some users disappear from the graph? | Removes users randomly or in order of their original degree, then measures how many users remain in the largest connected group. | `outputs/robustness/node_removal_summary.csv` and figure |
 | `scripts/flagship_checks.py` | Do hubs stand out after accounting for opportunity, and how does structure change? | Compares recipients with others of similar observed tenure and recent activity, rewires links while keeping degrees fixed, and measures three year-end structural properties. | `outputs/flagship/` tables and figures |
-| `scripts/verify_reproduction.py` | Did the main results regenerate? | Checks the source checksum and selected published numbers. | A `PASS` message or an error |
+| `scripts/verify_reproduction.py` | Do the stored outputs match the headline results? | Checks the source checksum and selected numbers in existing CSVs. It does not rerun the scripts or check output freshness. | A `PASS` message or an error |
+
+`scripts/temporal_sensitivity.py` separates new yearly ratings from accumulated ratings and follows a fixed 2011 cohort. `scripts/community_profiles.py` describes internal and boundary links in the five largest Louvain groups. `scripts/reproduce.py` runs all six numerical analyses in order and records their execution details and output hashes. Use `python scripts/verify_reproduction.py --check-manifest` afterward to check that those recorded files, scripts, and package versions still match.
 
 `scripts/export_cytoscape.py` is a separate visual export. It saves GraphML for Cytoscape; it does not calculate the report's statistics.
-`scripts/full_network_overview.py` draws every user and positive projected link in degree-ranked shells. Its rings are a layout choice, not communities or time periods.
+`scripts/full_network_force.py` draws the positive projection with a fixed-seed spring layout. It shows the largest component and separates the other small components and isolated users so they remain visible. The saved coordinates make the chosen layout inspectable. Proximity on the page is a layout result; it does not measure geography or time. The earlier `scripts/full_network_overview.py` produces a degree-ranked shell view as an alternative.
 
 ## Follow one calculation
 
@@ -21,7 +23,7 @@ Start with one rule: a row `6,2,4,time` means **user 6 gave user 2 a positive ra
 positive = ratings[ratings.rating > 0]
 ```
 
-This keeps rows with favorable scores. A `+4` and a `+9` each make **one** positive link. The score is stored, but the main structural results count links rather than adding score values.
+This keeps rows with favorable scores. A `+4` and a `+9` each make **one** positive link. The directed graph stores `rating`, `weight` (the same original score), and `time_unix`. The main structural results count links rather than adding score values.
 
 ```python
 incoming = positive.groupby("target").size()
@@ -45,4 +47,4 @@ The reported shortest-path distance is the number of links, or **hops**. A path 
 
 > We downloaded one timestamped rating file and verified its checksum. Each user ID became a node; each rating became a directed, signed edge. For the main analysis we kept positive ratings, and for ER and BA comparisons we made an undirected positive projection. We measured its structure, watched cumulative positive ratings grow by year, and tested how its connectivity changed when users were removed. We fixed random seeds and provide a checker for the headline results.
 
-The [reconstruction guide](REPRODUCIBILITY.md) gives the exact graph rules. The notebooks show tables and figures alongside the code. Run commands are in the [README](README.md).
+The [reconstruction guide](REPRODUCIBILITY.md) gives the exact graph rules. To learn the calculations, run the invented examples in notebooks 02–04: build a five-user graph, calculate its measures, list eligible recipients before a rating, and match those recipients by observed tenure and activity. Those teaching examples are separate from the Bitcoin OTC measurements. The notebooks also display the full analysis outputs. Run commands are in the [README](README.md).

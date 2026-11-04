@@ -1,0 +1,15 @@
+            strategy  removed_nodes  removed_fraction     mean      std
+highest_degree_first              0          0.000000 0.943887      NaN
+highest_degree_first              6          0.001020 0.856827      NaN
+highest_degree_first             29          0.004931 0.772318      NaN
+highest_degree_first             59          0.010032 0.720116      NaN
+highest_degree_first            118          0.020065 0.631695      NaN
+highest_degree_first            294          0.049991 0.455705      NaN
+highest_degree_first            588          0.099983 0.143173      NaN
+      uniform_random              0          0.000000 0.943887 0.000000
+      uniform_random              6          0.001020 0.942481 0.000743
+      uniform_random             29          0.004931 0.937669 0.001596
+      uniform_random             59          0.010032 0.931208 0.002070
+      uniform_random            118          0.020065 0.919226 0.002854
+      uniform_random            294          0.049991 0.875860 0.013282
+      uniform_random            588          0.099983 0.811670 0.019607
