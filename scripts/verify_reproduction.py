@@ -41,7 +41,19 @@ def main():
     detail = pd.read_csv(ROOT / "outputs/robustness/node_removal_replicates.csv")
     assert len(detail[detail.removed_nodes == 294]) == 31
 
-    print("PASS: source checksum, graph size, model count, temporal trend, and node-removal results")
+    matched = pd.read_csv(ROOT / "outputs/flagship/matched_target_choice.csv")
+    high = matched.set_index("prior_positive_in_degree").loc["32+"]
+    close(high.observed_over_expected, 1.6485)
+    assert int(matched.observed_target_events.sum()) == 26993
+    rewired = pd.read_csv(ROOT / "outputs/flagship/degree_preserving_null.csv")
+    assert len(rewired) == 9  # observed plus eight degree-preserving rewires
+    assert (rewired.edges == 18591).all()
+    assert rewired.iloc[0].transitivity > rewired.iloc[1:].transitivity.max()
+    evolution = pd.read_csv(ROOT / "outputs/flagship/structural_evolution.csv").set_index("year_end")
+    close(evolution.loc[2011, "directed_reciprocity"], 0.8795)
+    close(evolution.loc[2015, "directed_reciprocity"], 0.8389)
+
+    print("PASS: source checksum, graph size, models, temporal trend, node removal, and flagship checks")
 
 
 if __name__ == "__main__":

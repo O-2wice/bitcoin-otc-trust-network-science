@@ -1,0 +1,39 @@
+{
+  "source_sha256": "6424ac981dad3a019f697fc1b9fcd85c19d8d9f039797758e9ffb6fea100c373",
+  "matched_choice": {
+    "existing_target_events": 27133,
+    "first_time_target_events": 4896,
+    "matched_events": 26993,
+    "excluded_small_stratum_events": 140,
+    "coverage_of_existing_target_events": 0.9948402314524748,
+    "median_matched_candidate_count": 55.0,
+    "tenure_bins_days": [
+      "under 90",
+      "90 to 364",
+      "365 or more"
+    ],
+    "activity_bins_prior_90_days": [
+      "0",
+      "1 to 2",
+      "3 to 9",
+      "10 or more"
+    ],
+    "minimum_candidates_including_chosen_target": 5
+  },
+  "rewire": {
+    "projection": "simple undirected positive graph, all observed users",
+    "seeds": [
+      2026,
+      2027,
+      2028,
+      2029,
+      2030,
+      2031,
+      2032,
+      2033
+    ],
+    "successful_swaps_per_replicate": 185910,
+    "method": "NetworkX double_edge_swap, preserves each projected node degree"
+  },
+  "evolution": "Cumulative positive ratings at 2011-2015 UTC year ends; active users only"
+}

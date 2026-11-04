@@ -2,13 +2,14 @@
 
 Start with one rule: a row `6,2,4,time` means **user 6 gave user 2 a positive rating of 4**. The graph has a user at each end and an arrow from 6 to 2. The code does not treat that row as a verified trade.
 
-## The four main scripts
+## The five main scripts
 
 | Script | Question | What it does | Main output |
 | --- | --- | --- | --- |
 | `scripts/structural_analysis.py` | What does the network look like? | Keeps positive ratings, counts links and communities, measures paths, then builds ER and BA comparison graphs. | `outputs/structure/network_metrics.csv` and figures |
 | `scripts/temporal_analysis.py` | How did recorded ratings build up? | Takes cumulative year-end snapshots, measures how concentrated incoming ratings became, and compares each later target with a simple equal-chance benchmark. | `outputs/temporal/annual_snapshots.csv` and target-choice tables |
 | `scripts/node_removal.py` | What if some users disappear from the graph? | Removes users randomly or in order of their original degree, then measures how many users remain in the largest connected group. | `outputs/robustness/node_removal_summary.csv` and figure |
+| `scripts/flagship_checks.py` | Do hubs stand out after accounting for opportunity, and how does structure change? | Compares recipients with others of similar observed tenure and recent activity, rewires links while keeping degrees fixed, and measures three year-end structural properties. | `outputs/flagship/` tables and figures |
 | `scripts/verify_reproduction.py` | Did the main results regenerate? | Checks the source checksum and selected published numbers. | A `PASS` message or an error |
 
 `scripts/export_cytoscape.py` is a separate visual export. It saves GraphML for Cytoscape; it does not calculate the report's statistics.
@@ -33,7 +34,7 @@ For a year-end snapshot, the code keeps ratings recorded by that year, counts in
 
 Before each new positive rating, the code looks at users already seen in earlier positive ratings. It removes the rater and anyone that rater has already rated positively. These are the **eligible targets** for that event. If the actual target has never appeared before, that event is outside this comparison.
 
-The benchmark asks: **if every eligible target had the same chance, how many ratings should go to users with 0, 1, 2–3, ..., or 32+ previous incoming ratings?** The code adds those expected chances over events and divides the actual count by the expected count. A ratio above 1 means that degree group was selected more often than this simple benchmark predicts. It does **not** prove that popularity caused the choice; the file lacks user activity, tenure, visibility, and trade data.
+The benchmark asks: **if every eligible target had the same chance, how many ratings should go to users with 0, 1, 2–3, ..., or 32+ previous incoming ratings?** The code adds those expected chances over events and divides the actual count by the expected count. A ratio above 1 means that degree group was selected more often than this simple benchmark predicts. The follow-up comparison limits possible recipients to users with similar **observed tenure** and **recent rating activity**. The 32+ ratio falls from 12.70 to 1.65. The file still lacks true account tenure, visibility, and trade data, so neither ratio proves that popularity caused the choice.
 
 ## What distance means
 
