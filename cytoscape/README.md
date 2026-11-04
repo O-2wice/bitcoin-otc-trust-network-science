@@ -6,7 +6,7 @@ To recreate it:
 
 1. Download the original SNAP file as described in the project README and run `python scripts/export_cytoscape.py`.
 2. Open Cytoscape and import `outputs/cytoscape/bitcoin_otc_spotlight.graphml` as a network.
-3. Load `cytoscape/spotlight_style.json` as a visual style. It uses teal for positive edges, pink for negative edges, arrowheads for direction, and node size for positive in-degree in the **full data**. Only the five highest-ranked users have labels.
+3. Load `cytoscape/spotlight_style.json` as a visual style. The dark Bitcoin-inspired theme uses teal for positive edges, coral for negative edges, and amber for users with more positive ratings received. Node size and amber fill both encode positive in-degree in the **full data**; arrows show rating direction. Only the five highest-ranked users have labels.
 4. Apply Cytoscape's force-directed layout and export a PNG. `cytoscape/compose_spotlight.py` removes empty canvas and adds the legend without redrawing the network.
 
 The [short MP4](../outputs/cytoscape/bitcoin_otc_spotlight_timeline.mp4) shows when these selected users' strong rating edges were recorded by each year end from 2011 to 2015. The node set and layout are held fixed. Because users were selected using the full period, the video is an illustration of edge timing, **not** an unbiased sample of historical network growth.
