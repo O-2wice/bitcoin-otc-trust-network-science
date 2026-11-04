@@ -2,6 +2,8 @@
 
 The 14 main slides are designed for about 11–13 minutes, followed by a short live code demonstration. Slide 15 holds references for questions. Every team member should be ready to explain the methods and limitations.
 
+Each slide has speaker notes with a reading script. Open the Notes pane in PowerPoint or Impress, or use Presenter View during the slideshow, to read them while presenting.
+
 | Slides | Topic | Time |
 | --- | --- | ---: |
 | 1–2 | Question, system, and source | 1 min |
