@@ -1,0 +1,123 @@
+                            quantity                                                      formula  observed  er_formula  er_simulated_mean  er_simulated_std  ba_formula  ba_simulated_mean  ba_simulated_std  rewired_mean  rewired_std  internal_link_formula  internal_link_simulated_mean  internal_link_simulated_std
+                         Mean degree                                   <k> = 2L/N; BA tends to 2m    6.3224      6.3224             6.3224            0.0000      6.0000             5.9969            0.0000        6.3224       0.0000                    NaN                        6.6823                       0.0296
+           Degree standard deviation                                      ER: sqrt(<k>) (Poisson)   20.3638      2.5144             2.4934            0.0238         NaN             8.2756            0.2717       20.3638       0.0000                    NaN                       23.0772                       0.2506
+                      Maximum degree                       ER: N P(K >= k_max) = 1; BA: m sqrt(N)  788.0000     17.0000            17.1000            1.1972    230.0630           231.0000           24.2716      788.0000       0.0000                    NaN                      332.9000                      18.5918
+             Heterogeneity <k^2>/<k>                                                  ER: <k> + 1   71.9120      7.3224             7.3058            0.0188         NaN            17.4281            0.7475       71.9120       0.0000                    NaN                       86.3860                       1.6442
+             Largest component share                        ER: S = 1 - exp(-<k>S); BA: connected    0.9439      0.9982             0.9982            0.0006      1.0000             1.0000            0.0000        0.9272       0.0020                    NaN                        1.0000                       0.0000
+Mean path length (largest component)                        ER: ln N / ln <k>; BA: ln N / ln ln N    3.7610      4.7066             4.9132            0.0539      4.0165             4.0821            0.0702        3.5190       0.0847                    NaN                        3.4825                       0.0593
+            Average local clustering                 ER: p = <k>/(N-1); BA scales as (ln N)^2 / N    0.1550      0.0011             0.0010            0.0002      0.0128             0.0081            0.0011        0.0615       0.0019                    NaN                        0.0974                       0.0027
+                        Transitivity                                                        ER: p    0.0570      0.0011             0.0011            0.0002         NaN             0.0042            0.0003        0.0430       0.0011                    NaN                        0.1164                       0.0040
+                Degree assortativity                                                        ER: 0   -0.1449      0.0000             0.0010            0.0067         NaN            -0.0444            0.0053       -0.1144       0.0019                    NaN                       -0.1421                       0.0097
+                  Louvain modularity                            No simple formula; simulated only    0.5042         NaN             0.3688            0.0016         NaN             0.3879            0.0019        0.3338       0.0010                    NaN                        0.3237                       0.0014
+          Degree tail exponent gamma BA: 3; internal links: 2 + m/(m + 2n); ER: no power-law tail    2.0896         NaN                NaN               NaN      3.0000             2.7445            0.0429           NaN          NaN                 2.1733                        1.8755                       0.0363
+                                            0                   1                    2             3                        4
+measure                     Undirected degree  Positive in-degree  Positive out-degree  BA reference  Internal-link reference
+nodes_with_positive_degree               5573                5497                 4768          5881                     5573
+k_min                                     7.0                 9.0                  7.0           5.0                      2.5
+tail_nodes                             1089.0               726.0                950.0           NaN                      NaN
+tail_share                             0.1954              0.1321               0.1992           NaN                      NaN
+gamma                                  2.0896              2.1536               2.0922        2.7445                   1.8755
+gamma_bootstrap_std                    0.1136              0.1465               0.1835        0.0429                   0.0363
+gamma_ci_low                           1.9118              1.8635               1.9321          2.65                    1.791
+gamma_ci_high                          2.2381              2.2777               2.7793        2.7909                   1.9126
+k_min_ci_low                              3.0                 2.0                  3.0           NaN                      NaN
+k_min_ci_high                            11.0               10.05               42.025           NaN                      NaN
+ks_distance                            0.0303              0.0381               0.0319           NaN                      NaN
+goodness_of_fit_p                       0.002                 0.0                  0.0           NaN                      NaN
+lr_vs_lognormal                      -10.6378              -9.067             -11.0276           NaN                      NaN
+p_vs_lognormal                         0.0037              0.0079               0.0036           NaN                      NaN
+lr_vs_exponential                    261.0684            127.6452             210.2295           NaN                      NaN
+p_vs_exponential                          0.0                 0.0                  0.0           NaN                      NaN
+lr_vs_truncated                      -12.9334            -10.5703             -12.6173           NaN                      NaN
+p_vs_truncated                            0.0                 0.0                  0.0           NaN                      NaN
+truncated_gamma                        1.8641              1.8542               1.8438           NaN                      NaN
+truncated_rate                         0.0042              0.0051               0.0047           NaN                      NaN
+lognormal_mu                          -0.9885              0.0432              -0.5141           NaN                      NaN
+lognormal_sigma                        2.0308              1.7701               1.9134           NaN                      NaN
+expected_max_degree                 4290.0171           2718.0043            3727.2304           NaN                      NaN
+observed_max_degree                     788.0               535.0                753.0           NaN                      NaN
+                                  benchmark  events  share_of_eligible_events  attachment_exponent_alpha  alpha_standard_error  ratio_0  ratio_1  ratio_2-3  ratio_4-7  ratio_8-15  ratio_16-31  ratio_32+
+                                    Uniform   27133                     1.000                      1.069                 0.005    1.759    0.276      0.484      1.003       1.850        4.335     12.697
+                        Tenure and activity   26993                     0.995                      0.685                 0.009    3.847    0.922      0.773      0.750       0.814        1.100      1.649
+                                Tenure only   27133                     1.000                      1.388                 0.005    1.246    0.249      0.491      1.100       2.331        5.680     18.455
+                              Activity only   27105                     0.999                      0.363                 0.006    3.939    0.938      0.773      0.716       0.805        1.133      1.706
+                   Tenure and ratings given   26588                     0.980                      0.611                 0.009    2.751    0.730      0.847      0.981       0.865        0.993      1.440
+            Uniform, first rating in a pair   13695                     0.505                      1.001                 0.007    0.715    0.342      0.553      1.081       1.816        4.212     11.088
+Tenure and activity, first rating in a pair   13617                     0.502                      0.745                 0.013    1.158    0.800      0.859      0.855       0.869        1.165      1.631
+prior_positive_in_degree  eligible_events  events_returning_an_earlier_rating  share_returning
+                       0              601                                 477            0.794
+                       1             3090                                1145            0.371
+                     2-3             3717                                1578            0.425
+                     4-7             4145                                1903            0.459
+                    8-15             4223                                2142            0.507
+                   16-31             4001                                2049            0.512
+                     32+             7356                                4144            0.563
+ network  heterogeneity_kappa  molloy_reed_threshold  random_removal_collapse_fraction  targeted_removal_collapse_fraction
+Observed              71.9120                 0.9859                              0.93                               0.150
+ Rewired              71.9120                 0.9859                              0.94                               0.150
+      BA              16.0535                 0.9336                              0.90                               0.300
+      ER               7.3296                 0.8420                              0.85                               0.625
+ betweenness_rank  node  positive_in_degree  positive_out_degree  betweenness_approx  betweenness_exact  in_degree_rank
+                1    35                 535                  753              0.1483             0.1425               1
+                2  2642                 411                  397              0.0725             0.0616               2
+                3     1                 226                  206              0.0462             0.0440               5
+                4     7                 216                  225              0.0628             0.0400               7
+                5   905                 226                  223              0.0389             0.0394               5
+                6  4172                 211                  190              0.0374             0.0355               8
+                7  1810                 270                  244              0.0235             0.0354               3
+                8  2028                 234                  267              0.0378             0.0336               4
+                9    13                 190                  193              0.0366             0.0300              10
+               10  1953                 153                  152              0.0478             0.0298              15
+               11  1018                 179                  193              0.0172             0.0239              12
+               12   546                 143                  160              0.0349             0.0223              16
+               13  2388                 122                  138              0.0291             0.0221              22
+               14  4197                 203                  199              0.0164             0.0210               9
+               15  1334                 157                  147              0.0222             0.0186              13
+               16  2125                 180                  170              0.0129             0.0185              11
+               17  1396                 116                  147              0.0112             0.0180              24
+               18  4291                 156                  167              0.0134             0.0167              14
+               19  3735                 129                  133              0.0130             0.0159              20
+               20  1352                 106                  113              0.0132             0.0156              29
+{
+  "seed": 2026,
+  "exact_mean_path_largest_component": 3.7609885727918515,
+  "exact_diameter_largest_component": 14,
+  "sampled_mean_path_stored": 3.5593524774774776,
+  "small_world": {
+    "clustering_ratio_to_er": 153.7610149799464,
+    "path_ratio_to_er": 0.7654874554577268,
+    "clustering_ratio_to_rewired": 2.521176509604796,
+    "path_ratio_to_rewired": 1.0687653660532275,
+    "small_world_sigma_vs_er": 200.86679916655757,
+    "small_world_sigma_vs_rewired": 2.3589616483504523
+  },
+  "centrality": {
+    "spearman_sampled_vs_exact_betweenness": 0.950802686526621,
+    "spearman_in_degree_vs_out_degree": 0.8366532328461586,
+    "spearman_in_degree_vs_exact_betweenness": 0.8676548895339476,
+    "top_10_overlap_sampled_vs_exact": 9,
+    "top_20_overlap_sampled_vs_exact": 13,
+    "top_10_overlap_in_degree_vs_exact": 9
+  },
+  "return_ratings": {
+    "eligible_events": 27133,
+    "events_returning_an_earlier_rating": 13438,
+    "share_returning": 0.49526406958316443,
+    "median_days_to_return": 0.002600345256979819,
+    "share_returned_within_7_days": 0.8730465843131419
+  },
+  "tail_method": "Discrete power-law maximum likelihood; k_min by smallest KS distance with at least 50 tail nodes; 200 bootstrap draws; semi-parametric goodness of fit with 500 draws; Vuong tests against lognormal and exponential, nested test against a cutoff",
+  "attachment_method": "Conditional logit: choice probability proportional to (k + 1) ** alpha among each event's candidates. Standard errors treat events as independent, so they are optimistic.",
+  "percolation_method": "20 random replicates per fraction on one realization of each graph; collapse is the first tested fraction leaving a largest component under 1% of original users",
+  "growth": {
+    "users_in_positive_ratings": 5573,
+    "undirected_links": 18591,
+    "links_arriving_with_a_new_user": 5491,
+    "links_between_existing_users": 13100,
+    "share_between_existing_users": 0.7046420310903125,
+    "links_per_new_user_m": 0.9852862013278306,
+    "internal_links_per_new_user_n": 2.350619056163646,
+    "gamma_double_preferential_attachment": 2.173266858098514
+  },
+  "limits": "Formula values are large-network approximations. Comparisons are descriptive and do not identify a mechanism."
+}
