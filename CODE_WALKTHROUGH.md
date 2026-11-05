@@ -15,7 +15,7 @@ Start with one rule: a row `6,2,4,time` means **user 6 gave user 2 a positive ra
 `scripts/temporal_sensitivity.py` separates new yearly ratings from accumulated ratings and follows a fixed 2011 cohort. `scripts/community_profiles.py` describes internal and boundary links in the five largest Louvain groups. `scripts/reproduce.py` runs all six numerical analyses in order and records their execution details and output hashes. Use `python scripts/verify_reproduction.py --check-manifest` afterward to check that those recorded files, scripts, and package versions still match.
 
 `scripts/export_cytoscape.py` is a separate visual export. It saves GraphML for Cytoscape; it does not calculate the report's statistics.
-`scripts/full_network_force.py` draws the positive projection with a fixed-seed spring layout. It shows the largest component and separates the other small components and isolated users so they remain visible. The saved coordinates make the chosen layout inspectable. Proximity on the page is a layout result; it does not measure geography or time. The earlier `scripts/full_network_overview.py` produces a degree-ranked shell view as an alternative.
+`scripts/full_network_force.py` draws the undirected network of positive ratings with a fixed-seed spring layout. It shows the largest component and separates the other small components and isolated users so they remain visible. The saved coordinates make the chosen layout inspectable. Proximity on the page is a layout result; it does not measure geography or time. The earlier `scripts/full_network_overview.py` produces a degree-ranked shell view as an alternative.
 
 ## Follow one calculation
 
@@ -41,10 +41,10 @@ The benchmark asks: **if every eligible target had the same chance, how many rat
 
 ## What distance means
 
-The reported shortest-path distance is the number of links, or **hops**. A path of three projected links has distance 3. The code does not turn rating scores into distances, and such a path is not evidence that trust or money traveled between those users.
+The reported shortest-path distance is the number of links, or **hops**. A path of three undirected links has distance 3. The code does not turn rating scores into distances, and such a path is not evidence that trust or money traveled between those users.
 
 ## A short way to present the workflow
 
-> We downloaded one timestamped rating file and verified its checksum. Each user ID became a node; each rating became a directed, signed edge. For the main analysis we kept positive ratings, and for ER and BA comparisons we made an undirected positive projection. We measured its structure, watched cumulative positive ratings grow by year, and tested how its connectivity changed when users were removed. We fixed random seeds and provide a checker for the headline results.
+> We downloaded one timestamped rating file and verified its checksum. Each user ID became a node; each rating became a directed, signed edge. For the main analysis we kept positive ratings, and for ER and BA comparisons we made an undirected network of positive ratings. We measured its structure, watched cumulative positive ratings grow by year, and tested how its connectivity changed when users were removed. We fixed random seeds and provide a checker for the headline results.
 
 The [reconstruction guide](REPRODUCIBILITY.md) gives the exact graph rules. To learn the calculations, run the invented examples in notebooks 02–04: build a five-user graph, calculate its measures, list eligible recipients before a rating, and match those recipients by observed tenure and activity. Those teaching examples are separate from the Bitcoin OTC measurements. The notebooks also display the full analysis outputs. Run commands are in the [README](README.md).

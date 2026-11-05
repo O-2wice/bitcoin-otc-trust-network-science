@@ -21,7 +21,7 @@ Each slide has speaker notes with an explicit 18-point reading script. Open the 
 
 For a two-minute demonstration, prepare these cells in advance:
 
-1. In `notebooks/02_structure_and_models.ipynb`, run the five-user teaching example. Identify one directed rating, its contribution to incoming degree, and the link after projection. The invented example is labelled separately from the Bitcoin observations.
+1. In `notebooks/02_structure_and_models.ipynb`, run the five-user teaching example. Identify one directed rating, its contribution to incoming degree, and the link after ignoring direction. The invented example is labelled separately from the Bitcoin observations.
 2. In `notebooks/03_temporal_rating_accumulation.ipynb`, run the cell that reconstructs the 2015 cumulative and annual-only counts. Explain why the two time windows answer different questions.
 3. Run `python scripts/verify_reproduction.py --check-manifest` in the project environment. Explain that this checks source and recorded-output consistency. The six analyses were run by `python scripts/reproduce.py`; the checker itself does not rerun them.
 

@@ -28,7 +28,7 @@ Our question is how positive-rating concentration changed as this record grew. W
 
 Each node is an account. The arrow points from the rater to the recipient. In these real records, user 6 rated user 2 positive four; user 2 later rated user 6 positive five.
 
-G plus keeps those two positive arrows separately. The score and time remain attributes. H plus joins the same two accounts with one undirected link. We use H plus for the model comparisons and community analysis.
+The directed network keeps those two positive arrows separately. The score and time remain attributes. In the undirected network, the same two accounts share one link. We use the undirected network for the model comparisons and community analysis.
 
 The main measures count links, rather than adding rating scores. A path counts hops: one link means distance one. Negative ratings remain in the full signed graph and the Cytoscape view.
 
@@ -54,7 +54,7 @@ ER keeps the observed number of accounts and links, but connects pairs at random
 
 The observed maximum degree is 788. The model averages are 17.1 for ER and 231 for BA. BA gives more uneven degrees than ER, but neither matches the observed maximum. BA has 5.15 percent fewer links because its number of new links must be a whole number.
 
-The mean degree is two L divided by N. Each undirected link has two endpoints, giving 6.32 here.
+The average degree is two L divided by N. Each undirected link has two endpoints, giving 6.32 here.
 
 **Sources / preparation:** outputs/structure/network_metrics.csv; Erdős and Rényi (1959); Barabási and Albert (1999), doi:10.1126/science.286.5439.509.
 
@@ -160,7 +160,7 @@ The annual check changes the story: concentration falls after 2013. Our conclusi
 
 Three findings answer our question. Triangle closure exceeds all three reference constructions. Cumulative rating concentration rises, while yearly concentration falls after 2013. The high-degree recipient contrast becomes much smaller after matching.
 
-For the demonstration, we will inspect a rating record, show the positive directed graph and its undirected projection, and reconstruct the annual versus cumulative counts. Then we will run the manifest checker.
+For the demonstration, we will inspect a rating record, show the positive directed graph and its undirected version, and reconstruct the annual versus cumulative counts. Then we will run the manifest checker.
 
 The checker validates stored source, scripts, environment, and output consistency. The separate six-script runner performs the analyses. Neither is a guarantee that every scientific interpretation is correct.
 

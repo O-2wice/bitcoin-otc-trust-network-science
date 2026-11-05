@@ -10,11 +10,13 @@ Download `soc-sign-bitcoinotc.csv.gz` from SNAP and place it in `data/`. The exp
 
 ## Approach
 
-We define positive ratings as directed edges from rater to recipient, analyse the network's structure and communities, and compare an undirected projection with random, Barabási–Albert, and degree-preserving rewired networks. The temporal investigation distinguishes ratings accumulated so far, ratings issued within each year, and a fixed cohort of users. It then compares recipient choices with uniform and tenure/activity-matched benchmarks. Random and targeted node removal provide a separate connectivity experiment. [Cytoscape and CyAnimator](cytoscape/README.md) supply a signed network spotlight and an animation connecting five annual snapshots of its recorded ratings.
+Nodes are user accounts. In the **directed network of positive ratings**, an arrow runs from rater to recipient: there are 32,029 such arrows. For the **undirected network**, we ignore arrow direction and combine reciprocal positive ratings into one link, giving 18,591 links. Both retain all 5,881 observed accounts. In-degree counts positive ratings received; out-degree counts positive ratings given.
+
+We define positive ratings as directed edges from rater to recipient, analyse the network's structure and communities, and compare an undirected network with random, Barabási–Albert, and degree-preserving rewired networks. The temporal investigation distinguishes ratings accumulated so far, ratings issued within each year, and a fixed cohort of users. It then compares recipient choices with uniform and tenure/activity-matched benchmarks. Random and targeted node removal provide a separate connectivity experiment. [Cytoscape and CyAnimator](cytoscape/README.md) supply a signed network spotlight and an animation connecting five annual snapshots of its recorded ratings.
 
 Accumulated incoming ratings become more unequal: the top 1% share rises from 15.5% in 2011 to 23.5% in 2015, and also rises within a fixed 2011 cohort. New yearly ratings differ: their top 1% share peaks at 21.0% in 2013 and falls to 11.3% in 2015 as volume declines. The 32+ prior-rating group has an observed/expected ratio of 12.70 under uniform choice, falling to 1.65 after matching by observed tenure and recent activity. These are descriptive findings, not evidence of a causal preference or current trust.
 
-The [reconstruction guide](REPRODUCIBILITY.md) traces a source rating through user IDs, filtering, directed edge construction, graph projection, and analysis.
+The [reconstruction guide](REPRODUCIBILITY.md) traces a source rating through user IDs, filtering, directed edge construction, conversion to an undirected network, and analysis.
 
 The [code walkthrough](CODE_WALKTHROUGH.md) explains each script and the harder target-choice calculation in plain language.
 
