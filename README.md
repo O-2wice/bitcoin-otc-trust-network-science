@@ -45,6 +45,8 @@ python3.12 -m venv .venv
 
 The [demo guide](presentation/DEMO.md) covers the analysis, code walkthrough, and Cytoscape animation.
 
+The [Overleaf source ZIP](overleaf/bitcoin_otc_report_overleaf.zip) contains the LaTeX report, bibliography, template files, and figures. See the [import instructions](overleaf/README.md).
+
 ## Team
 
 [O-2wice](https://github.com/O-2wice), [shishi177-cpu](https://github.com/shishi177-cpu), and [Abdak-Yussuf](https://github.com/Abdak-Yussuf).
