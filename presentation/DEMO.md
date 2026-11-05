@@ -2,7 +2,7 @@
 
 Allow about 11–12 minutes for slides 1–14 and 2 minutes for the code demonstration, keeping the whole talk within 15 minutes. Slide 15 holds sources and method details for questions. Every team member should be ready to explain the methods and limitations.
 
-Each slide has speaker notes with an explicit 18-point reading script. Open the Notes pane in PowerPoint or Impress, or use Presenter View during the slideshow. The [Markdown reading notes](SPEAKER_NOTES.md) contain the same script. Timing and sources are preparation notes, not part of the spoken text.
+Each slide's reading script is embedded in its PowerPoint speaker notes in 18-point text. Open the Notes pane below the slide while editing in PowerPoint or Impress, or use Presenter View during the slideshow. Timing and sources are preparation notes, not part of the spoken text.
 
 | Slides | Topic | Time |
 | --- | --- | ---: |
