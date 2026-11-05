@@ -3,6 +3,8 @@ __pycache__/
 .venv/
 report/
 *.[pP][dD][fF]
+presentation/SPEAKER_NOTES.md
+presentation/bitcoin_otc_network_science.pptx
 data/*.gz
 outputs/cytoscape/*.graphml
 outputs/cytoscape/*.cys

@@ -43,7 +43,7 @@ python3.12 -m venv .venv
 
 ## Presentation
 
-The [slides](presentation/bitcoin_otc_network_science.pptx) and [demo guide](presentation/DEMO.md) cover the analysis and code walkthrough. Each slide's reading script is embedded in its PowerPoint speaker notes in 18-point text. Open the Notes pane below the slide while editing, or use Presenter View while presenting.
+The [demo guide](presentation/DEMO.md) covers the analysis, code walkthrough, and Cytoscape animation.
 
 ## Team
 
