@@ -7,6 +7,7 @@ data/*.gz
 outputs/cytoscape/*.graphml
 outputs/cytoscape/*.cys
 outputs/cytoscape/animation_frames/
+outputs/cytoscape/cyanimator_verified/
 outputs/cytoscape/*_raw.png
 .deck_build/
 .codex-finalizer/

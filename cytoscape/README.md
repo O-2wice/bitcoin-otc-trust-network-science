@@ -11,19 +11,24 @@ To recreate it:
 
 The [short MP4](../outputs/cytoscape/bitcoin_otc_spotlight_timeline.mp4) shows when these selected users' strong rating edges were recorded by each year end from 2011 to 2015. The node set and layout are held fixed. Because users were selected using the full period, the video is an illustration of edge timing, **not** an unbiased sample of historical network growth.
 
-CyAnimator 2.2.1 was installed and tested in Cytoscape 3.10.4. It successfully produced 17 recorded frames, but those recorded frames did not preserve the year-specific edge opacity settings. The delivered timeline therefore uses five verified Cytoscape year exports, labelled by `cytoscape/compose_timeline.py` and encoded by `cytoscape/make_timeline_video.py`; it is **not** described as a CyAnimator movie. `cytoscape/record_timeline.py` documents the CyAnimator test and creates the year exports. The frames and live session are kept locally.
+## CyAnimator's role
 
-To rebuild the timeline, keep Cytoscape running with CyREST available at `http://localhost:1234/v1` and install CyAnimator 2.2.1. The recorder imports the spotlight itself, applies the saved style, lays out the network once, and exports `keyframe_2011.png` through `keyframe_2015.png` into `outputs/cytoscape/animation_frames/`. It also repeats the CyAnimator test; the movie is encoded from the five year exports. Install the external `ffmpeg` executable with H.264 (`libx264`) encoding support; it is not a Python requirement.
+**Slide 7 contains the actual CyAnimator animation.** It connects five year-end states, making recorded link accumulation visible with account positions fixed. The annual states contain 5, 16, 54, 73, and 76 strong directed ratings. The next slides supply whole-population measurements; this spotlight is selected using the full record.
+
+CyAnimator 2.2.1 in Cytoscape 3.10.4 exported 97 frames. The MP4 uses 93 of those network drawings. The first interpolated frame after each keyframe briefly flashed the final style; those four renderer glitches (indices 1, 25, 49 and 73) were omitted. Cropping, year labels, and encoding follow the app export. [Frame and movie hashes](../outputs/cytoscape/cyanimator_provenance.json) record the provenance. Intermediate frames are visual interpolation, not additional timestamped observations. See [Morris et al. (2015)](https://doi.org/10.12688/f1000research.6852.2) for the method.
+
+To rebuild, keep Cytoscape running with CyREST at `http://localhost:1234/v1` and install CyAnimator 2.2.1. Also install the external `ffmpeg` executable with H.264 (`libx264`) support; it is not a Python requirement. The recorder creates a fresh collection and explicitly selects its current view, avoiding retained frames and capture of another network. Distinct year styles use a text year attribute for edge visibility. The layout is calculated once and then held fixed.
 
 From the project root, using the project Python environment:
 
 ```bash
 python scripts/export_cytoscape.py
-python cytoscape/record_timeline.py
-python cytoscape/compose_timeline.py
-python cytoscape/make_timeline_video.py
+python cytoscape/record_verified_animation.py
+python cytoscape/compose_cyanimator_video.py
 ```
 
-Inspect all five raw and composed frames before encoding: 5, 16, 54, 73, and 76 edges should be visible respectively, and the node positions should stay fixed. `compose_timeline.py` uses a crop fitted to the original CyREST export; adjust it if a new Cytoscape canvas changes the framing. The layout can differ between Cytoscape runs. To update the separate video backup bundled beside the slides, copy the resulting MP4 to `presentation/bitcoin_otc_spotlight_timeline.mp4`; updating that file alone does not replace the video already embedded inside the PPTX.
+Raw exports stay locally under `outputs/cytoscape/cyanimator_verified/`; `latest_capture.json` identifies the current run. Inspect exported frames 0, 24, 48, 72 and 96, not only the source view images. They should show the stated counts and fixed positions. The composition script uses one fixed crop, labels annual states and transitions, and writes both MP4 copies. Layouts may differ between Cytoscape runs. Replacing an MP4 file does not update the movie already embedded inside an existing PPTX. The earlier `record_timeline.py`, `compose_timeline.py`, and `make_timeline_video.py` document the previous fallback workflow.
 
 The full signed GraphML, spotlight GraphML, and Cytoscape session are kept locally because they include source ratings. The repository tracks the generators, styles, final figure, and MP4.
+
+The working session is saved locally as `outputs/cytoscape/bitcoin_otc_cyanimator_verified.cys`. Its final network is named **Bitcoin OTC - VERIFIED CyAnimator 2011-2015**. Open that session and select that network to inspect its captured frames in CyAnimator.

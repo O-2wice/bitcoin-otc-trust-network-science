@@ -10,7 +10,7 @@ Download `soc-sign-bitcoinotc.csv.gz` from SNAP and place it in `data/`. The exp
 
 ## Approach
 
-We define positive ratings as directed edges from rater to recipient, analyse the network's structure and communities, and compare an undirected projection with random, Barabási–Albert, and degree-preserving rewired networks. The temporal investigation distinguishes ratings accumulated so far, ratings issued within each year, and a fixed cohort of users. It then compares recipient choices with uniform and tenure/activity-matched benchmarks. Random and targeted node removal provide a separate connectivity experiment. [Cytoscape](cytoscape/README.md) supplies a signed network spotlight and a timeline of its recorded ratings.
+We define positive ratings as directed edges from rater to recipient, analyse the network's structure and communities, and compare an undirected projection with random, Barabási–Albert, and degree-preserving rewired networks. The temporal investigation distinguishes ratings accumulated so far, ratings issued within each year, and a fixed cohort of users. It then compares recipient choices with uniform and tenure/activity-matched benchmarks. Random and targeted node removal provide a separate connectivity experiment. [Cytoscape and CyAnimator](cytoscape/README.md) supply a signed network spotlight and an animation connecting five annual snapshots of its recorded ratings.
 
 Accumulated incoming ratings become more unequal: the top 1% share rises from 15.5% in 2011 to 23.5% in 2015, and also rises within a fixed 2011 cohort. New yearly ratings differ: their top 1% share peaks at 21.0% in 2013 and falls to 11.3% in 2015 as volume declines. The 32+ prior-rating group has an observed/expected ratio of 12.70 under uniform choice, falling to 1.65 after matching by observed tenure and recent activity. These are descriptive findings, not evidence of a causal preference or current trust.
 
@@ -41,7 +41,7 @@ python3.12 -m venv .venv
 
 ## Presentation
 
-The [slides](presentation/bitcoin_otc_network_science.pptx) and [demo guide](presentation/DEMO.md) cover the analysis and code walkthrough.
+The [slides](presentation/bitcoin_otc_network_science.pptx) and [demo guide](presentation/DEMO.md) cover the analysis and code walkthrough. Every slide has an 18-point reading script. The [large-type notes PDF](presentation/READING_NOTES.pdf) shows each slide with its script; the same [notes in Markdown](presentation/SPEAKER_NOTES.md) are easy for the team to edit.
 
 ## Team
 
