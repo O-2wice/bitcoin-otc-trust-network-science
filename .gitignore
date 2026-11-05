@@ -2,7 +2,7 @@
 __pycache__/
 .venv/
 report/
-Network Science Project Work 2026.pdf
+*.[pP][dD][fF]
 data/*.gz
 outputs/cytoscape/*.graphml
 outputs/cytoscape/*.cys

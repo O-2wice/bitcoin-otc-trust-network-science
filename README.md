@@ -43,7 +43,7 @@ python3.12 -m venv .venv
 
 ## Presentation
 
-The [slides](presentation/bitcoin_otc_network_science.pptx) and [demo guide](presentation/DEMO.md) cover the analysis and code walkthrough. Every slide has an 18-point reading script. The [large-type notes PDF](presentation/READING_NOTES.pdf) shows each slide with its script; the same [notes in Markdown](presentation/SPEAKER_NOTES.md) are easy for the team to edit.
+The [slides](presentation/bitcoin_otc_network_science.pptx) and [demo guide](presentation/DEMO.md) cover the analysis and code walkthrough. Every slide has an 18-point reading script. The [reading notes in Markdown](presentation/SPEAKER_NOTES.md) contain the same script and are easy for the team to edit.
 
 ## Team
 
