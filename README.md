@@ -2,7 +2,7 @@
 
 How did positive ratings become concentrated among Bitcoin OTC users, and how sensitive is the apparent advantage of already highly rated users to the comparison benchmark?
 
-The full write-up is the [LaTeX report](overleaf/README.md).
+The full write-up is the [report (PDF)](report/bitcoin_otc_report.pdf). Its LaTeX source is in [overleaf/](overleaf/README.md).
 
 ## Data
 
@@ -52,6 +52,7 @@ View the [positive-network overview](outputs/structure/full_positive_network_for
 ```text
 data/              Download instructions; the SNAP source file is not stored in Git
 overleaf/          LaTeX report source, bibliography, template, and figures
+report/            Compiled report (bitcoin_otc_report.pdf)
 scripts/           Analysis scripts, the seven-script runner, and the checker
 notebooks/         Data audit, structure and models, temporal analysis, follow-up checks, theory comparison
 outputs/
@@ -105,7 +106,7 @@ Starting Jupyter through `python -m` also works where Windows Application Contro
 
 The [demo guide](presentation/DEMO.md) covers the analysis, code walkthrough, and Cytoscape animation.
 
-The [Overleaf source ZIP](overleaf/bitcoin_otc_report_overleaf.zip) contains the LaTeX report, bibliography, template files, and figures. See the [import instructions](overleaf/README.md).
+The [compiled report](report/bitcoin_otc_report.pdf) is 15 pages. The [Overleaf source ZIP](overleaf/bitcoin_otc_report_overleaf.zip) contains the LaTeX report, bibliography, template files, and figures. See the [build instructions](overleaf/README.md).
 
 ## Team
 

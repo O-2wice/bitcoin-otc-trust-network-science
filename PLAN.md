@@ -47,7 +47,7 @@ This is a working allocation, not a promise of final pagination; the compiled PD
 
 - Team GitHub usernames: `O-2wice`, `shishi177-cpu`, and `Abdak-Yussuf` (invitations pending acceptance).
 - Instructor GitHub username from brief: `sziklaye`.
-- GitHub repository: [O-2wice/bitcoin-otc-trust-network-science](https://github.com/O-2wice/bitcoin-otc-trust-network-science), public as requested. Invitations sent to both teammates and the instructor; verify acceptance later. The report source is in `overleaf/`. Before submission, compile it and add the PDF as `report/bitcoin_otc_report.pdf`, a path Git allows despite the wider PDF ignore rule.
+- GitHub repository: [O-2wice/bitcoin-otc-trust-network-science](https://github.com/O-2wice/bitcoin-otc-trust-network-science), public as requested. Invitations sent to both teammates and the instructor; verify acceptance later. The report source is in `overleaf/`, and the compiled PDF is `report/bitcoin_otc_report.pdf` (15 pages), a path Git allows despite the wider PDF ignore rule. After any change to the source, recompile and replace the PDF.
 - Submission: **2026-11-26 23:59**.
 - Presentation: register for **December 3 or 10, 2026**, then prepare 10--15 minutes plus a code demonstration.
 - AI disclosure: document assistance and independent checks in the repository.
