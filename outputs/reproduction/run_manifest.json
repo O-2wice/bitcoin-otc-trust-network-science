@@ -1,6 +1,6 @@
 {
   "scope": "Seven numerical analysis scripts; separate visual, document, and presentation builds are excluded",
-  "started_utc": "2026-11-05T18:38:13.386592+00:00",
+  "started_utc": "2026-11-08T08:50:41.544755+00:00",
   "complete": true,
   "python_version": "3.12.13",
   "python_executable": "python.exe",
@@ -21,10 +21,10 @@
     {
       "script": "scripts/structural_analysis.py",
       "script_sha256": "faf27ea8dc2237e1d252d47668bd2f2a479b57b94d03200f2540780521974034",
-      "started_utc": "2026-11-05T18:38:13.890948+00:00",
+      "started_utc": "2026-11-08T08:50:41.976242+00:00",
       "log": "outputs/reproduction/logs/structural_analysis.log",
-      "finished_utc": "2026-11-05T18:39:43.598293+00:00",
-      "elapsed_seconds": 89.707,
+      "finished_utc": "2026-11-08T08:53:10.907015+00:00",
+      "elapsed_seconds": 148.931,
       "exit_code": 0,
       "output_sha256": {
         "outputs/structure/network_metrics.csv": "d60168c7bd5ef224f6cf1f181fd086d6d5709bb4809070a400e2d1638c0f0646",
@@ -37,10 +37,10 @@
     {
       "script": "scripts/temporal_analysis.py",
       "script_sha256": "332d32e4b24b85bd7c4abef9e97fa4ad154270e8dbd525cbed0634fece0ef398",
-      "started_utc": "2026-11-05T18:39:43.610315+00:00",
+      "started_utc": "2026-11-08T08:53:10.974380+00:00",
       "log": "outputs/reproduction/logs/temporal_analysis.log",
-      "finished_utc": "2026-11-05T18:40:03.352913+00:00",
-      "elapsed_seconds": 19.743,
+      "finished_utc": "2026-11-08T08:54:09.554470+00:00",
+      "elapsed_seconds": 58.581,
       "exit_code": 0,
       "output_sha256": {
         "outputs/temporal/annual_snapshots.csv": "6a6f712296418e09a5d5a49f40517f0daaa41e375c6dcfb36efbaa609c8a1a18",
@@ -55,10 +55,10 @@
     {
       "script": "scripts/node_removal.py",
       "script_sha256": "ecd64122839543d41b6f25fdb6ada287f67256216a7e8762050b7bb4df235d79",
-      "started_utc": "2026-11-05T18:40:03.365628+00:00",
+      "started_utc": "2026-11-08T08:54:09.582613+00:00",
       "log": "outputs/reproduction/logs/node_removal.log",
-      "finished_utc": "2026-11-05T18:40:46.151284+00:00",
-      "elapsed_seconds": 42.785,
+      "finished_utc": "2026-11-08T08:55:29.560859+00:00",
+      "elapsed_seconds": 79.978,
       "exit_code": 0,
       "output_sha256": {
         "outputs/robustness/node_removal_summary.csv": "08ebcd4f4aac0759506b1a76167a0b4bc7421dc0fb4e044855ebda87b375448b",
@@ -69,10 +69,10 @@
     {
       "script": "scripts/flagship_checks.py",
       "script_sha256": "187cf7aabcad0261a10f9f49510fe0f1bfdf1a1a26fc0c6621ef1856e0e30771",
-      "started_utc": "2026-11-05T18:40:46.156814+00:00",
+      "started_utc": "2026-11-08T08:55:29.648641+00:00",
       "log": "outputs/reproduction/logs/flagship_checks.log",
-      "finished_utc": "2026-11-05T18:42:44.811059+00:00",
-      "elapsed_seconds": 118.654,
+      "finished_utc": "2026-11-08T08:57:55.447026+00:00",
+      "elapsed_seconds": 145.798,
       "exit_code": 0,
       "output_sha256": {
         "outputs/flagship/matched_target_choice.csv": "099387ca3c1de95dcacd3fe4491a24e52a40a50e041f1bd32a75f33c93626e1c",
@@ -87,10 +87,10 @@
     {
       "script": "scripts/temporal_sensitivity.py",
       "script_sha256": "f96ae565858f9bb59000d827e7b57a0a3227b90ebeb0928f74b81516ecebd1c4",
-      "started_utc": "2026-11-05T18:42:44.825594+00:00",
+      "started_utc": "2026-11-08T08:57:55.467632+00:00",
       "log": "outputs/reproduction/logs/temporal_sensitivity.log",
-      "finished_utc": "2026-11-05T18:42:53.200274+00:00",
-      "elapsed_seconds": 8.374,
+      "finished_utc": "2026-11-08T08:58:05.492215+00:00",
+      "elapsed_seconds": 10.023,
       "exit_code": 0,
       "output_sha256": {
         "outputs/sensitivity/annual_only_concentration.csv": "b237e770747260a4f5d8d375e999c68677e743f836ab1bcc835f495f3bcd2f25",
@@ -104,10 +104,10 @@
     {
       "script": "scripts/community_profiles.py",
       "script_sha256": "2cbccbefaf2b6256babdfc653f8ee82ec7e7c2b498e79eb192b5c29be7397a14",
-      "started_utc": "2026-11-05T18:42:53.211821+00:00",
+      "started_utc": "2026-11-08T08:58:05.506938+00:00",
       "log": "outputs/reproduction/logs/community_profiles.log",
-      "finished_utc": "2026-11-05T18:43:38.454022+00:00",
-      "elapsed_seconds": 45.241,
+      "finished_utc": "2026-11-08T08:58:49.042494+00:00",
+      "elapsed_seconds": 43.536,
       "exit_code": 0,
       "output_sha256": {
         "outputs/sensitivity/community_profiles.csv": "02fbf7f4c237ae7aa7346d038c4721a4adf13c627e88b7df7e1995867e7002f3",
@@ -118,11 +118,11 @@
     },
     {
       "script": "scripts/theory_comparison.py",
-      "script_sha256": "0cb04c9358030942779fd56b6d404b2c2485530a81521b846babc9fd753fffbc",
-      "started_utc": "2026-11-05T18:43:38.462184+00:00",
+      "script_sha256": "391d61310e46cf84c7bc0cd4be4f5d0f29c950f6c840dac40f197eb5d8a53ed8",
+      "started_utc": "2026-11-08T08:58:49.054634+00:00",
       "log": "outputs/reproduction/logs/theory_comparison.log",
-      "finished_utc": "2026-11-05T18:58:18.108389+00:00",
-      "elapsed_seconds": 879.646,
+      "finished_utc": "2026-11-08T09:18:36.832255+00:00",
+      "elapsed_seconds": 1187.777,
       "exit_code": 0,
       "output_sha256": {
         "outputs/theory/reference_metrics.csv": "daa19f35282bbb6d924187f60a5817bb1b163209ae59285c9fd2ba0b9a56f383",
@@ -140,5 +140,5 @@
       }
     }
   ],
-  "finished_utc": "2026-11-05T18:58:18.132552+00:00"
+  "finished_utc": "2026-11-08T09:18:36.888582+00:00"
 }

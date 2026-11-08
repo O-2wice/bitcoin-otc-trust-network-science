@@ -424,7 +424,8 @@ def growth_by_link_type(positive):
 
     BA assumes every link arrives with a new node. Each new link is classified at the
     moment its undirected pair first appears, to give the growth rates m and n used by
-    the double preferential attachment formula gamma = 2 + m / (m + 2n).
+    the double preferential attachment formula gamma = 2 + m / (m + 2n)
+    (Barabasi, Network Science, Section 6.5, Eq. 6.27).
     """
     seen, links = set(), set()
     with_new_user = internal = 0
@@ -451,8 +452,9 @@ def internal_link_graphs(growth, rng):
     """Simulate growth where existing users also link, with both ends chosen by degree.
 
     Each new user brings one preferential link (m is close to 1 here) and each step adds
-    n internal links on average. With k growing as dk/dt = (m + 2n) k / [2(m + n) t], the
-    continuum method gives gamma = 2 + m / (m + 2n).
+    n internal links on average. This is the double preferential attachment model in
+    Barabasi, Network Science, Section 6.5, whose degree exponent is
+    gamma = 2 + m / (m + 2n) (Eq. 6.27).
     """
     graphs = []
     for _ in range(MODEL_REPLICATES):
