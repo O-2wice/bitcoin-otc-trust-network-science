@@ -111,7 +111,8 @@ def main():
         "positive_out_degree": [directed.out_degree(v) for v in directed],
         "betweenness_approx": [between[v] for v in directed],
     })
-    centrality.sort_values("positive_in_degree", ascending=False).to_csv(
+    # Break ties by user ID: the default sort's tie order varies between machines.
+    centrality.sort_values(["positive_in_degree", "node"], ascending=[False, True]).to_csv(
         OUT / "directed_centrality.csv", index=False
     )
 

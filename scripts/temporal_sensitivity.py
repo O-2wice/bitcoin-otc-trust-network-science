@@ -19,6 +19,56 @@ from temporal_analysis import EXPECTED_SHA, SOURCE, annual_snapshots, gini
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "outputs" / "sensitivity"
 YEARS = range(2011, 2016)
+EQUAL_VOLUME_DRAWS = 1000
+EQUAL_VOLUME_FRACTION = 0.8
+SEED = 2026
+
+
+def top_percent_share(sources, targets):
+    """Top 1% incoming share among users appearing in these ratings."""
+    users = np.unique(np.concatenate([sources, targets]))
+    counts = np.bincount(np.searchsorted(users, targets), minlength=len(users))
+    top_count = max(1, int(np.ceil(0.01 * len(users))))
+    return np.sort(counts)[-top_count:].sum() / counts.sum()
+
+
+def equal_volume_check(positive):
+    """Ask whether the annual fall survives equal rating volume in every year.
+
+    The top 1% contains 25 users in 2013 but only 4 in 2015, and the share depends
+    on how many ratings a year has. Every year, including the smallest, is therefore
+    redrawn to 80% of the smallest year's rating count, so each one has a spread.
+    The share held by a fixed number of recipients gives a second view.
+    """
+    rng = np.random.default_rng(SEED)
+    yearly = {year: positive[positive.year == year] for year in YEARS}
+    size = int(EQUAL_VOLUME_FRACTION * min(len(part) for part in yearly.values()))
+    fixed_recipients = max(1, int(np.ceil(0.01 * len(
+        set(yearly[2015].source) | set(yearly[2015].target)))))
+    rows = []
+    for year, part in yearly.items():
+        sources, targets = part.source.to_numpy(), part.target.to_numpy()
+        equal, equal_fixed = [], []
+        for _ in range(EQUAL_VOLUME_DRAWS):
+            chosen = rng.choice(len(part), size, replace=False)
+            equal.append(top_percent_share(sources[chosen], targets[chosen]))
+            counts = np.bincount(np.unique(targets[chosen], return_inverse=True)[1])
+            equal_fixed.append(np.sort(counts)[-fixed_recipients:].sum() / size)
+        counts = part.groupby("target").size().to_numpy()
+        rows.append({
+            "year": year, "ratings": len(part),
+            "top_1_percent_share": top_percent_share(sources, targets),
+            "equal_volume_ratings": size,
+            "equal_volume_share_mean": np.mean(equal),
+            "equal_volume_share_low": np.quantile(equal, 0.025),
+            "equal_volume_share_high": np.quantile(equal, 0.975),
+            "fixed_recipients": fixed_recipients,
+            "fixed_recipients_share": np.sort(counts)[-fixed_recipients:].sum() / len(part),
+            "fixed_recipients_equal_volume_mean": np.mean(equal_fixed),
+            "fixed_recipients_equal_volume_low": np.quantile(equal_fixed, 0.025),
+            "fixed_recipients_equal_volume_high": np.quantile(equal_fixed, 0.975),
+        })
+    return pd.DataFrame(rows)
 
 
 def summarize_incoming(ratings, users):
@@ -69,6 +119,8 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     annual.to_csv(OUT / "annual_only_concentration.csv", index=False)
     fixed.to_csv(OUT / "fixed_2011_cohort_concentration.csv", index=False)
+    equal_volume = equal_volume_check(positive)
+    equal_volume.to_csv(OUT / "annual_equal_volume_check.csv", index=False)
     metadata = {
         "source_sha256": checksum,
         "edge_rule": "One directed positive rating per observed ordered pair; score > 0",
@@ -78,6 +130,7 @@ def main():
         "fixed_cohort_size": len(cohort),
         "fixed_cohort_rating_denominator": "Cumulative positive ratings received by members of the fixed cohort, not all ratings in the network",
         "top_group": "Ceiling of 1% of each specified user population; highest incoming counts reselected at each snapshot",
+        "equal_volume_check": f"{EQUAL_VOLUME_DRAWS} redraws of every year's ratings to {EQUAL_VOLUME_FRACTION:.0%} of the smallest year's count, plus the share held by a fixed number of recipients",
         "limits": "Annual samples differ across years; fixed cohort is selected early and does not represent later entrants. Neither view identifies active trust relationships or a causal mechanism.",
     }
     (OUT / "temporal_metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
@@ -113,6 +166,7 @@ def main():
     plt.close(fig)
     print("Annual-only ratings:\n" + annual.round(4).to_string(index=False))
     print("Fixed 2011 cohort:\n" + fixed.round(4).to_string(index=False))
+    print("Equal-volume check:\n" + equal_volume.round(4).to_string(index=False))
 
 
 if __name__ == "__main__":

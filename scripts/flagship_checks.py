@@ -1,6 +1,6 @@
 """Three follow-up checks: matched target choice, degree-preserving null, evolution.
 
-Run after downloading the SNAP file: .venv/bin/python scripts/flagship_checks.py
+Run after downloading the SNAP file: python scripts/flagship_checks.py
 All choices are measured immediately before each event; no future degree is used.
 """
 
@@ -56,7 +56,7 @@ def matched_target_choice(positive):
             recent[old_v] -= 1
         if active[v]:
             eligible += 1
-            # Coarse, predeclared groups keep comparisons understandable.
+            # Coarse groups keep comparisons understandable.
             tenure = (time - first_seen) / 86400
             tenure_group = np.digitize(tenure, [90, 365])
             activity_group = np.digitize(recent, [1, 3, 10])
@@ -155,7 +155,7 @@ def figures(matched, rewired, evolution):
     fig, axes = plt.subplots(1, 3, figsize=(11, 3.5))
     for ax, column, label in zip(axes,
                                  ("largest_component_share_of_active", "projection_transitivity", "directed_reciprocity"),
-                                 ("Largest component share", "Projection transitivity", "Directed reciprocity")):
+                                 ("Largest component share", "Transitivity (undirected network)", "Directed reciprocity")):
         ax.plot(evolution.year_end, evolution[column], marker="o", color="#D99A36")
         ax.set(xlabel="Year end", ylabel=label)
         ax.set_xticks(evolution.year_end)

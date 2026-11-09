@@ -1,1 +1,7 @@
+# The run manifest records file hashes, so text files stay LF on every platform.
+* text=auto eol=lf
+*.gz binary
+*.mp4 binary
 *.pdf binary
+*.png binary
+*.pptx binary

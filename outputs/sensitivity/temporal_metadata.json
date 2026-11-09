@@ -7,5 +7,6 @@
   "fixed_cohort_size": 1631,
   "fixed_cohort_rating_denominator": "Cumulative positive ratings received by members of the fixed cohort, not all ratings in the network",
   "top_group": "Ceiling of 1% of each specified user population; highest incoming counts reselected at each snapshot",
+  "equal_volume_check": "1000 redraws of every year's ratings to 80% of the smallest year's count, plus the share held by a fixed number of recipients",
   "limits": "Annual samples differ across years; fixed cohort is selected early and does not represent later entrants. Neither view identifies active trust relationships or a causal mechanism."
 }

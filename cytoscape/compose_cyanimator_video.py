@@ -60,7 +60,7 @@ def main():
             fig.text(.56, .79, '▶  PLAY TIMELINE', fontsize=16, weight='bold', color='#F8F4E8',
                      bbox={'boxstyle':'round,pad=.55', 'facecolor':'#173946', 'edgecolor':'#49D6C5'})
             poster = ROOT / '.deck_build/timeline_frames/2015.png'
-            poster.parent.mkdir(exist_ok=True)
+            poster.parent.mkdir(parents=True, exist_ok=True)
             fig.savefig(poster, dpi=100, facecolor=BACKGROUND)
         plt.close(fig)
         duration = 1.2 if index == 0 else 1.5 if index == 96 else .7 if exact else 1/24

@@ -65,7 +65,7 @@ def main():
             label="Highest original degree first")
     ax.set(xlabel="Users removed (% of original network)",
            ylabel="Largest component / original users",
-           title="Positive-projection node removal")
+           title="Node removal in the undirected positive network")
     ax.set_ylim(0, 1)
     ax.legend()
     fig.tight_layout()

@@ -1,0 +1,43 @@
+{
+  "seed": 2026,
+  "exact_mean_path_largest_component": 3.7609885727918515,
+  "exact_diameter_largest_component": 14,
+  "sampled_mean_path_stored": 3.5593524774774776,
+  "small_world": {
+    "clustering_ratio_to_er": 153.7610149799464,
+    "path_ratio_to_er": 0.7654874554577268,
+    "clustering_ratio_to_rewired": 2.521176509604796,
+    "path_ratio_to_rewired": 1.0687653660532275,
+    "small_world_sigma_vs_er": 200.86679916655757,
+    "small_world_sigma_vs_rewired": 2.3589616483504523
+  },
+  "centrality": {
+    "spearman_sampled_vs_exact_betweenness": 0.950802686526621,
+    "spearman_in_degree_vs_out_degree": 0.8366532328461586,
+    "spearman_in_degree_vs_exact_betweenness": 0.8676548895339476,
+    "top_10_overlap_sampled_vs_exact": 9,
+    "top_20_overlap_sampled_vs_exact": 13,
+    "top_10_overlap_in_degree_vs_exact": 9
+  },
+  "return_ratings": {
+    "eligible_events": 27133,
+    "events_returning_an_earlier_rating": 13438,
+    "share_returning": 0.49526406958316443,
+    "median_days_to_return": 0.002600345256979819,
+    "share_returned_within_7_days": 0.8730465843131419
+  },
+  "tail_method": "Discrete power-law maximum likelihood; k_min by smallest KS distance with at least 50 tail nodes; 200 bootstrap draws; semi-parametric goodness of fit with 500 draws; Vuong tests against lognormal and exponential, nested test against a cutoff",
+  "attachment_method": "Conditional logit: choice probability proportional to (k + 1) ** alpha among each event's candidates. Standard errors treat events as independent, so they are optimistic.",
+  "percolation_method": "20 random replicates per fraction on one realization of each graph; collapse is the first tested fraction leaving a largest component under 1% of original users",
+  "growth": {
+    "users_in_positive_ratings": 5573,
+    "undirected_links": 18591,
+    "links_arriving_with_a_new_user": 5491,
+    "links_between_existing_users": 13100,
+    "share_between_existing_users": 0.7046420310903125,
+    "links_per_new_user_m": 0.9852862013278306,
+    "internal_links_per_new_user_n": 2.350619056163646,
+    "gamma_double_preferential_attachment": 2.173266858098514
+  },
+  "limits": "Formula values are large-network approximations. Comparisons are descriptive and do not identify a mechanism."
+}

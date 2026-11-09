@@ -14,10 +14,10 @@
 2. **Define graphs.** Build the full directed signed graph, the primary positive directed graph, and a clearly labelled undirected network of positive ratings only where a method requires it. State whether negative-only users remain as isolates.
 3. **Describe structure.** Degree distributions and mean degree; density; clustering; component sizes; shortest paths and diameter on a specified component; selected centralities; detected communities. Explain each choice of network representation and the consequences of disconnectedness.
 4. **Compare models.** Match ER on users and links, use BA's nearest integer link parameter and state its 5.15% link mismatch, then rewire while preserving each degree in the undirected network. Repeat with fixed seeds and report variation. Explain that retaining accounts isolated by positive filtering affects component comparisons.
-5. **Investigate one focused phenomenon.** Compare cumulative rating history, annual-only ratings, and a fixed 2011 cohort. The cumulative top 1% share rises, while annual concentration falls after 2013. Compare event-level recipient choices under uniform and observed-tenure/recent-activity-matched benchmarks. These are descriptive comparisons.
+5. **Investigate one focused phenomenon.** Compare cumulative rating history, annual-only ratings, and a fixed 2011 cohort. The cumulative top 1% share rises. The raw annual share falls after 2013, but most of that fall disappears at equal rating volume. Compare event-level recipient choices under uniform and observed-tenure/recent-activity-matched benchmarks. These are descriptive comparisons.
 6. **Sensitivity and intervention.** Repeat concentration using ratings of at least +5. Compare random removal with removal of highest original-degree users. Interpret communities using their internal and boundary links; distinguish the 308 singleton groups from 33 non-singleton groups.
 7. **Visuals.** Draw the full undirected network of positive ratings using a fixed-seed spring layout with disconnected pieces and isolates explicitly separated. Use the Cytoscape signed spotlight and embedded timeline to illustrate selected users, alongside whole-network numerical results.
-8. **Write and defend.** Fill the LaTeX report from verified outputs, cite dataset and methods, prepare a 10--15 minute presentation, and practise explaining definitions, choices, results, and limitations.
+8. **Write and defend.** Fill the report from verified outputs, cite dataset and methods, prepare a 10--15 minute presentation, and practise explaining definitions, choices, results, and limitations.
 
 ## Assignment mapping
 
@@ -25,7 +25,7 @@
 | --- | --- |
 | A: construction and processing | Source audit, graph definitions, cleaning log, full-network overview, Cytoscape subnetwork figure |
 | B: structure and communities | Metrics table, distribution figures, component-aware path metrics, community analysis |
-| C: two models/concepts | ER and BA comparisons, degree-preserving randomization, repeated seeds and limitations |
+| C: two models/concepts | ER and BA comparisons against simulations and formulas, degree-preserving randomization, degree-tail fits, an internal-link extension, attachment exponent, percolation threshold, repeated seeds and limitations |
 | D: one focused investigation | Temporal rating concentration and event-level target-choice comparison |
 | E: critical reflection | Sensitivity, observation limits, finite-size/model limits, real-world interpretation |
 | Deliverables | One GitHub repo, 10--15 page PDF report, notebook/code, figures, AI disclosure, presentation/demo |
@@ -47,7 +47,7 @@ This is a working allocation, not a promise of final pagination; the compiled PD
 
 - Team GitHub usernames: `O-2wice`, `shishi177-cpu`, and `Abdak-Yussuf` (invitations pending acceptance).
 - Instructor GitHub username from brief: `sziklaye`.
-- GitHub repository: [O-2wice/bitcoin-otc-trust-network-science](https://github.com/O-2wice/bitcoin-otc-trust-network-science), public as requested. Invitations sent to both teammates and the instructor; verify acceptance later. Keep the LaTeX report local for now, then add the final report to the repository before submission.
+- GitHub repository: [O-2wice/bitcoin-otc-trust-network-science](https://github.com/O-2wice/bitcoin-otc-trust-network-science), public as requested. Invitations sent to both teammates and the instructor; verify acceptance later. The report source is in `overleaf/`, and the compiled PDF is `report/bitcoin_otc_report.pdf` (15 pages), a path Git allows despite the wider PDF ignore rule. After any change to the source, recompile and replace the PDF.
 - Submission: **2026-11-26 23:59**.
 - Presentation: register for **December 3 or 10, 2026**, then prepare 10--15 minutes plus a code demonstration.
 - AI disclosure: document assistance and independent checks in the repository.
