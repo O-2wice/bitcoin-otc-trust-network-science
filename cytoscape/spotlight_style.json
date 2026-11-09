@@ -1,48 +1,152 @@
 {
-  "title": "Bitcoin OTC amber spotlight",
+  "title": "Bitcoin OTC spotlight",
   "defaults": [
-    {"visualProperty": "NETWORK_BACKGROUND_PAINT", "value": "#0D1420"},
-    {"visualProperty": "NODE_FILL_COLOR", "value": "#1B4854"},
-    {"visualProperty": "NODE_BORDER_PAINT", "value": "#E9B44C"},
-    {"visualProperty": "NODE_BORDER_WIDTH", "value": 2.2},
-    {"visualProperty": "NODE_SIZE", "value": 28},
-    {"visualProperty": "NODE_LABEL_COLOR", "value": "#F8F4E8"},
-    {"visualProperty": "NODE_LABEL_FONT_SIZE", "value": 18},
-    {"visualProperty": "EDGE_WIDTH", "value": 1.8},
-    {"visualProperty": "EDGE_TRANSPARENCY", "value": 190},
-    {"visualProperty": "EDGE_TARGET_ARROW_SHAPE", "value": "DELTA"},
-    {"visualProperty": "EDGE_TARGET_ARROW_SIZE", "value": 4},
-    {"visualProperty": "EDGE_STROKE_UNSELECTED_PAINT", "value": "#49D6C5"}
+    {
+      "visualProperty": "NETWORK_BACKGROUND_PAINT",
+      "value": "#0B1220"
+    },
+    {
+      "visualProperty": "NODE_SHAPE",
+      "value": "ELLIPSE"
+    },
+    {
+      "visualProperty": "NODE_BORDER_PAINT",
+      "value": "#0B1220"
+    },
+    {
+      "visualProperty": "NODE_BORDER_WIDTH",
+      "value": 2.5
+    },
+    {
+      "visualProperty": "NODE_LABEL_COLOR",
+      "value": "#F1F5F9"
+    },
+    {
+      "visualProperty": "NODE_LABEL_FONT_SIZE",
+      "value": 26
+    },
+    {
+      "visualProperty": "NODE_LABEL_FONT_FACE",
+      "value": "SansSerif.bold,bold,26"
+    },
+    {
+      "visualProperty": "NODE_LABEL_POSITION",
+      "value": "S,N,c,0.00,4.00"
+    },
+    {
+      "visualProperty": "EDGE_CURVED",
+      "value": true
+    },
+    {
+      "visualProperty": "EDGE_TARGET_ARROW_SHAPE",
+      "value": "DELTA"
+    },
+    {
+      "visualProperty": "EDGE_TARGET_ARROW_SIZE",
+      "value": 7
+    },
+    {
+      "visualProperty": "EDGE_TRANSPARENCY",
+      "value": 205
+    }
   ],
   "mappings": [
+    {
+      "mappingType": "continuous",
+      "mappingColumn": "in_degree",
+      "mappingColumnType": "Integer",
+      "visualProperty": "NODE_SIZE",
+      "points": [
+        {
+          "value": 115,
+          "lesser": 30,
+          "equal": 30,
+          "greater": 30
+        },
+        {
+          "value": 535,
+          "lesser": 70,
+          "equal": 70,
+          "greater": 70
+        }
+      ]
+    },
+    {
+      "mappingType": "continuous",
+      "mappingColumn": "in_degree",
+      "mappingColumnType": "Integer",
+      "visualProperty": "NODE_WIDTH",
+      "points": [
+        {
+          "value": 115,
+          "lesser": 30,
+          "equal": 30,
+          "greater": 30
+        },
+        {
+          "value": 535,
+          "lesser": 70,
+          "equal": 70,
+          "greater": 70
+        }
+      ]
+    },
+    {
+      "mappingType": "continuous",
+      "mappingColumn": "in_degree",
+      "mappingColumnType": "Integer",
+      "visualProperty": "NODE_HEIGHT",
+      "points": [
+        {
+          "value": 115,
+          "lesser": 30,
+          "equal": 30,
+          "greater": 30
+        },
+        {
+          "value": 535,
+          "lesser": 70,
+          "equal": 70,
+          "greater": 70
+        }
+      ]
+    },
+    {
+      "mappingType": "discrete",
+      "mappingColumn": "hub",
+      "mappingColumnType": "String",
+      "visualProperty": "NODE_FILL_COLOR",
+      "map": [
+        {
+          "key": "yes",
+          "value": "#F5B841"
+        },
+        {
+          "key": "no",
+          "value": "#94A3B8"
+        }
+      ]
+    },
+    {
+      "mappingType": "passthrough",
+      "mappingColumn": "label",
+      "mappingColumnType": "String",
+      "visualProperty": "NODE_LABEL"
+    },
     {
       "mappingType": "discrete",
       "mappingColumn": "sign",
       "mappingColumnType": "String",
       "visualProperty": "EDGE_STROKE_UNSELECTED_PAINT",
       "map": [
-        {"key": "positive", "value": "#49D6C5"},
-        {"key": "negative", "value": "#F26B7E"}
-      ]
-    },
-    {
-      "mappingType": "continuous",
-      "mappingColumn": "positive_in_degree",
-      "mappingColumnType": "Long",
-      "visualProperty": "NODE_SIZE",
-      "points": [
-        {"value": 0, "lesser": 27, "equal": 27, "greater": 27},
-        {"value": 535, "lesser": 64, "equal": 64, "greater": 64}
-      ]
-    },
-    {
-      "mappingType": "continuous",
-      "mappingColumn": "positive_in_degree",
-      "mappingColumnType": "Long",
-      "visualProperty": "NODE_FILL_COLOR",
-      "points": [
-        {"value": 0, "lesser": "#173946", "equal": "#173946", "greater": "#173946"},
-        {"value": 535, "lesser": "#D99A36", "equal": "#D99A36", "greater": "#D99A36"}
+        {
+          "key": "positive",
+          "value": "#2EC4B6"
+        },
+        {
+          "key": "negative",
+          "value": "#F2617A"
+        }
       ]
     },
     {
@@ -51,15 +155,35 @@
       "mappingColumnType": "String",
       "visualProperty": "EDGE_TARGET_ARROW_UNSELECTED_PAINT",
       "map": [
-        {"key": "positive", "value": "#49D6C5"},
-        {"key": "negative", "value": "#F26B7E"}
+        {
+          "key": "positive",
+          "value": "#2EC4B6"
+        },
+        {
+          "key": "negative",
+          "value": "#F2617A"
+        }
       ]
     },
     {
-      "mappingType": "passthrough",
-      "mappingColumn": "display_label",
-      "mappingColumnType": "String",
-      "visualProperty": "NODE_LABEL"
+      "mappingType": "continuous",
+      "mappingColumn": "abs_rating",
+      "mappingColumnType": "Integer",
+      "visualProperty": "EDGE_WIDTH",
+      "points": [
+        {
+          "value": 5,
+          "lesser": 1.6,
+          "equal": 1.6,
+          "greater": 1.6
+        },
+        {
+          "value": 10,
+          "lesser": 4.2,
+          "equal": 4.2,
+          "greater": 4.2
+        }
+      ]
     }
   ]
 }
