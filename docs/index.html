@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Bitcoin OTC Trust Network</title>
+<meta name="description" content="A network science study of 35,592 trust ratings between 5,881 Bitcoin OTC traders: structure, models, degree correlations, robustness and how reputation concentrated over time.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]});"></script>
+<style>
+:root {
+  --ink: #0F172A; --body: #334155; --muted: #64748B; --line: #E2E8F0; --soft: #F8FAFC; --tint: #F1F5F9;
+  --teal: #0E9F8E; --teal-bright: #2EC4B6; --amber: #E59E1B; --coral: #DC4363;
+  --night: #0B1220; --night-2: #121B2E; --night-text: #CBD5E1;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #FFFFFF; color: var(--body); font: 400 17px/1.7 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img, video, svg { display: block; max-width: 100%; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.narrow { max-width: 760px; }
+
+/* navigation */
+nav { position: sticky; top: 0; z-index: 10; background: rgba(11, 18, 32, 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+nav .brand { color: #F8FAFC; font-weight: 600; font-size: 15px; letter-spacing: 0.01em; }
+nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+nav ul a { color: #94A3B8; font-size: 14px; font-weight: 500; }
+nav ul a:hover { color: #F8FAFC; text-decoration: none; }
+
+/* hero */
+.hero { background: radial-gradient(1200px 500px at 85% 0%, #16233D 0%, var(--night) 60%); color: var(--night-text); padding: 88px 0 72px; }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin: 0 0 14px; }
+.hero .eyebrow { color: var(--amber); }
+.hero h1 { color: #F8FAFC; font-size: clamp(38px, 6vw, 62px); line-height: 1.04; letter-spacing: -0.025em; font-weight: 800; margin: 0 0 22px; max-width: 820px; }
+.hero .lead { font-size: 20px; line-height: 1.6; max-width: 720px; margin: 0 0 32px; color: var(--night-text); }
+.buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+.button { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 15px; }
+.button.primary { background: var(--teal-bright); color: #06201D; }
+.button.ghost { border: 1px solid rgba(203, 213, 225, 0.35); color: #F8FAFC; }
+.button:hover { text-decoration: none; filter: brightness(1.08); }
+.film { margin: 56px 0 0; }
+.film video { width: 100%; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 30px 80px rgba(0,0,0,0.45); background: var(--night); }
+.film figcaption { color: #94A3B8; font-size: 14px; margin-top: 14px; }
+
+/* sections */
+section { padding: 96px 0; border-top: 1px solid var(--line); }
+section.alt { background: var(--soft); }
+h2 { color: var(--ink); font-size: clamp(28px, 3.6vw, 38px); line-height: 1.15; letter-spacing: -0.02em; font-weight: 700; margin: 0 0 18px; }
+h3 { color: var(--ink); font-size: 22px; line-height: 1.3; letter-spacing: -0.01em; font-weight: 700; margin: 0 0 12px; }
+p { margin: 0 0 16px; }
+.lead { font-size: 19px; color: var(--body); }
+.split { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center; margin-top: 40px; }
+.split.flip { grid-template-columns: 1.15fr 1fr; }
+.split + .split { margin-top: 72px; }
+figure { margin: 0; }
+figcaption { font-size: 14px; color: var(--muted); margin-top: 12px; line-height: 1.55; }
+.panel { background: #FFFFFF; border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.wide { margin-top: 44px; }
+
+/* key numbers */
+.numbers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 40px 0 18px; border-top: 1px solid var(--line); }
+.numbers div { padding: 22px 20px 0 0; }
+.numbers strong { display: block; color: var(--ink); font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.numbers span { font-size: 15px; color: var(--muted); }
+.note { font-size: 14px; color: var(--muted); }
+
+/* concepts */
+.concepts { display: grid; gap: 14px; margin-top: 22px; }
+.concept { border-left: 3px solid var(--teal); background: var(--soft); padding: 14px 18px; border-radius: 0 10px 10px 0; font-size: 15.5px; }
+.concept b { color: var(--ink); }
+
+/* stat grid */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+.stat { background: #FFFFFF; border: 1px solid var(--line); border-radius: 14px; padding: 22px 20px; }
+.stat strong { display: block; color: var(--ink); font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.stat .name { display: block; margin: 8px 0 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+.stat p { font-size: 14.5px; line-height: 1.55; margin: 0; color: var(--muted); }
+
+/* table */
+table { width: 100%; border-collapse: collapse; font-size: 15.5px; margin-top: 28px; }
+th, td { text-align: right; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { text-align: left; }
+thead th { color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+tbody td:nth-child(2) { color: var(--ink); font-weight: 700; }
+.formula { color: var(--ink); background: var(--tint); border-radius: 10px; padding: 14px 18px; margin: 18px 0; text-align: center; font-size: 18px; }
+
+/* cards */
+.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 40px; }
+.card { border: 1px solid var(--line); border-radius: 16px; padding: 26px; background: #FFFFFF; }
+.card .index { color: var(--amber); font-weight: 700; font-size: 14px; letter-spacing: 0.08em; }
+.card h3 { margin-top: 8px; font-size: 20px; }
+.card p { margin: 0; font-size: 16px; }
+
+/* code */
+pre { background: var(--night); color: #E2E8F0; border-radius: 14px; padding: 22px 24px; overflow-x: auto; font: 14.5px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; margin: 24px 0; }
+pre .comment { color: #64748B; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.links a { border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: 15px; font-weight: 500; color: var(--ink); background: #FFFFFF; }
+.links a:hover { border-color: var(--teal); color: var(--teal); text-decoration: none; }
+
+footer { background: var(--night); color: #94A3B8; padding: 56px 0; font-size: 14.5px; }
+footer strong { color: #F8FAFC; font-weight: 600; }
+footer p { margin: 0 0 10px; }
+footer a { color: var(--teal-bright); }
+
+@media (max-width: 900px) {
+  .split, .split.flip { grid-template-columns: 1fr; gap: 28px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .numbers { grid-template-columns: repeat(2, 1fr); }
+  .cards { grid-template-columns: 1fr; }
+  nav ul { display: none; }
+  section { padding: 72px 0; }
+}
+@media (max-width: 520px) {
+  body { font-size: 16px; }
+  .stats { grid-template-columns: 1fr; }
+  .hero { padding: 64px 0 48px; }
+  th, td { padding: 10px 6px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">Bitcoin OTC Trust Network</a>
+    <ul>
+      <li><a href="#network">Network</a></li>
+      <li><a href="#structure">Structure</a></li>
+      <li><a href="#theory">Theory</a></li>
+      <li><a href="#time">Over time</a></li>
+      <li><a href="#robustness">Robustness</a></li>
+      <li><a href="#reproduce">Reproduce</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Network Science · Eötvös Loránd University · 2026</p>
+    <h1>The Bitcoin OTC Trust Network</h1>
+    <p class="lead">Between 2010 and 2016, traders on Bitcoin OTC left 35,592 ratings about each other. We read those ratings as a network to see how trust was organised, which theories explain its shape, and how reputation became concentrated on a few accounts.</p>
+    <div class="buttons">
+      <a class="button primary" href="https://github.com/O-2wice/bitcoin-otc-trust-network-science/blob/main/report/bitcoin_otc_report.pdf">Read the report</a>
+      <a class="button ghost" href="https://github.com/O-2wice/bitcoin-otc-trust-network-science">Code on GitHub</a>
+    </div>
+    <figure class="film">
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/timeline-poster.jpg" aria-label="Animation of strong ratings among the 22 most-rated users, year by year from 2011 to 2015">
+        <source src="assets/timeline.mp4" type="video/mp4">
+      </video>
+      <figcaption>The 22 most-rated users and the strong ratings (±5 or more) between them, at the end of each year. New ratings glow; users light up with their first rating. Drawn in Cytoscape and animated with CyAnimator.</figcaption>
+    </figure>
+  </div>
+</header>
+
+<section id="question">
+  <div class="wrap">
+    <p class="eyebrow">01 · The question</p>
+    <div class="narrow">
+      <h2>How does reputation concentrate in a web of trust?</h2>
+      <p class="lead">On an anonymous marketplace, ratings are the main signal of who is safe to trade with. If they pile up on a few accounts, newcomers struggle to build trust and the system leans on those accounts. We ask how positive ratings became concentrated, and how much of the advantage of already highly rated users survives a fair comparison.</p>
+    </div>
+    <div class="numbers">
+      <div><strong>35,592</strong><span>ratings</span></div>
+      <div><strong>5,881</strong><span>users</span></div>
+      <div><strong>90%</strong><span>positive</span></div>
+      <div><strong>2010–16</strong><span>timestamped</span></div>
+    </div>
+    <p class="note">Data: the <a href="https://snap.stanford.edu/data/soc-sign-bitcoinotc.html">SNAP Bitcoin OTC trust network</a>. A rating is an opinion; it does not prove that a trade took place.</p>
+  </div>
+</section>
+
+<section id="network" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">02 · From ratings to a network</p>
+    <div class="split">
+      <div>
+        <h2>Each rating is a directed link</h2>
+        <p>A user is a <b>node</b>. A rating is a <b>link</b> pointing from the rater to the rated user, carrying a score from −10 to +10 and a time. We keep the 32,029 positive ratings. Many models in the course are for undirected networks, so we also merge each mutual pair into one link: 18,591 links among 5,881 users.</p>
+        <div class="concepts">
+          <div class="concept"><b>Directed network.</b> Keeps who rated whom. A user's in-degree \(k^{in}\) is the number of positive ratings received.</div>
+          <div class="concept"><b>Undirected network.</b> Two users are linked if either rated the other. Path lengths count links; a higher score is not a longer distance.</div>
+        </div>
+      </div>
+      <figure class="panel" aria-label="Two ratings between users 6 and 2 become one undirected link">
+        <svg viewBox="0 0 520 220" role="img" aria-labelledby="diagram-title">
+          <title id="diagram-title">User 6 rates user 2 with +4 and user 2 rates user 6 with +5; in the undirected network they share one link</title>
+          <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E9F8E"/></marker></defs>
+          <text x="20" y="28" font-size="13" font-weight="600" fill="#64748B" letter-spacing="1.5">DIRECTED</text>
+          <path d="M70 92 Q130 52 190 92" stroke="#0E9F8E" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+          <path d="M190 128 Q130 168 70 128" stroke="#0E9F8E" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+          <text x="118" y="58" font-size="15" font-weight="600" fill="#0F172A">+4</text>
+          <text x="118" y="182" font-size="15" font-weight="600" fill="#0F172A">+5</text>
+          <circle cx="52" cy="110" r="24" fill="#94A3B8"/><text x="52" y="116" text-anchor="middle" font-size="17" font-weight="700" fill="#0F172A">6</text>
+          <circle cx="208" cy="110" r="24" fill="#E59E1B"/><text x="208" y="116" text-anchor="middle" font-size="17" font-weight="700" fill="#0F172A">2</text>
+          <path d="M262 110 H296" stroke="#CBD5E1" stroke-width="2" marker-end="url(#arrow)"/>
+          <text x="330" y="28" font-size="13" font-weight="600" fill="#64748B" letter-spacing="1.5">UNDIRECTED</text>
+          <line x1="364" y1="110" x2="470" y2="110" stroke="#0E9F8E" stroke-width="3"/>
+          <circle cx="352" cy="110" r="24" fill="#94A3B8"/><text x="352" y="116" text-anchor="middle" font-size="17" font-weight="700" fill="#0F172A">6</text>
+          <circle cx="482" cy="110" r="24" fill="#E59E1B"/><text x="482" y="116" text-anchor="middle" font-size="17" font-weight="700" fill="#0F172A">2</text>
+        </svg>
+        <figcaption>Two real records: user 6 gave user 2 a +4 in 2010, and user 2 returned a +5 in 2012.</figcaption>
+      </figure>
+    </div>
+    <figure class="wide panel">
+      <img src="assets/network.jpg" alt="The undirected network of positive ratings drawn with a spring layout; most users form one large connected piece" loading="lazy">
+      <figcaption>The whole undirected network. The large connected piece holds 94% of users; the right panel separates the small pieces and the 308 users without a positive rating. Colours mark the five largest communities.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="structure">
+  <div class="wrap">
+    <p class="eyebrow">03 · Structure</p>
+    <div class="narrow">
+      <h2>A sparse small world with hubs</h2>
+      <p class="lead">Eight measures from the course describe the shape of the network.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>6.32</strong><span class="name">Average degree</span><p>Links per user, \(\langle k\rangle = 2L/N\). The largest hub has 788.</p></div>
+      <div class="stat"><strong>0.11%</strong><span class="name">Density</span><p>Share of all possible pairs that are linked, \(2L/N(N-1)\).</p></div>
+      <div class="stat"><strong>0.155</strong><span class="name">Clustering</span><p>Chance that two neighbours of a user are also linked, averaged over users.</p></div>
+      <div class="stat"><strong>94.4%</strong><span class="name">Largest component</span><p>Users who can reach each other. The network is not connected, so distances use this part.</p></div>
+      <div class="stat"><strong>3.76</strong><span class="name">Mean distance</span><p>Average number of links on a shortest path between two users.</p></div>
+      <div class="stat"><strong>14</strong><span class="name">Diameter</span><p>The longest of all shortest paths.</p></div>
+      <div class="stat"><strong>0.504</strong><span class="name">Modularity</span><p>How much more often links stay inside communities than random wiring would allow.</p></div>
+      <div class="stat"><strong>−0.145</strong><span class="name">Assortativity</span><p>Correlation of degrees at the two ends of a link. Negative: hubs link to small users.</p></div>
+    </div>
+    <div class="narrow wide">
+      <p>Paths are shorter than in a random network of the same size while clustering is about 150 times higher: the signature of a <b>small world</b>. All five largest communities are <b>weak communities</b> in Barabási's sense, with more of their members' link ends inside the group than outside, but which users land in which group changes when the community algorithm is rerun.</p>
+    </div>
+  </div>
+</section>
+
+<section id="theory" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">04 · Theory</p>
+    <div class="narrow">
+      <h2>What the models get right, and wrong</h2>
+      <p class="lead">We compared the network with three references: an <b>Erdős–Rényi</b> random network with the same users and links, a <b>Barabási–Albert</b> network grown by preferential attachment, and a <b>degree-preserving randomization</b> that keeps every user's degree but shuffles who is linked to whom.</p>
+      <table>
+        <thead><tr><th></th><th>Observed</th><th>ER</th><th>BA</th><th>Rewired</th></tr></thead>
+        <tbody>
+          <tr><td>Largest degree</td><td>788</td><td>17</td><td>231</td><td>788</td></tr>
+          <tr><td>Average clustering</td><td>0.155</td><td>0.001</td><td>0.008</td><td>0.061</td></tr>
+          <tr><td>Mean distance</td><td>3.76</td><td>4.91</td><td>4.08</td><td>3.52</td></tr>
+          <tr><td>Modularity</td><td>0.504</td><td>0.369</td><td>0.388</td><td>0.334</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:12px">Keeping the degrees reproduces the short paths, but not the clustering or the communities: those come from how users chose their partners.</p>
+    </div>
+
+    <div class="wide">
+      <div class="narrow">
+        <h3>Heavy-tailed, but not strictly scale-free</h3>
+        <p>A scale-free network has a degree distribution \(P(k) \propto k^{-\gamma}\). Fitted properly, by maximum likelihood rather than a straight line on a log–log plot, the tail gives \(\gamma = 2.09\): heavier than the \(\gamma = 3\) of the BA model. Yet a lognormal tail fits better; above about 100 links the data bend down.</p>
+        <p>BA's growth rule also fails: 70.5% of links join two users who were already present. Barabási's internal-link model allows exactly that, and for the measured \(m = 0.99\) and \(n = 2.35\) it predicts</p>
+        <div class="formula">\(\gamma = 2 + \dfrac{m}{m + 2n} = 2.17\)</div>
+        <p>inside the fitted range.</p>
+      </div>
+      <figure class="panel" style="margin-top:28px">
+        <img src="assets/degree-ccdf.jpg" alt="Degree distributions on log-log axes with fitted power-law and lognormal tails and the BA slope" loading="lazy">
+        <figcaption>Share of users with at least \(k\) links, for undirected, in- and out-degree, with the fitted tails and BA's slope.</figcaption>
+      </figure>
+    </div>
+
+    <div class="split flip">
+      <figure class="panel">
+        <img src="assets/knn.svg" alt="Average degree of neighbours against degree, for the observed network and for degree-preserving randomizations" loading="lazy">
+        <figcaption>Average degree of a user's neighbours, \(k_{nn}(k)\), against the user's own degree.</figcaption>
+      </figure>
+      <div>
+        <h3>Hubs link to small users</h3>
+        <p>Degree correlations ask whether hubs connect to other hubs. Here they do not: the assortativity is \(r = -0.145\).</p>
+        <p>Much of this is forced. In a simple network a hub cannot find enough other hubs, and above the <b>structural cutoff</b> \(k_s = \sqrt{\langle k\rangle N} \approx 193\) that pushes \(r\) below zero. Our largest hub has 788 links, and randomizations that keep every degree already give \(r = -0.114\).</p>
+        <p>The extra pull is small but real: users with a single link are attached to neighbours with 181 links on average, against 93 after randomizing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="time">
+  <div class="wrap">
+    <p class="eyebrow">05 · The focused question</p>
+    <div class="narrow">
+      <h2>How reputation concentrated over time</h2>
+      <p class="lead">Every rating has a timestamp, so we can follow the network as it grew and ask who received each new rating.</p>
+    </div>
+    <div class="split">
+      <div>
+        <h3>Accumulated ratings concentrate</h3>
+        <p>Counting all ratings received so far, the top 1% of users held 15.5% of positive ratings at the end of 2011 and 23.5% by 2015. The rise also holds within the same group of users present in 2011, so it is not just new users joining.</p>
+        <p>The share of each year's new ratings seems to fall after 2013, but ratings collapsed from 11,138 to 929 a year. Redrawn to the same 743 ratings every year, 2013 and 2015 overlap: most of that fall is a <b>volume effect</b>.</p>
+      </div>
+      <figure class="panel">
+        <img src="assets/concentration.svg" alt="Share of positive ratings held by the top 1% from 2011 to 2015, for all ratings so far, for each year's new ratings, and at equal volume" loading="lazy">
+        <figcaption>The top 1% is chosen again at each date. The band shows the middle 95% of 1,000 equal-volume redraws.</figcaption>
+      </figure>
+    </div>
+    <div class="split flip">
+      <figure class="panel">
+        <img src="assets/attachment.svg" alt="How often users with 32 or more earlier ratings were chosen, relative to five comparison groups" loading="lazy">
+        <figcaption>Users with 32 or more earlier ratings, compared with everyone who could have received each rating, and with users of the same tenure or recent activity.</figcaption>
+      </figure>
+      <div>
+        <h3>Who receives the next rating?</h3>
+        <p>This is how the course measures <b>preferential attachment</b>: for every new rating, compare the user who received it with everyone who could have. Users with 32 or more earlier ratings were chosen 12.7 times as often as chance, and the fitted rule \(\Pi(k) \propto k^{\alpha}\) has \(\alpha = 1.07\), almost exactly BA's linear attachment.</p>
+        <p>But that compares a dormant newcomer with an active trader. Against users with the same tenure and recent activity, the ratio falls to 1.65 and \(\alpha\) to 0.68. Recent activity, not reputation, explains most of the advantage, and about half of all ratings simply return an earlier one, usually within minutes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="robustness" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">06 · Robustness</p>
+    <div class="split">
+      <div>
+        <h2>Robust to random failures, fragile to attacks</h2>
+        <p>Percolation theory predicts when a network falls apart. A giant component exists while \(\kappa = \langle k^2\rangle / \langle k\rangle > 2\), the Molloy–Reed criterion, and removing a random fraction \(f\) of users destroys it at the critical threshold</p>
+        <div class="formula">\(f_c = 1 - \dfrac{1}{\kappa - 1} = 0.986\) &nbsp; for &nbsp; \(\kappa = 71.9\)</div>
+        <p>Random removal barely matters: the giant component survives until about 93% of users are gone. Removing the most-connected users first breaks it after only 15%. Randomized networks with the same degrees break at the same point, so the hubs are the weak spot.</p>
+      </div>
+      <figure class="panel">
+        <img src="assets/robustness.svg" alt="Share of users in the largest component as users are removed at random or by degree, for the observed network and an ER network" loading="lazy">
+        <figcaption>Largest connected piece as users are removed at random or from the most connected down.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="meaning">
+  <div class="wrap">
+    <p class="eyebrow">07 · What it means</p>
+    <div class="narrow"><h2>What this means for a web of trust</h2></div>
+    <div class="cards">
+      <div class="card"><span class="index">01</span><h3>Reputation stays concentrated</h3><p>By 2015, 56 accounts held 23.5% of positive ratings. Ratings never expire here, so a high score may describe the past more than the present.</p></div>
+      <div class="card"><span class="index">02</span><h3>A few accounts hold it together</h3><p>Losing or compromising a handful of hubs would disconnect far more of the trust record than the same number of random departures.</p></div>
+      <div class="card"><span class="index">03</span><h3>Counts overstate independent opinions</h3><p>About half of the ratings return an earlier one, often within minutes, so a rating count is not a count of independent endorsements.</p></div>
+      <div class="card"><span class="index">04</span><h3>Activity beats reputation</h3><p>Recent activity explains most of the pull of highly rated users. We cannot separate it from trading volume, which the data do not record.</p></div>
+    </div>
+    <p class="note wide">Limits: ratings are opinions, not verified trades; the data have no registration dates or trade volumes; one person may hold several IDs; the users in the animation were chosen using all years.</p>
+  </div>
+</section>
+
+<section id="reproduce" class="alt">
+  <div class="wrap"><div class="narrow">
+    <p class="eyebrow">08 · Reproduce</p>
+    <h2>Every number can be rebuilt</h2>
+    <p>The repository has the analysis scripts, explanatory notebooks, stored results and a checker that compares a new run with the recorded one. With Python 3.12:</p>
+<pre><span class="comment"># set up the environment</span>
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+<span class="comment"># put soc-sign-bitcoinotc.csv.gz from SNAP in data/, then</span>
+.venv/bin/python scripts/reproduce.py                        <span class="comment"># eight analyses, 15–30 minutes</span>
+.venv/bin/python scripts/verify_reproduction.py --check-manifest</pre>
+    <div class="links">
+      <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science/blob/main/report/bitcoin_otc_report.pdf">Report (PDF)</a>
+      <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science/tree/main/notebooks">Notebooks</a>
+      <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science/blob/main/CODE_WALKTHROUGH.md">Code walkthrough</a>
+      <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science/blob/main/cytoscape/README.md">Cytoscape workflow</a>
+      <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science/blob/main/AI_DISCLOSURE.md">AI-use disclosure</a>
+    </div>
+  </div></div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Ouko Oyombe · Sheillah Khaluvitsi · Abdihakim Yussuf</strong></p>
+    <p>Network Science, Eötvös Loránd University, 2026 · <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science">github.com/O-2wice/bitcoin-otc-trust-network-science</a></p>
+    <p>Data: SNAP Bitcoin OTC trust network. S. Kumar, F. Spezzano, V. S. Subrahmanian and C. Faloutsos, <em>Edge Weight Prediction in Weighted Signed Networks</em>, IEEE ICDM 2016.</p>
+  </div>
+</footer>
+
+</body>
+</html>
