@@ -1,0 +1,20 @@
+{
+  "source_sha256": "6424ac981dad3a019f697fc1b9fcd85c19d8d9f039797758e9ffb6fea100c373",
+  "undirected_graph": "positive projection, all observed users (users without positive links have no edges and do not affect r)",
+  "directed_graph": "positive ratings, direction kept, reciprocal ratings kept",
+  "seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033
+  ],
+  "undirected_swaps_per_rewire": 185910,
+  "directed_swaps_per_rewire": 320290,
+  "method": "NetworkX double_edge_swap (undirected) and directed_edge_swap (directed); each preserves every user's degree (in- and out-degree for the directed case)",
+  "structural_cutoff": "k_s = sqrt(2E) = sqrt(<k> N)",
+  "k_nn_fit": "mu reported only if at least 6 degrees held by >= 5 users span a factor of 5; otherwise NaN"
+}
