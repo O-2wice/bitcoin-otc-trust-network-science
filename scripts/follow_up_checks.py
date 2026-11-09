@@ -1,6 +1,6 @@
 """Three follow-up checks: matched target choice, degree-preserving null, evolution.
 
-Run after downloading the SNAP file: python scripts/flagship_checks.py
+Run after downloading the SNAP file: python scripts/follow_up_checks.py
 All choices are measured immediately before each event; no future degree is used.
 """
 
@@ -17,7 +17,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data/soc-sign-bitcoinotc.csv.gz"
-OUT = ROOT / "outputs/flagship"
+OUT = ROOT / "outputs/follow_up"
 SHA = "6424ac981dad3a019f697fc1b9fcd85c19d8d9f039797758e9ffb6fea100c373"
 WINDOW = 90 * 24 * 60 * 60
 SEEDS = tuple(range(2026, 2034))

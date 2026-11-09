@@ -25,7 +25,7 @@
 | --- | --- |
 | A: construction and processing | Source audit, graph definitions, cleaning log, full-network overview, Cytoscape subnetwork figure |
 | B: structure and communities | Metrics table, distribution figures, component-aware path metrics, community analysis |
-| C: two models/concepts | ER and BA comparisons against simulations and formulas, degree-preserving randomization, degree-tail fits, an internal-link extension, attachment exponent, percolation threshold, repeated seeds and limitations |
+| C: two models/concepts | ER and BA comparisons against simulations and formulas, degree-preserving randomization, degree-tail fits, an internal-link extension, attachment exponent, percolation threshold, degree correlations against the structural cutoff, repeated seeds and limitations |
 | D: one focused investigation | Temporal rating concentration and event-level target-choice comparison |
 | E: critical reflection | Sensitivity, observation limits, finite-size/model limits, real-world interpretation |
 | Deliverables | One GitHub repo, 10--15 page PDF report, notebook/code, figures, AI disclosure, presentation/demo |

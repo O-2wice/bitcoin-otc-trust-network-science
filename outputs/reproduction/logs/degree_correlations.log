@@ -1,0 +1,23 @@
+Positive projection: 5881 users, 18591 links
+Degree-preserving rewires:
+  rewire 2026: r = -0.1132
+  rewire 2027: r = -0.1122
+  rewire 2028: r = -0.1137
+  rewire 2029: r = -0.1138
+  rewire 2030: r = -0.1144
+  rewire 2031: r = -0.1160
+  rewire 2032: r = -0.1137
+  rewire 2033: r = -0.1184
+
+Undirected assortativity
+  observed r         = -0.1449
+  rewired r          = -0.1144 (min -0.1184, max -0.1122)
+  outside all rewires: True,  z = -15.7
+  k_max = 788, structural cutoff k_s = 193
+Directed (rater degree type -> rated degree type)
+  out_in   observed -0.1508   rewired -0.1137
+  out_out  observed -0.1378   rewired -0.1037
+  in_in    observed -0.1549   rewired -0.1182
+  in_out   observed -0.1423   rewired -0.1080
+
+Wrote results to outputs/correlations

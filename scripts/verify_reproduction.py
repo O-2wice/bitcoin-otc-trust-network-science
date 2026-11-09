@@ -64,17 +64,17 @@ def main():
     close(uniform.set_index("prior_positive_in_degree").loc["32+", "observed_over_expected"], 12.6968)
     assert int(uniform.observed_target_events.sum()) == 27133
 
-    matched = pd.read_csv(ROOT / "outputs/flagship/matched_target_choice.csv")
+    matched = pd.read_csv(ROOT / "outputs/follow_up/matched_target_choice.csv")
     high = matched.set_index("prior_positive_in_degree").loc["32+"]
     close(high.observed_over_expected, 1.6485)
     assert int(matched.observed_target_events.sum()) == 26993
-    flagship_meta = json.loads((ROOT / "outputs/flagship/metadata.json").read_text())
-    close(flagship_meta["matched_choice"]["coverage_of_existing_target_events"], 0.9948)
-    rewired = pd.read_csv(ROOT / "outputs/flagship/degree_preserving_null.csv")
+    follow_up_meta = json.loads((ROOT / "outputs/follow_up/metadata.json").read_text())
+    close(follow_up_meta["matched_choice"]["coverage_of_existing_target_events"], 0.9948)
+    rewired = pd.read_csv(ROOT / "outputs/follow_up/degree_preserving_null.csv")
     assert len(rewired) == 9  # observed plus eight degree-preserving rewires
     assert (rewired.edges == 18591).all()
     assert rewired.iloc[0].transitivity > rewired.iloc[1:].transitivity.max()
-    evolution = pd.read_csv(ROOT / "outputs/flagship/structural_evolution.csv").set_index("year_end")
+    evolution = pd.read_csv(ROOT / "outputs/follow_up/structural_evolution.csv").set_index("year_end")
     close(evolution.loc[2011, "directed_reciprocity"], 0.8795)
     close(evolution.loc[2015, "directed_reciprocity"], 0.8389)
 
@@ -116,12 +116,23 @@ def main():
     thresholds = pd.read_csv(ROOT / "outputs/theory/percolation_thresholds.csv").set_index("network")
     close(thresholds.loc["Observed", "molloy_reed_threshold"], 0.9859)
 
+    correlations = pd.read_csv(ROOT / "outputs/correlations/correlation_summary.csv").iloc[0]
+    close(correlations.r_observed, -0.1449)
+    close(correlations.r_rewired_mean, -0.1144)
+    assert correlations.r_observed < correlations.r_rewired_min
+    assert int(correlations.max_degree) == 788
+    close(correlations.structural_cutoff, 192.83, tolerance=0.01)
+    directed_r = pd.read_csv(ROOT / "outputs/correlations/directed_assortativity.csv").set_index("type")
+    close(directed_r.loc["out_in", "observed"], -0.1508)
+    assert directed_r.outside_rewired_range.all()
+    assert len(pd.read_csv(ROOT / "outputs/correlations/rewired_assortativity.csv")) == 9
+
     print("PASS: source checksum and headline values in the stored CSV outputs")
     if args.check_manifest:
         manifest_path = ROOT / "outputs/reproduction/run_manifest.json"
         manifest = json.loads(manifest_path.read_text())
         assert manifest["complete"], "The recorded analysis run did not complete"
-        assert len(manifest["steps"]) == 7
+        assert len(manifest["steps"]) == 8
         assert manifest["source_sha256"] == actual_hash
         assert manifest["requirements_sha256"] == sha256(ROOT / "requirements.txt"), "requirements.txt changed since the recorded run"
         assert manifest["python_version"] == sys.version.split()[0], "Python version differs from the recorded run"
@@ -134,7 +145,7 @@ def main():
             for relative_path, expected_hash in step["output_sha256"].items():
                 output_hash = sha256(ROOT / relative_path)
                 assert output_hash == expected_hash, f"Output changed since recorded run: {relative_path}"
-        print("PASS: recorded seven-script run matches current source, scripts, environment, and listed outputs")
+        print("PASS: recorded eight-script run matches current source, scripts, environment, and listed outputs")
         print("The manifest records one execution; it does not establish scientific correctness or independent replication.")
     else:
         print("This checker reads existing outputs; it does not rerun the analyses or verify output freshness.")

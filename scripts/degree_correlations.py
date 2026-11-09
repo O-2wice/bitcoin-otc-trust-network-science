@@ -11,7 +11,7 @@ Questions answered
      so any difference from the rewires comes from the wiring itself.
 
 The undirected analysis uses the same positive projection as the structural
-analysis, the same eight seeds and the same swap budget as flagship_checks.py.
+analysis, the same eight seeds and the same swap budget as follow_up_checks.py.
 A directed version (out/in degree mixing) is reported as a second, smaller table.
 """
 
@@ -31,8 +31,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "soc-sign-bitcoinotc.csv.gz"
 OUT = ROOT / "outputs" / "correlations"
 EXPECTED_SHA = "6424ac981dad3a019f697fc1b9fcd85c19d8d9f039797758e9ffb6fea100c373"
-SEEDS = tuple(range(2026, 2034))        # the same eight seeds as flagship_checks.py
-SWAPS_PER_EDGE = 10                     # the same swap budget as flagship_checks.py
+SEEDS = tuple(range(2026, 2034))        # the same eight seeds as follow_up_checks.py
+SWAPS_PER_EDGE = 10                     # the same swap budget as follow_up_checks.py
 MIN_NODES_FOR_FIT = 5                   # a degree needs this many users to enter the k_nn fit
 DIRECTED_TYPES = (("out", "in"), ("out", "out"), ("in", "in"), ("in", "out"))
 
@@ -197,7 +197,7 @@ def main():
     directed_table = pd.DataFrame(directed_rows)
     directed_table.to_csv(OUT / "directed_assortativity.csv", index=False)
 
-    # All individual values, observed first (seed -1, as in outputs/flagship)
+    # All individual values, observed first (seed -1, as in outputs/follow_up)
     observed_row = {"seed": -1, "r_undirected": observed_r,
                     **{f"r_{k}": v for k, v in observed_directed.items()}}
     pd.concat([pd.DataFrame([observed_row]), rewires]).to_csv(

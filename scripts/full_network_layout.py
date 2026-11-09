@@ -90,18 +90,18 @@ def main():
                  x=0.05, ha="left", fontsize=16, fontweight="bold")
     fig.text(0.05, 0.015, "Color: Louvain group; gray: other groups. Size: degree. Spring positions are a drawing aid, not measured distance.", fontsize=9)
     fig.tight_layout(rect=(0, 0.12, 1, 0.95))
-    fig.savefig(OUT / "full_positive_network_force.png", dpi=180, facecolor="white", bbox_inches="tight")
+    fig.savefig(OUT / "full_positive_network_layout.png", dpi=180, facecolor="white", bbox_inches="tight")
     plt.close(fig)
     pd.DataFrame([{"node": v, "x": float(positions[v][0]), "y": float(positions[v][1]),
                    "component": 0 if v in components[0] else 1}
-                  for v in sorted(graph)]).to_csv(OUT / "full_positive_network_force_positions.csv", index=False)
-    (OUT / "full_positive_network_force_metadata.json").write_text(json.dumps({
+                  for v in sorted(graph)]).to_csv(OUT / "full_positive_network_layout_positions.csv", index=False)
+    (OUT / "full_positive_network_layout_metadata.json").write_text(json.dumps({
         "seed": SEED, "iterations": ITERATIONS, "layout": "NetworkX spring_layout, energy method",
         "main_component_nodes": len(main_graph), "minor_component_nodes": sum(map(len, minor)),
         "isolates": len(isolate_nodes), "source_sha256": SHA,
         "note": "Disconnected pieces occupy a separate panel with arbitrary panel coordinates."
     }, indent=2) + "\n")
-    print("Saved full_positive_network_force.png", flush=True)
+    print("Saved full_positive_network_layout.png", flush=True)
 
 
 if __name__ == "__main__":

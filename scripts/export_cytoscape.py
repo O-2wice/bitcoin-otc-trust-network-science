@@ -76,7 +76,7 @@ def main():
         "edge_attributes": ["rating", "sign", "time_unix"],
         "style_suggestion": "map edge sign to color, rating magnitude to width, positive in-degree to node size; label only selected nodes",
     }
-    (OUT / "README.json").write_text(json.dumps(metadata, indent=2) + "\n")
+    (OUT / "export_summary.json").write_text(json.dumps(metadata, indent=2) + "\n")
     print(json.dumps(metadata, indent=2))
 
 

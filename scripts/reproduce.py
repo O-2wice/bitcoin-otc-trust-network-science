@@ -1,4 +1,4 @@
-"""Run the seven numerical analyses and record their provenance.
+"""Run the eight numerical analyses and record their provenance.
 
 Run from the repository root: python scripts/reproduce.py
 The source dataset and the environment in requirements.txt must be ready first.
@@ -33,7 +33,7 @@ STEPS = (
         "metadata.json", "growth_and_concentration.png", "target_choice_ratio.png")),
     ("node_removal.py", "robustness", (
         "node_removal_summary.csv", "node_removal_replicates.csv", "node_removal.png")),
-    ("flagship_checks.py", "flagship", (
+    ("follow_up_checks.py", "follow_up", (
         "matched_target_choice.csv", "degree_preserving_null.csv",
         "structural_evolution.csv", "metadata.json", "matched_target_choice.png",
         "degree_preserving_null.png", "structural_evolution.png")),
@@ -50,6 +50,9 @@ STEPS = (
         "percolation_curves.csv", "percolation_thresholds.csv", "centrality_comparison.csv",
         "metadata.json", "degree_ccdf_fits.png", "attachment_kernel.png",
         "percolation_vs_theory.png")),
+    ("degree_correlations.py", "correlations", (
+        "correlation_summary.csv", "directed_assortativity.csv", "rewired_assortativity.csv",
+        "knn_by_degree.csv", "metadata.json", "degree_correlations.png")),
 )
 
 
@@ -80,7 +83,7 @@ def main():
     (OUT / "logs").mkdir(exist_ok=True)
     manifest_path = OUT / "run_manifest.json"
     manifest = {
-        "scope": "Seven numerical analysis scripts; separate visual, document, and presentation builds are excluded",
+        "scope": "Eight numerical analysis scripts; separate visual, document, and presentation builds are excluded",
         "started_utc": utc_now(), "complete": False,
         "python_version": sys.version.split()[0],
         "python_executable": Path(sys.executable).name,
@@ -126,7 +129,7 @@ def main():
 
     manifest.update({"complete": True, "finished_utc": utc_now()})
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
-    print("Completed seven analyses. Next: python scripts/verify_reproduction.py --check-manifest")
+    print("Completed eight analyses. Next: python scripts/verify_reproduction.py --check-manifest")
 
 
 if __name__ == "__main__":

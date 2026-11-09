@@ -21,7 +21,7 @@ import pandas as pd
 from scipy import optimize, sparse, special, stats
 from scipy.sparse.csgraph import connected_components, shortest_path
 
-from flagship_checks import DEGREE_LABELS, SEEDS as REWIRE_SEEDS, WINDOW, degree_bin
+from follow_up_checks import DEGREE_LABELS, SEEDS as REWIRE_SEEDS, WINDOW, degree_bin
 from structural_analysis import MODEL_REPLICATES, SEED, load_graphs, sampled_mean_path_length
 
 
@@ -640,7 +640,7 @@ def main():
 
     # Confirm these are the same graphs the earlier scripts measured.
     stored = pd.read_csv(ROOT / "outputs/structure/network_metrics.csv").set_index("network")
-    stored_rewires = pd.read_csv(ROOT / "outputs/flagship/degree_preserving_null.csv")
+    stored_rewires = pd.read_csv(ROOT / "outputs/follow_up/degree_preserving_null.csv")
     assert abs(nx.transitivity(er[0]) - stored.loc["ER_01", "transitivity"]) < 1e-12
     assert abs(nx.transitivity(ba[0]) - stored.loc["BA_01", "transitivity"]) < 1e-12
     assert abs(nx.transitivity(rewired[0]) - stored_rewires.loc[stored_rewires.seed == REWIRE_SEEDS[0], "transitivity"].iloc[0]) < 1e-12
@@ -662,7 +662,7 @@ def main():
     # The two established benchmarks must reproduce the stored results exactly.
     table = benchmarks.set_index("benchmark")
     uniform = pd.read_csv(ROOT / "outputs/temporal/target_choice_by_prior_degree.csv").set_index("prior_positive_in_degree")
-    matched = pd.read_csv(ROOT / "outputs/flagship/matched_target_choice.csv").set_index("prior_positive_in_degree")
+    matched = pd.read_csv(ROOT / "outputs/follow_up/matched_target_choice.csv").set_index("prior_positive_in_degree")
     for label in DEGREE_LABELS:
         assert abs(table.loc["Uniform", f"ratio_{label}"] - uniform.loc[label, "observed_over_expected"]) < 1e-9
         assert abs(table.loc["Tenure and activity", f"ratio_{label}"] - matched.loc[label, "observed_over_expected"]) < 1e-9
