@@ -33,7 +33,7 @@ The first command runs eight scripts in order: structural analysis, temporal ana
 
 The second command checks the source checksum and headline values **in the stored CSV files**, then checks that the completed manifest matches the current scripts, requirements, installed versions, and listed outputs. It does not execute the analyses. Running the checker alone is not a fresh reproduction. The manifest records one execution and does not establish scientific correctness or independent replication. Without `--check-manifest`, the checker validates only the source checksum and selected stored values. Text files are hashed with normalized line endings, so Windows and Linux checkouts agree. PNG hashes are exact: a rerun on another platform can produce matching figures with different bytes, and the runner then records the new hashes.
 
-The scripts use fixed seeds, but image rendering and minor floating-point details may vary across platforms. The numerical runner excludes the full-network layout, Cytoscape media, report, and slides; these have separate build steps. See `cytoscape/README.md` for the additional steps to recreate the Cytoscape view and `overleaf/README.md` for compiling the report.
+The scripts use fixed seeds, but image rendering and minor floating-point details may vary across platforms. The numerical runner excludes the full-network layout, Cytoscape media, report, and slides; these have separate build steps. See `cytoscape/README.md` for the additional steps to recreate the Cytoscape figures and video, `overleaf/README.md` for compiling the report, and `docs/make_figures.py` for the website charts.
 
 ## Learn the calculations before running the full analysis
 

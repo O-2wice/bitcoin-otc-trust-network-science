@@ -2,7 +2,7 @@
 
 How did positive ratings become concentrated among Bitcoin OTC users, and how sensitive is the apparent advantage of already highly rated users to the comparison benchmark?
 
-The full write-up is the [report (PDF)](report/bitcoin_otc_report.pdf). Its LaTeX source is in [overleaf/](overleaf/README.md).
+The full write-up is the [report (PDF)](report/bitcoin_otc_report.pdf). Its LaTeX source is in [overleaf/](overleaf/README.md). The [project website](https://o-2wice.github.io/bitcoin-otc-trust-network-science/) explains the project and the network science concepts for a general reader; its source is in [docs/](docs/).
 
 ## Data
 
@@ -64,10 +64,11 @@ outputs/
   robustness/      Random and targeted node removal
   theory/          Formula comparisons, tail fits, attachment benchmarks, percolation, exact centrality
   correlations/    Assortativity, k_nn(k), and directed degree mixing against degree-preserving rewires
-  cytoscape/       Spotlight figure, timeline video, and their provenance record
+  cytoscape/       Spotlight figures (dark and light), timeline video, poster, and provenance record
   reproduction/    Run manifest and script logs
-cytoscape/         Cytoscape styles and the scripts that build the figure and video
-presentation/      Demo guide and backup copy of the timeline video
+cytoscape/         Cytoscape styles and the two scripts that build the figures and video
+docs/              Project website (GitHub Pages) and the script that draws its charts
+presentation/      Demo guide and a copy of the timeline video (the slides stay local)
 PLAN.md            Project plan and how it maps to the assignment
 REPRODUCIBILITY.md How a source rating becomes a graph, and how to recreate the outputs
 CODE_WALKTHROUGH.md Plain-language explanation of each script
@@ -82,7 +83,7 @@ Run `python scripts/reproduce.py` to execute the eight numerical analyses in ord
 
 The [structure notebook](notebooks/02_structure_and_models.ipynb), [temporal notebook](notebooks/03_temporal_rating_accumulation.ipynb), [follow-up checks notebook](notebooks/04_follow_up_checks.ipynb), and [theory notebook](notebooks/05_theory_comparison.ipynb) contain small worked calculations as well as the recorded results. The [degree-correlation notebook](notebooks/06_degree_correlations.ipynb) defines assortativity, k_nn(k), and the structural cutoff, and interprets the stored results. Numerical outputs are in `outputs/structure/`, `outputs/temporal/`, `outputs/robustness/`, `outputs/follow_up/`, `outputs/sensitivity/`, `outputs/theory/`, and `outputs/correlations/`. Run `python scripts/full_network_layout.py` after the structural script to regenerate the seeded network layout; coordinates and layout parameters are saved alongside its figure. Run `python scripts/export_cytoscape.py` to generate signed, directed GraphML files locally. GraphML files are not distributed in the repository.
 
-The checker validates the source, stored headline results, and optionally the execution manifest; it does not independently establish scientific correctness. The [Cytoscape guide](cytoscape/README.md) describes the manual import, style, and layout steps for the spotlight and movie.
+The checker validates the source, stored headline results, and optionally the execution manifest; it does not independently establish scientific correctness. The [Cytoscape guide](cytoscape/README.md) explains how the spotlight figures and the CyAnimator video are drawn in Cytoscape and assembled. Run `python docs/make_figures.py` to redraw the website charts from the stored results.
 
 On Linux or macOS, create the notebook environment with:
 
@@ -106,7 +107,7 @@ Starting Jupyter through `python -m` also works where Windows Application Contro
 
 ## Presentation
 
-The [demo guide](presentation/DEMO.md) covers the analysis, code walkthrough, and Cytoscape animation.
+The [demo guide](presentation/DEMO.md) gives the slide timing, the code demonstration, and how to play the CyAnimator video. The 16-slide deck uses the ELTE template and holds the speaker notes; it stays local and is presented from a team member's computer.
 
 The [compiled report](report/bitcoin_otc_report.pdf) is 15 pages. The [Overleaf source ZIP](overleaf/bitcoin_otc_report_overleaf.zip) contains the LaTeX report, bibliography, template files, and figures. See the [build instructions](overleaf/README.md).
 
