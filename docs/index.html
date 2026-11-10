@@ -359,13 +359,7 @@ footer b { color: var(--ink); }
       <p>We also drew the 22 most-rated users and the strong ratings between them (±5 or more) in Cytoscape, and animated how those ratings appeared with CyAnimator. Colour shows the sign of a rating, width its strength, and size how many ratings a user received.</p>
       <figure>
         <img src="assets/cytoscape-light.jpg" alt="Strong ratings among the 22 most-rated users, drawn in Cytoscape" loading="lazy">
-        <figcaption><b>Cytoscape.</b> All 76 strong ratings among the 22 users.</figcaption>
-      </figure>
-      <figure>
-        <video controls muted playsinline preload="none" poster="assets/timeline-poster.jpg" aria-label="CyAnimator animation of strong ratings among the most-rated users, 2011 to 2015">
-          <source src="assets/timeline.mp4" type="video/mp4">
-        </video>
-        <figcaption><b>CyAnimator.</b> The same users at each year end from 2011 to 2015; the newest ratings are bright. The users were chosen using all years, so this shows timing, not the growth of the whole network.</figcaption>
+        <figcaption><b>Cytoscape.</b> All 76 strong ratings among the 22 users. <a href="#talk" data-slide="9">Watch the CyAnimator animation</a> on slide 9 of the presentation below.</figcaption>
       </figure>
     </div>
   </section>
@@ -447,28 +441,32 @@ python3.12 -m venv .venv
   const N = nodes.id.length, E = edges.s.length;
   const hubs = new Set(data.hubs), mainHub = data.hubs[0];
 
-  const INK = [26, 26, 26], GREY = [154, 149, 140], LIGHT = [217, 213, 204], BLUE = [36, 80, 122], BRICK = [193, 68, 46];
-  const GROUPS = [[36, 80, 122], [193, 68, 46], [76, 140, 90], [184, 134, 11], [122, 92, 153]];
+  // Colours by number, so users can be drawn in a few batches instead of one at a time.
+  const PALETTE = [[26, 26, 26], [154, 149, 140], [217, 213, 204], [36, 80, 122], [193, 68, 46],
+                   [36, 80, 122], [193, 68, 46], [76, 140, 90], [184, 134, 11], [122, 92, 153]];
+  const INK = 0, GREY = 1, LIGHT = 2, BLUE = 3, BRICK = 4, GROUP = 5;  // GROUP + g for community g
+  const rgb = c => PALETTE[c].join(',');
 
   // where each user sits on screen (px, py), and where it is drawn now (cx, cy)
   const px = new Float32Array(N), py = new Float32Array(N), cx = new Float32Array(N), cy = new Float32Array(N);
-  // what each user should look like (t*) and looks like now (c*)
-  const tR = new Float32Array(N), tA = new Float32Array(N), tC = new Float32Array(N * 3);
-  const cR = new Float32Array(N), cA = new Float32Array(N), cC = new Float32Array(N * 3);
-  // the same for links: alpha and colour (0 grey, 1 brick, 2 blue)
-  const eT = new Float32Array(E), eC = new Float32Array(E), eCol = new Uint8Array(E);
+  // size and opacity each user should have (t*) and has now (c*); colours change at once
+  const tR = new Float32Array(N), tA = new Float32Array(N), cR = new Float32Array(N), cA = new Float32Array(N);
+  const colour = new Uint8Array(N);
   const neighbour = new Uint8Array(N);
   for (let e = 0; e < E; e++) {
     if (edges.s[e] === mainHub) neighbour[edges.t[e]] = 1;
     if (edges.t[e] === mainHub) neighbour[edges.s[e]] = 1;
   }
-  const order = Array.from({length: N}, (_, i) => i).sort((a, b) => nodes.k[a] - nodes.k[b]);  // hubs drawn last
 
-  let width = 0, height = 0, dpr = 1, unit = 1, step = 'intro', running = false, settled = reduceMotion;
+  let width = 0, height = 0, dpr = 1, unit = 1, step = '', running = false, settled = reduceMotion;
+  // Links are drawn once into a picture (layer) per scene; changing scene cross-fades two pictures.
+  let edgesNow = null, edgesBefore = null, fade = 1;
+  let growthLayer = null, growthUpTo = 0, growthT = 2010.85;
+  const lineWidth = () => Math.max(0.5, 0.6 * unit);
 
   function place() {
-    width = stage.clientWidth; height = stage.clientHeight; dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = width * dpr; canvas.height = height * dpr;
+    width = stage.clientWidth; height = stage.clientHeight; dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
     canvas.style.width = width + 'px'; canvas.style.height = height + 'px';
     const narrow = width < 900;
     const columnLeft = Math.max(22, (width - 760) / 2), boxLeft = columnLeft + 410;
@@ -483,62 +481,105 @@ python3.12 -m venv .venv
     buildGrid();
   }
 
-  function setNode(i, r, colour, alpha) {
-    tR[i] = r * unit; tA[i] = alpha;
-    tC[3 * i] = colour[0]; tC[3 * i + 1] = colour[1]; tC[3 * i + 2] = colour[2];
+  function newLayer() {
+    const layer = document.createElement('canvas');
+    layer.width = canvas.width; layer.height = canvas.height;
+    const lctx2 = layer.getContext('2d');
+    lctx2.setTransform(dpr, 0, 0, dpr, 0, 0);
+    lctx2.lineWidth = lineWidth();
+    return layer;
   }
+  function strokeLinks(target, list, c, alpha) {
+    if (!list.length) return;
+    target.strokeStyle = `rgba(${rgb(c)},${alpha})`;
+    target.beginPath();
+    for (const e of list) { const s = edges.s[e], t = edges.t[e]; target.moveTo(px[s], py[s]); target.lineTo(px[t], py[t]); }
+    target.stroke();
+  }
+  function strokeRange(target, from, to, c, alpha) {
+    if (to <= from) return;
+    target.strokeStyle = `rgba(${rgb(c)},${alpha})`;
+    target.beginPath();
+    for (let e = from; e < to; e++) { const s = edges.s[e], t = edges.t[e]; target.moveTo(px[s], py[s]); target.lineTo(px[t], py[t]); }
+    target.stroke();
+  }
+
+  // The links of a scene, drawn once.
+  function paintLinks(name) {
+    const layer = newLayer();
+    if (!settled) return layer;  // users are still flying in
+    const target = layer.getContext('2d'), groups = new Map();
+    for (let e = 0; e < E; e++) {
+      const s = edges.s[e], t = edges.t[e];
+      let alpha = 0.06, c = GREY;
+      if (name === 'intro') alpha = 0.035;
+      else if (name === 'groups') alpha = 0.04;
+      else if (name === 'hub') { const touches = s === mainHub || t === mainHub; alpha = touches ? 0.22 : 0.015; c = touches ? BRICK : GREY; }
+      else if (name === 'random' || name === 'attack') {
+        const a = nodes[name][s], b = nodes[name][t];
+        alpha = a === 0 || b === 0 ? 0 : (a === 2 && b === 2 ? 0.07 : 0.03);
+        c = a === 2 && b === 2 ? BLUE : GREY;
+      }
+      if (alpha <= 0) continue;
+      const key = c + '|' + alpha;
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(e);
+    }
+    for (const [key, list] of groups) { const [c, alpha] = key.split('|'); strokeLinks(target, list, +c, +alpha); }
+    return layer;
+  }
+  function showLinks(layer) { edgesBefore = edgesNow; edgesNow = layer; fade = reduceMotion ? 1 : 0; }
+
+  // Links sorted by year: the replay adds only the links that are new since the last scroll.
+  function upTo(limit) { let lo = 0, hi = E; while (lo < hi) { const m = (lo + hi) >> 1; if (edges.y[m] <= limit) lo = m + 1; else hi = m; } return lo; }
+  function growLinks(time, fresh) {
+    growthT = time;
+    if (fresh || !growthLayer) { growthLayer = newLayer(); growthUpTo = 0; showLinks(null); }
+    if (!settled) return;
+    const end = upTo(time - 0.3), target = growthLayer.getContext('2d');
+    if (end < growthUpTo) {  // scrolled back: start again
+      target.setTransform(1, 0, 0, 1, 0, 0); target.clearRect(0, 0, growthLayer.width, growthLayer.height);
+      target.setTransform(dpr, 0, 0, dpr, 0, 0); growthUpTo = 0;
+    }
+    strokeRange(target, growthUpTo, end, GREY, 0.06);
+    growthUpTo = end;
+  }
+
+  function setNode(i, r, c, alpha) { tR[i] = r * unit; tA[i] = alpha; colour[i] = c; }
   const size = k => 1.1 + 0.42 * Math.sqrt(k);
 
   function scene(name, time) {
+    const changed = name !== step;
     step = name;
     for (let i = 0; i < N; i++) {
       const k = nodes.k[i];
       if (name === 'intro' || name === 'dots') setNode(i, 1.35, GREY, 0.85);
       else if (name === 'hubs') setNode(i, size(k), hubs.has(i) ? BRICK : (k > 40 ? INK : GREY), hubs.has(i) ? 1 : 0.8);
-      else if (name === 'groups') setNode(i, 1.2 + 0.18 * Math.sqrt(k), nodes.g[i] >= 0 ? GROUPS[nodes.g[i]] : LIGHT, nodes.g[i] >= 0 ? 0.9 : 0.6);
-      else if (name === 'growth') {
-        const t = nodes.t[i];
-        setNode(i, 1.35, t > time - 0.3 ? BRICK : INK, t <= time ? 0.85 : 0);
-      } else if (name === 'hub') {
+      else if (name === 'groups') setNode(i, 1.2 + 0.18 * Math.sqrt(k), nodes.g[i] >= 0 ? GROUP + nodes.g[i] : LIGHT, nodes.g[i] >= 0 ? 0.9 : 0.6);
+      else if (name === 'growth') { const t = nodes.t[i]; setNode(i, 1.35, t > time - 0.3 ? BRICK : INK, t <= time ? 0.85 : 0); }
+      else if (name === 'hub') {
         if (i === mainHub) setNode(i, 13, INK, 1);
         else if (neighbour[i]) setNode(i, 2.1, k <= 3 ? BRICK : BLUE, 0.95);
         else setNode(i, 1.2, LIGHT, 0.5);
       } else {
         const state = nodes[name][i];  // 0 removed, 1 cut off, 2 still connected
-        if (state === 0) setNode(i, 0, BRICK, 0);
+        if (state === 0) setNode(i, 0, LIGHT, 0);
         else setNode(i, state === 2 ? 1.7 : 1.25, state === 2 ? BLUE : LIGHT, state === 2 ? 0.9 : 0.8);
       }
     }
-    for (let e = 0; e < E; e++) {
-      const s = edges.s[e], t = edges.t[e];
-      let alpha = 0.06, colour = 0;
-      if (name === 'intro') alpha = 0.035;
-      else if (name === 'groups') alpha = 0.04;
-      else if (name === 'growth') {
-        const y = edges.y[e];
-        alpha = y > time ? 0 : (y > time - 0.3 ? 0.5 : 0.06);
-        colour = y > time - 0.3 ? 1 : 0;
-      } else if (name === 'hub') {
-        const touches = s === mainHub || t === mainHub;
-        alpha = touches ? 0.22 : 0.015; colour = touches ? 1 : 0;
-      } else if (name === 'random' || name === 'attack') {
-        const a = nodes[name][s], b = nodes[name][t];
-        alpha = a === 0 || b === 0 ? 0 : (a === 2 && b === 2 ? 0.07 : 0.03);
-        colour = a === 2 && b === 2 ? 2 : 0;
-      }
-      eT[e] = alpha; eCol[e] = colour;
-    }
+    if (name === 'growth') growLinks(time, changed);
+    else if (changed) showLinks(paintLinks(name));
     yearLabel.style.opacity = name === 'growth' ? 1 : 0;
     if (name === 'growth') yearLabel.textContent = Math.min(2016, Math.floor(time));
-    showLegend(name);
+    if (changed) showLegend(name);
     go();
   }
 
   function showLegend(name) {
-    const dot = (c, label) => `<span><i style="background:rgb(${c})"></i>${label}</span>`;
+    const dot = (c, label) => `<span><i style="background:rgb(${rgb(c)})"></i>${label}</span>`;
     const items = {
       hubs: dot(BRICK, 'five most-rated users') + dot(INK, 'more than 40 links'),
-      groups: GROUPS.map((c, i) => dot(c, 'group ' + (i + 1))).join(''),
+      groups: [0, 1, 2, 3, 4].map(g => dot(GROUP + g, 'group ' + (g + 1))).join(''),
       growth: dot(BRICK, 'newest links and users'),
       hub: dot(INK, 'user 35') + dot(BRICK, 'neighbours with 1–3 links') + dot(BLUE, '4 or more'),
       random: dot(BLUE, 'still connected') + dot(LIGHT, 'cut off'),
@@ -550,52 +591,57 @@ python3.12 -m venv .venv
   function go() { if (!running) { running = true; requestAnimationFrame(frame); } }
 
   function frame() {
-    const k = reduceMotion ? 1 : 0.13;
+    const k = reduceMotion ? 1 : 0.14;
     let change = 0;
     if (!settled) {
       let moved = 0;
       for (let i = 0; i < N; i++) {
         const dx = px[i] - cx[i], dy = py[i] - cy[i];
-        cx[i] += dx * 0.055; cy[i] += dy * 0.055; moved += Math.abs(dx) + Math.abs(dy);
+        cx[i] += dx * 0.06; cy[i] += dy * 0.06; moved += Math.abs(dx) + Math.abs(dy);
       }
-      if (moved < N * 0.15) { settled = true; cx.set(px); cy.set(py); }
       change += moved;
+      if (moved < N * 0.15) {  // arrived: now draw the links
+        settled = true; cx.set(px); cy.set(py);
+        if (step === 'growth') growLinks(growthT, true); else showLinks(paintLinks(step));
+      }
     }
     for (let i = 0; i < N; i++) {
       const dr = tR[i] - cR[i], da = tA[i] - cA[i];
       cR[i] += dr * k; cA[i] += da * k; change += Math.abs(dr) + Math.abs(da) * 10;
-      for (let c = 3 * i; c < 3 * i + 3; c++) { const d = tC[c] - cC[c]; cC[c] += d * k; change += Math.abs(d) * 0.01; }
     }
-    for (let e = 0; e < E; e++) { const d = eT[e] - eC[e]; eC[e] += d * k; change += Math.abs(d) * 4; }
+    if (fade < 1) { fade = Math.min(1, fade + 0.09); change += 1; }
     draw();
     if (change > 0.5) requestAnimationFrame(frame); else running = false;
   }
 
-  const LEVELS = 24, buckets = Array.from({length: 3 * LEVELS}, () => []);
-  const strokes = [GREY, BRICK, BLUE];
+  const LEVELS = 10, batches = Array.from({length: PALETTE.length * LEVELS}, () => []);
+  function drawUsers() {
+    for (const big of [false, true]) {  // small users first, hubs on top
+      for (const b of batches) b.length = 0;
+      for (let i = 0; i < N; i++) {
+        if ((nodes.k[i] > 40) !== big || cA[i] < 0.05 || cR[i] < 0.2) continue;
+        batches[colour[i] * LEVELS + Math.round(cA[i] * (LEVELS - 1))].push(i);
+      }
+      batches.forEach((list, b) => {
+        if (!list.length) return;
+        ctx.fillStyle = `rgba(${rgb(Math.floor(b / LEVELS))},${((b % LEVELS) / (LEVELS - 1)).toFixed(2)})`;
+        ctx.beginPath();
+        for (const i of list) { ctx.moveTo(cx[i] + cR[i], cy[i]); ctx.arc(cx[i], cy[i], cR[i], 0, 6.2832); }
+        ctx.fill();
+      });
+    }
+  }
+
   function draw() {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (edgesBefore && fade < 1) { ctx.globalAlpha = 1 - fade; ctx.drawImage(edgesBefore, 0, 0); }
+    if (edgesNow) { ctx.globalAlpha = fade; ctx.drawImage(edgesNow, 0, 0); }
+    ctx.globalAlpha = 1;
+    if (step === 'growth' && settled && growthLayer) ctx.drawImage(growthLayer, 0, 0);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, width, height);
-    for (const b of buckets) b.length = 0;
-    for (let e = 0; e < E; e++) {
-      const a = eC[e];
-      if (a < 0.006) continue;
-      buckets[eCol[e] * LEVELS + Math.min(LEVELS - 1, Math.round(a * 40))].push(e);
-    }
-    ctx.lineWidth = Math.max(0.5, 0.6 * unit);
-    buckets.forEach((list, b) => {
-      if (!list.length) return;
-      const level = b % LEVELS, colour = strokes[Math.floor(b / LEVELS)];
-      ctx.strokeStyle = `rgba(${colour},${level / 40})`;
-      ctx.beginPath();
-      for (const e of list) { const s = edges.s[e], t = edges.t[e]; ctx.moveTo(cx[s], cy[s]); ctx.lineTo(cx[t], cy[t]); }
-      ctx.stroke();
-    });
-    for (const i of order) {
-      if (cA[i] < 0.01 || cR[i] < 0.2) continue;
-      ctx.fillStyle = `rgba(${cC[3 * i] | 0},${cC[3 * i + 1] | 0},${cC[3 * i + 2] | 0},${cA[i]})`;
-      ctx.beginPath(); ctx.arc(cx[i], cy[i], cR[i], 0, 6.2832); ctx.fill();
-    }
+    if (step === 'growth' && settled) { ctx.lineWidth = lineWidth(); strokeRange(ctx, upTo(growthT - 0.3), upTo(growthT), BRICK, 0.5); }
+    drawUsers();
     if (step === 'hubs' || step === 'hub') {
       ctx.font = '700 13px Lato, sans-serif'; ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.fillStyle = '#1A1A1A';
       const placed = [];
@@ -637,7 +683,7 @@ python3.12 -m venv .venv
   });
   stage.addEventListener('mouseleave', () => { tip.style.opacity = 0; });
 
-  // scrolling: the step at the middle of the screen decides the scene
+  // scrolling: the step at the middle of the screen decides the scene (at most once per screen refresh)
   const steps = [...document.querySelectorAll('.step')];
   const growthStep = document.getElementById('step-growth');
   function growthTime() {
@@ -649,9 +695,11 @@ python3.12 -m venv .venv
     const middle = innerHeight / 2;
     const current = steps.find(s => { const r = s.getBoundingClientRect(); return r.top <= middle && r.bottom > middle; });
     const name = current ? current.dataset.step : (steps[0].getBoundingClientRect().top > middle ? 'intro' : 'attack');
-    if (name === 'growth') scene('growth', growthTime());
+    if (name === 'growth') { const t = growthTime(); if (step !== 'growth' || Math.abs(t - growthT) > 0.004) scene('growth', t); }
     else if (name !== step) scene(name);
   }
+  let queued = false;
+  function onScroll() { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; update(); }); } }
 
   // first frame: users start scattered around the centre and settle into the layout
   place();
@@ -662,10 +710,13 @@ python3.12 -m venv .venv
       cx[i] = mx + Math.cos(angle) * radius; cy[i] = my + Math.sin(angle) * radius;
     }
   }
-  step = '';
   update();
-  addEventListener('scroll', update, {passive: true});
-  addEventListener('resize', () => { place(); scene(step, growthTime()); });
+  addEventListener('scroll', onScroll, {passive: true});
+  addEventListener('resize', () => {
+    place();
+    if (step === 'growth') growLinks(growthT, true); else { showLinks(paintLinks(step)); fade = 1; }
+    go();
+  });
 
   // ---------- break the network yourself ----------
   const lab = document.getElementById('lab'), lctx = lab.getContext('2d');
@@ -812,6 +863,7 @@ python3.12 -m venv .venv
     if (current !== VIDEO_SLIDE) video.pause();
     for (const m of [current - 1, current + 1]) if (m >= 1 && m <= titles.length) new Image().src = source(m);  // preload neighbours
   }
+  for (const link of document.querySelectorAll('a[data-slide]')) link.addEventListener('click', () => show(+link.dataset.slide));
   previous.addEventListener('click', () => show(current - 1));
   next.addEventListener('click', () => show(current + 1));
   deck.addEventListener('keydown', event => {
