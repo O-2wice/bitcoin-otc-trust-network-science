@@ -214,6 +214,7 @@ def network_data():
         },
         'edges': edges,
         'hubs': [index[v] for v in hubs if v in index],
+        'total': graph.number_of_nodes(),  # all 5,881 users, the denominator used in the analysis
         'aspect': round((x1 - x0) / (y1 - y0), 4),
         'note': 'Largest connected component of the undirected network of positive ratings; positions from a '
                 'community-weighted spring layout (docs/layout_positions.csv); t = year of first positive rating.',
