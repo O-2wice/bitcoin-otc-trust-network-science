@@ -123,6 +123,14 @@ pre .c { color: var(--muted); }
 #deck-count { min-width: 4.5ch; text-align: center; font-variant-numeric: tabular-nums; }
 .deck-title { flex: 1; min-width: 0; font-weight: 400; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .deck:focus-visible .deck-frame { outline: 2px solid var(--brick); outline-offset: 3px; }
+.deck-controls .deck-expand { display: inline-flex; align-items: center; justify-content: center; }
+.deck.is-full { position: fixed; inset: 0; z-index: 100; margin: 0; background: #111; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.deck.is-full .deck-frame { width: min(100vw, calc((100vh - 64px) * 16 / 9)); border: 0; background: #111; }
+.deck.is-full .deck-controls { width: min(100vw, calc((100vh - 64px) * 16 / 9)); border: 0; padding: 12px 16px; color: #EDEDED; }
+.deck.is-full .deck-controls button { background: transparent; color: #EDEDED; border-color: #777; }
+.deck.is-full .deck-controls button:hover { background: #EDEDED; color: #111; }
+.deck.is-full .deck-title { color: #A8A8A8; }
+.deck.is-full:focus-visible .deck-frame { outline: 0; }
 footer { margin-top: 80px; padding: 40px 0 56px; border-top: 1px solid var(--ink); font: 400 15px/1.6 var(--sans); color: var(--muted); }
 footer p { margin: 0 0 8px; }
 footer b { color: var(--ink); }
@@ -380,7 +388,7 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">The talk</p>
       <h2>The presentation</h2>
-      <p>The fifteen slides of our thirteen-minute talk. Use the arrows, the arrow keys, or swipe; slide 9 plays the CyAnimator video.</p>
+      <p>The fifteen slides of our thirteen-minute talk. Use the arrows, the arrow keys, or swipe; slide 9 plays the CyAnimator video. The arrow button (or a double click on a slide) shows them full screen.</p>
       <div class="deck" id="deck" tabindex="0" aria-roledescription="carousel" aria-label="Presentation slides">
         <div class="deck-frame">
           <img id="deck-image" src="assets/slides/slide-01.jpg" alt="Slide 1: The Bitcoin OTC Trust Network" width="1600" height="900">
@@ -393,6 +401,7 @@ footer b { color: var(--ink); }
           <span id="deck-count" aria-live="polite">1 / 15</span>
           <button type="button" id="deck-next" aria-label="Next slide">&rarr;</button>
           <span class="deck-title" id="deck-title">The Bitcoin OTC Trust Network</span>
+          <button type="button" id="deck-expand" class="deck-expand" aria-pressed="false" aria-label="Full screen" title="Full screen"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M9.5 2.5h4v4M13.5 2.5 9 7M6.5 13.5h-4v-4M2.5 13.5 7 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
       </div>
     </div>
@@ -864,6 +873,38 @@ python3.12 -m venv .venv
     for (const m of [current - 1, current + 1]) if (m >= 1 && m <= titles.length) new Image().src = source(m);  // preload neighbours
   }
   for (const link of document.querySelectorAll('a[data-slide]')) link.addEventListener('click', () => show(+link.dataset.slide));
+
+  // Full screen: the real thing where the browser allows it, otherwise the slides fill the window.
+  const expand = document.getElementById('deck-expand');
+  const icon = d => `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const EXPAND = icon('M9.5 2.5h4v4M13.5 2.5 9 7M6.5 13.5h-4v-4M2.5 13.5 7 9');      // arrows pointing out
+  const COLLAPSE = icon('M13.5 6.5h-4v-4M9.5 6.5 14 2M2.5 9.5h4v4M6.5 9.5 2 14');    // arrows pointing in
+  const realFull = () => (document.fullscreenElement || document.webkitFullscreenElement) === deck;
+  function mark(full) {
+    deck.classList.toggle('is-full', full);
+    document.body.style.overflow = full ? 'hidden' : '';
+    expand.innerHTML = full ? COLLAPSE : EXPAND;
+    expand.setAttribute('aria-label', full ? 'Exit full screen' : 'Full screen');
+    expand.title = full ? 'Exit full screen (Esc)' : 'Full screen';
+    expand.setAttribute('aria-pressed', String(full));
+    if (full) deck.focus();
+  }
+  async function toggleFull() {
+    if (deck.classList.contains('is-full')) {
+      if (realFull()) await (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      mark(false);
+      return;
+    }
+    const enter = deck.requestFullscreen || deck.webkitRequestFullscreen;
+    if (enter) { try { await enter.call(deck); } catch (error) { /* not allowed here: fill the window instead */ } }
+    mark(true);
+  }
+  expand.addEventListener('click', toggleFull);
+  image.addEventListener('dblclick', toggleFull);
+  for (const name of ['fullscreenchange', 'webkitfullscreenchange']) {
+    document.addEventListener(name, () => { if (!realFull() && deck.classList.contains('is-full')) mark(false); });
+  }
+  deck.addEventListener('keydown', event => { if (event.key === 'Escape' && deck.classList.contains('is-full') && !realFull()) mark(false); });
   previous.addEventListener('click', () => show(current - 1));
   next.addEventListener('click', () => show(current + 1));
   deck.addEventListener('keydown', event => {
