@@ -34,6 +34,7 @@ body { margin: 0; background: var(--paper); color: var(--text); font: 400 19px/1
 a { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { color: var(--brick); }
 img, video, svg { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
 h1, h2, h3 { color: var(--ink); font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em; }
 h2 { font-size: 34px; line-height: 1.2; margin: 0 0 18px; }
 h3 { font-size: 23px; line-height: 1.3; margin: 40px 0 10px; }
@@ -110,6 +111,18 @@ pre .c { color: var(--muted); }
 .credits a { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font: 700 15px/1 var(--sans); }
 .credits a:hover { color: var(--brick); }
 .credits img { width: 40px; height: 40px; border-radius: 50%; background: var(--wash); }
+/* ---------- slide viewer ---------- */
+.deck { margin-top: 26px; outline: none; }
+.deck-frame { position: relative; aspect-ratio: 16 / 9; border: 1px solid var(--rule); background: var(--wash); touch-action: pan-y; }
+.deck-frame img { width: 100%; height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+.deck-frame video { position: absolute; left: 17.1%; top: 20.1%; width: 65.7%; height: 65.7%; background: #0B1220; }
+.deck-controls { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--rule); font: 700 14px/1 var(--sans); color: var(--ink); }
+.deck-controls button { width: 42px; height: 38px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); font: 400 18px/1 var(--sans); cursor: pointer; }
+.deck-controls button:hover { background: var(--ink); color: var(--paper); }
+.deck-controls button:disabled { opacity: .3; cursor: default; background: var(--paper); color: var(--ink); }
+#deck-count { min-width: 4.5ch; text-align: center; font-variant-numeric: tabular-nums; }
+.deck-title { flex: 1; min-width: 0; font-weight: 400; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.deck:focus-visible .deck-frame { outline: 2px solid var(--brick); outline-offset: 3px; }
 footer { margin-top: 80px; padding: 40px 0 56px; border-top: 1px solid var(--ink); font: 400 15px/1.6 var(--sans); color: var(--muted); }
 footer p { margin: 0 0 8px; }
 footer b { color: var(--ink); }
@@ -255,7 +268,7 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">The measures</p>
       <h2>A sparse small world</h2>
-      <p>We turned the ratings into a network: users are nodes, and a positive rating from one user to another is a directed link. Most models in the course are for undirected networks, so we also join two users with one link when either rated the other, which gives 18,591 links among 5,881 users. These are its basic measures.</p>
+      <p>We turned the ratings into a network: users are nodes, and a positive rating from one user to another is a directed link. Most classic network models are for undirected networks, so we also join two users with one link when either rated the other, which gives 18,591 links among 5,881 users. These are its basic measures.</p>
       <table>
         <thead><tr><th>Measure</th><th>Value</th><th>What it says</th></tr></thead>
         <tbody>
@@ -269,7 +282,7 @@ footer b { color: var(--ink); }
           <tr><td>Modularity</td><td class="num">0.504</td><td>Strong community structure</td></tr>
         </tbody>
       </table>
-      <p>Paths are shorter than in a random network of the same size, while clustering is about 150 times higher: together that is a <b>small world</b>. All five largest communities are <b>weak communities</b> in Barabási's sense, with more of their members' link ends inside the group than outside, although which users land in which group changes when the algorithm is rerun.</p>
+      <p>Paths are shorter than in a random network of the same size, while clustering is about 150 times higher: together that is a <b>small world</b>. All five largest communities are <b>weak communities</b> in the sense of Barabási's <i>Network Science</i>, with more of their members' link ends inside the group than outside, although which users land in which group changes when the algorithm is rerun.</p>
     </div>
   </section>
 
@@ -316,7 +329,7 @@ footer b { color: var(--ink); }
         <figcaption><b>Concentration over time.</b> The top 1% is chosen again at each date; the band shows the middle 95% of 1,000 equal-volume redraws.</figcaption>
       </figure>
       <h3>Who receives the next rating?</h3>
-      <p>This is how the course measures <b>preferential attachment</b>: for every new rating, compare the user who received it with everyone who could have. Users with 32 or more earlier ratings were chosen 12.7 times as often as chance, and the fitted rule \(\Pi(k) \propto k^{\alpha}\) has \(\alpha = 1.07\), almost exactly BA's linear attachment.</p>
+      <p>The standard way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare, for every new rating, the user who received it with everyone who could have. Users with 32 or more earlier ratings were chosen 12.7 times as often as chance, and the fitted rule \(\Pi(k) \propto k^{\alpha}\) has \(\alpha = 1.07\), almost exactly BA's linear attachment.</p>
       <p>That compares a dormant newcomer with an active trader. Against users with the same tenure and recent activity the ratio falls to 1.65, and \(\alpha\) to a sublinear 0.68. Recent activity, not reputation, explains most of the advantage, and about half of all ratings simply return an earlier one, usually within minutes.</p>
       <figure>
         <img src="assets/attachment.svg" alt="How often users with 32 or more earlier ratings were chosen, relative to five comparison groups" loading="lazy">
@@ -366,6 +379,28 @@ footer b { color: var(--ink); }
       <p><b>Counts overstate independent opinions.</b> About half of the ratings return an earlier one, often within minutes, so a rating count is not a count of independent endorsements.</p>
       <p><b>Activity beats reputation.</b> Recent activity explains most of the pull of highly rated users. We cannot separate it from trading volume, which the data do not record.</p>
       <p class="byline">Limits: ratings are opinions, not verified trades; the data have no registration dates or trade volumes; one person may hold several IDs.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="talk">
+    <div class="col">
+      <p class="kicker">The talk</p>
+      <h2>The presentation</h2>
+      <p>The fifteen slides of our thirteen-minute talk. Use the arrows, the arrow keys, or swipe; slide 9 plays the CyAnimator video.</p>
+      <div class="deck" id="deck" tabindex="0" aria-roledescription="carousel" aria-label="Presentation slides">
+        <div class="deck-frame">
+          <img id="deck-image" src="assets/slides/slide-01.jpg" alt="Slide 1: The Bitcoin OTC Trust Network" width="1600" height="900">
+          <video id="deck-video" controls muted playsinline preload="none" poster="assets/timeline-poster.jpg" hidden>
+            <source src="assets/timeline.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="deck-controls">
+          <button type="button" id="deck-previous" aria-label="Previous slide">&larr;</button>
+          <span id="deck-count" aria-live="polite">1 / 15</span>
+          <button type="button" id="deck-next" aria-label="Next slide">&rarr;</button>
+          <span class="deck-title" id="deck-title">The Bitcoin OTC Trust Network</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -747,6 +782,51 @@ python3.12 -m venv .venv
   addEventListener('resize', () => { placeLab(); drawLab(); });
   placeLab();
   drawLab();
+})();
+
+// ---------- slide viewer ----------
+(function () {
+  const titles = ['The Bitcoin OTC Trust Network', 'Why study Bitcoin OTC ratings?', 'A rating becomes a directed link',
+    'The network at a glance', 'Communities: weak, but clearly present', 'Compared with ER, BA and degree-preserving networks',
+    'Heavy-tailed, but not strictly scale-free', 'Degree correlations: hubs link to small users',
+    'How strong ratings among top users built up', 'Accumulated ratings concentrate; yearly ratings do not',
+    'Who receives the next positive rating?', 'A fair comparison: recent activity matters',
+    'Robust to random failures, fragile to attacks', 'Checks and limits', 'Findings and code demonstration'];
+  const VIDEO_SLIDE = 9;
+  const deck = document.getElementById('deck'), image = document.getElementById('deck-image');
+  const video = document.getElementById('deck-video'), count = document.getElementById('deck-count');
+  const title = document.getElementById('deck-title');
+  const previous = document.getElementById('deck-previous'), next = document.getElementById('deck-next');
+  const source = n => `assets/slides/slide-${String(n).padStart(2, '0')}.jpg`;
+  let current = 1;
+
+  function show(n) {
+    current = Math.min(titles.length, Math.max(1, n));
+    image.src = source(current);
+    image.alt = `Slide ${current}: ${titles[current - 1]}`;
+    count.textContent = `${current} / ${titles.length}`;
+    title.textContent = titles[current - 1];
+    previous.disabled = current === 1;
+    next.disabled = current === titles.length;
+    video.hidden = current !== VIDEO_SLIDE;
+    if (current !== VIDEO_SLIDE) video.pause();
+    for (const m of [current - 1, current + 1]) if (m >= 1 && m <= titles.length) new Image().src = source(m);  // preload neighbours
+  }
+  previous.addEventListener('click', () => show(current - 1));
+  next.addEventListener('click', () => show(current + 1));
+  deck.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') { show(current - 1); event.preventDefault(); }
+    if (event.key === 'ArrowRight') { show(current + 1); event.preventDefault(); }
+  });
+  let startX = null;
+  image.addEventListener('pointerdown', event => { startX = event.clientX; });
+  image.addEventListener('pointerup', event => {
+    if (startX === null) return;
+    const moved = event.clientX - startX;
+    if (Math.abs(moved) > 40) show(current + (moved < 0 ? 1 : -1));
+    startX = null;
+  });
+  show(1);
 })();
 </script>
 </body>
