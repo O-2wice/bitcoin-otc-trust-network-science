@@ -7,7 +7,7 @@ frames, adds titles and legends, and encodes the video with ffmpeg.
 Writes to outputs/cytoscape/:
   bitcoin_otc_spotlight.png                dark figure (slides and website)
   bitcoin_otc_spotlight_light.png          light figure (report)
-  bitcoin_otc_spotlight_timeline.mp4       CyAnimator video, plus a copy in presentation/
+  bitcoin_otc_spotlight_timeline.mp4       CyAnimator video
   bitcoin_otc_spotlight_timeline_poster.png
   cyanimator_provenance.json
 """
@@ -198,7 +198,6 @@ def build_video(chosen, dropped, crop):
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', str(listing),
                     '-vf', 'fps=24,format=yuv420p', '-t', f'{total:.3f}', '-c:v', 'libx264', '-preset', 'slow',
                     '-crf', '18', '-movflags', '+faststart', str(movie)], check=True)
-    shutil.copyfile(movie, ROOT / 'presentation/bitcoin_otc_spotlight_timeline.mp4')
     shutil.copyfile(entries[-1][0], OUT / 'bitcoin_otc_spotlight_timeline_poster.png')
     return movie, total
 

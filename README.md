@@ -68,11 +68,8 @@ outputs/
   reproduction/    Run manifest and script logs
 cytoscape/         Cytoscape styles and the two scripts that build the figures and video
 docs/              Project website (GitHub Pages) and the script that draws its charts
-presentation/      Demo guide and a copy of the timeline video (the slides stay local)
-PLAN.md            Project plan and how it maps to the assignment
 REPRODUCIBILITY.md How a source rating becomes a graph, and how to recreate the outputs
 CODE_WALKTHROUGH.md Plain-language explanation of each script
-AI_DISCLOSURE.md   AI tools used and how their output was checked
 ```
 
 ## Reproduce
@@ -107,7 +104,7 @@ Starting Jupyter through `python -m` also works where Windows Application Contro
 
 ## Presentation
 
-The [demo guide](presentation/DEMO.md) gives the slide timing, the code demonstration, and how to play the CyAnimator video. The 16-slide deck uses the ELTE template and holds the speaker notes; it stays local and is presented from a team member's computer.
+The slides of the talk can be viewed on the [project website](https://o-2wice.github.io/bitcoin-otc-trust-network-science/#talk). The PowerPoint with speaker notes is kept by the team for the presentation.
 
 The [compiled report](report/bitcoin_otc_report.pdf) is 15 pages. The [Overleaf source ZIP](overleaf/bitcoin_otc_report_overleaf.zip) contains the LaTeX report, bibliography, template files, and figures. See the [build instructions](overleaf/README.md).
 
@@ -117,4 +114,4 @@ Ouko Oyombe ([O-2wice](https://github.com/O-2wice)), Sheillah Khaluvitsi ([shish
 
 ## AI-use disclosure
 
-See [AI_DISCLOSURE.md](AI_DISCLOSURE.md) for the required account of assistance and verification.
+AI tools were used in this project. Which tools, what for, and how their output was checked is set out in the *Declaration on the use of AI tools* at the end of the [report](report/bitcoin_otc_report.pdf).

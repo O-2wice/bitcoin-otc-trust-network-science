@@ -4,8 +4,9 @@ __pycache__/
 report/*
 *.[pP][dD][fF]
 !report/bitcoin_otc_report.pdf
-presentation/SPEAKER_NOTES.md
-presentation/bitcoin_otc_network_science.pptx
+presentation/
+PLAN.md
+AI_DISCLOSURE.md
 data/*.gz
 outputs/cytoscape/*.graphml
 outputs/cytoscape/*.cys
