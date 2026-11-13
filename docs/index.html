@@ -358,11 +358,11 @@ footer b { color: var(--ink); }
           <tr><td>Modularity</td><td>0.504</td><td>0.369</td><td>0.388</td><td>0.334</td></tr>
         </tbody>
       </table>
-      <p>Keeping the degrees reproduces the short paths but not the clustering or the communities. Those come from how users actually chose their partners.</p>
+      <p>Keeping the degrees reproduces the short paths but not the clustering or the communities, so the degrees alone do not explain those. The randomization does not show what does.</p>
 
       <h3>Heavy-tailed, but not strictly scale-free</h3>
-      <p>A scale-free network has a degree distribution \(P(k) \propto k^{-\gamma}\). Fitted properly, by maximum likelihood rather than a straight line on a log–log plot, the tail gives \(\gamma = 2.09\): heavier than the \(\gamma = 3\) of the BA model. Yet a lognormal tail fits better, and above about 100 links the data bend down.</p>
-      <p>BA's growth rule also fails, because 70.5% of links join two users who were already present. Barabási's internal-link model allows exactly that, and for the measured \(m = 0.99\) new and \(n = 2.35\) internal links per new user it predicts a value inside the fitted range:</p>
+      <p>A scale-free network has a degree distribution \(P(k) \propto k^{-\gamma}\). Fitted properly, by maximum likelihood rather than a straight line on a log–log plot, the tail gives \(\gamma = 2.09\): heavier than the \(\gamma = 3\) of the BA model. Yet approximate tests favour a lognormal tail, and above about 100 links the data bend down.</p>
+      <p>Most links, 70.5%, join two users who had already appeared in an earlier rating. That alone does not rule out BA's growth rule, because a newcomer's later links count too. Barabási's internal-link model allows such links, and for the measured \(m = 0.99\) new and \(n = 2.35\) internal links per new user it predicts a value inside the fitted range:</p>
       <div class="formula">\(\gamma = 2 + \dfrac{m}{m + 2n} = 2.17\)</div>
       <figure>
         <img src="assets/degree-ccdf.jpg" alt="Degree distributions on log-log axes with fitted power-law and lognormal tails and the BA slope" loading="lazy">
@@ -387,7 +387,7 @@ footer b { color: var(--ink); }
         <figcaption><b>Concentration over time.</b> The top 1% is chosen again at each date; the band shows the middle 95% of 1,000 equal-volume redraws.</figcaption>
       </figure>
       <h3>Who receives the next rating?</h3>
-      <p>The standard way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare, for every new rating, the user who received it with everyone who could have. Users with 32 or more earlier ratings were chosen 12.7 times as often as chance, and the fitted rule \(\Pi(k) \propto k^{\alpha}\) has \(\alpha = 1.07\), almost exactly BA's linear attachment.</p>
+      <p>The standard way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare, for every new rating, the user who received it with everyone who could have. Users with 32 or more earlier ratings were chosen 12.7 times as often as chance, and the fitted rule \(\Pi(k) \propto (k+1)^{\alpha}\), where the \(+1\) lets users with no ratings yet be chosen, has \(\alpha = 1.07\), almost exactly BA's linear attachment.</p>
       <p>That compares a dormant newcomer with an active trader. Against users with the same tenure and recent activity the ratio falls to 1.65, and \(\alpha\) to a sublinear 0.68. Matching on recent activity alone gives a similar drop (1.71), and about half of the ratings to users already in the network return an earlier one, usually within minutes.</p>
       <figure>
         <img src="assets/attachment.svg" alt="How often users with 32 or more earlier ratings were chosen, relative to five comparison groups" loading="lazy">
