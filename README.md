@@ -32,7 +32,7 @@ These are descriptive findings, not evidence of a causal preference or current t
 
 ## What the findings imply
 
-Reputation is concentrated and stays concentrated: by 2015, 56 accounts held 23.5% of positive ratings. Old ratings stay in this record while new ones fell sharply after 2013, so a large accumulated score may increasingly describe past standing. The trust record depends on few accounts, so losing or compromising prominent accounts would disconnect far more of it than the same number of random departures. A rating count is not a count of independent endorsements, since about half of eligible ratings return an earlier one, usually within minutes. Recent participation may also matter more for attracting ratings than an established reputation alone, though the data cannot separate it from unobserved trading volume.
+Reputation is concentrated and stays concentrated: by 2015, 56 accounts held 23.5% of positive ratings. Old ratings stay in this record while new ones fell sharply after 2013, so a large accumulated score may increasingly describe past standing. In the removal simulation the rating network depends on few accounts: removing prominent accounts disconnects far more of it than removing the same number at random. A rating count is not a count of independent endorsements, since about half of eligible ratings return an earlier one, usually within minutes. Recent participation may also matter more for attracting ratings than an established reputation alone, though the data cannot separate it from unobserved trading volume.
 
 ## Limitations and further work
 
