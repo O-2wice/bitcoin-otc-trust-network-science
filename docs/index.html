@@ -373,14 +373,14 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">The focused question</p>
       <h2>How reputation concentrated</h2>
-      <p>Counting all ratings received so far, the top 1% of users held 15.5% of positive ratings at the end of 2011 and 23.5% by 2015, and the rise also holds within the users present in 2011. The share of each year's new ratings seems to fall after 2013, but ratings collapsed from 11,138 to 929 a year. Redrawn to the same 743 ratings every year, 2013 and 2015 overlap: most of that fall is a volume effect.</p>
+      <p>Counting all ratings received so far, the top 1% of users held 15.5% of positive ratings at the end of 2011 and 23.5% by 2015, and the rise also holds within the users present in 2011. The share of each year's new ratings seems to fall after 2013, but ratings collapsed from 11,138 to 929 a year. Redrawn to the same 743 ratings every year, 2013 and 2015 overlap, so the apparent fall is sensitive to volume: the data do not show that new ratings became less concentrated.</p>
       <figure>
         <img src="assets/concentration.svg" alt="Share of positive ratings held by the top 1% from 2011 to 2015, for all ratings so far, for each year's new ratings, and at equal volume" loading="lazy">
         <figcaption><b>Concentration over time.</b> The top 1% is chosen again at each date; the band shows the middle 95% of 1,000 equal-volume redraws.</figcaption>
       </figure>
       <h3>Who receives the next rating?</h3>
       <p>The standard way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare, for every new rating, the user who received it with everyone who could have. Users with 32 or more earlier ratings were chosen 12.7 times as often as chance, and the fitted rule \(\Pi(k) \propto k^{\alpha}\) has \(\alpha = 1.07\), almost exactly BA's linear attachment.</p>
-      <p>That compares a dormant newcomer with an active trader. Against users with the same tenure and recent activity the ratio falls to 1.65, and \(\alpha\) to a sublinear 0.68. Recent activity, not reputation, explains most of the advantage, and about half of all ratings simply return an earlier one, usually within minutes.</p>
+      <p>That compares a dormant newcomer with an active trader. Against users with the same tenure and recent activity the ratio falls to 1.65, and \(\alpha\) to a sublinear 0.68. Matching on recent activity alone gives a similar drop (1.71), and about half of the ratings to users already in the network return an earlier one, usually within minutes.</p>
       <figure>
         <img src="assets/attachment.svg" alt="How often users with 32 or more earlier ratings were chosen, relative to five comparison groups" loading="lazy">
         <figcaption><b>A fairer comparison.</b> Users with 32 or more earlier ratings against everyone who could have been rated, and against users with the same tenure or recent activity.</figcaption>
@@ -392,9 +392,9 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">Robustness</p>
       <h2>Robust to failures, fragile to attacks</h2>
-      <p>Percolation theory predicts when a network falls apart. A giant component exists while \(\kappa = \langle k^2\rangle / \langle k\rangle > 2\), the Molloy–Reed criterion, and removing a random fraction \(f\) of the users destroys it at the critical threshold</p>
+      <p>Percolation theory predicts when a network falls apart. A giant component exists while \(\kappa = \langle k^2\rangle / \langle k\rangle > 2\), the Molloy–Reed criterion, and for a random network with the same degrees, removing a random fraction \(f\) of the users destroys it at the critical threshold</p>
       <div class="formula">\(f_c = 1 - \dfrac{1}{\kappa - 1} = 0.986 \quad \text{for} \quad \kappa = 71.9\)</div>
-      <p>Random removal barely matters: the giant component survives until about 93% of users are gone. Removing the most-connected users first breaks it after 15%. Randomized networks with the same degrees break at the same point, so the hubs are the weak spot.</p>
+      <p>That is a benchmark, not a prediction for this clustered, finite network. In our simulation random removal barely matters: the largest component stays above 1% of users until about 93% are gone. Removing the most-connected users first breaks it after 15%. Randomized networks with the same degrees break at the same point, so the hubs are the weak spot.</p>
       <figure>
         <img src="assets/robustness.svg" alt="Share of users in the largest component as users are removed at random or by degree, for the observed network and an ER network" loading="lazy">
         <figcaption><b>Percolation.</b> The largest connected piece as users are removed at random or from the most connected down.</figcaption>
@@ -418,10 +418,10 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">What it means</p>
       <h2>Lessons for a web of trust</h2>
-      <p><b>Reputation stays concentrated.</b> By 2015, 56 accounts held 23.5% of positive ratings. Ratings never expire here, so a high score can describe the past more than the present.</p>
+      <p><b>Reputation stays concentrated.</b> By 2015, 56 accounts held 23.5% of positive ratings. Old ratings stay in the record while new ones fell after 2013, so a high score can describe the past more than the present.</p>
       <p><b>A few accounts hold it together.</b> Losing or compromising a handful of hubs would disconnect far more of the trust record than the same number of random departures.</p>
-      <p><b>Counts overstate independent opinions.</b> About half of the ratings return an earlier one, often within minutes, so a rating count is not a count of independent endorsements.</p>
-      <p><b>Activity beats reputation.</b> Recent activity explains most of the pull of highly rated users. We cannot separate it from trading volume, which the data do not record.</p>
+      <p><b>Counts overstate independent opinions.</b> About half of the ratings to users already in the network return an earlier one, often within minutes, so a rating count is not a count of independent endorsements.</p>
+      <p><b>Activity matters.</b> Comparing users with the same tenure and recent activity shrinks the pull of highly rated users from 12.7 to 1.65 times chance. This is an association: we cannot separate activity from trading volume, which the data do not record.</p>
       <p class="byline">Limits: ratings are opinions, not verified trades; the data have no registration dates or trade volumes; one person may hold several IDs.</p>
     </div>
   </section>
@@ -476,7 +476,7 @@ python3.12 -m venv .venv
         <a href="https://github.com/shishi177-cpu"><img src="https://github.com/shishi177-cpu.png?size=96" alt="" width="40" height="40" loading="lazy">@shishi177-cpu</a>
         <a href="https://github.com/Abdak-Yussuf"><img src="https://github.com/Abdak-Yussuf.png?size=96" alt="" width="40" height="40" loading="lazy">@Abdak-Yussuf</a>
       </div>
-      <p>Data: the <a href="https://snap.stanford.edu/data/soc-sign-bitcoinotc.html">SNAP Bitcoin OTC trust network</a>. S. Kumar, F. Spezzano, V. S. Subrahmanian and C. Faloutsos, <i>Edge Weight Prediction in Weighted Signed Networks</i>, IEEE ICDM 2016.</p>
+      <p>Data: the <a href="https://snap.stanford.edu/data/soc-sign-bitcoinotc.html">SNAP Bitcoin OTC trust network</a>. S. Kumar, F. Spezzano, V. S. Subrahmanian and C. Faloutsos, <i>Edge Weight Prediction in Weighted Signed Networks</i>, IEEE ICDM 2016; S. Kumar, B. Hooi, D. Makhija, M. Kumar, C. Faloutsos and V. S. Subrahmanian, <i>REV2: Fraudulent User Prediction in Rating Platforms</i>, ACM WSDM 2018.</p>
     </div>
   </footer>
 </main>
