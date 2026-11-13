@@ -26,7 +26,7 @@
     "median_days_to_return": 0.002600345256979819,
     "share_returned_within_7_days": 0.8730465843131419
   },
-  "tail_method": "Discrete power-law maximum likelihood; k_min by smallest KS distance with at least 50 tail nodes; 200 bootstrap draws; semi-parametric goodness of fit with 500 draws; Vuong tests against lognormal and exponential, nested test against a cutoff",
+  "tail_method": "Discrete power-law maximum likelihood; k_min by smallest KS distance with at least 50 tail nodes; 200 bootstrap draws; semi-parametric goodness of fit with 500 draws, tails drawn exactly from the discrete power law; Vuong tests against lognormal and exponential, nested test against a cutoff",
   "attachment_method": "Conditional logit: choice probability proportional to (k + 1) ** alpha among each event's candidates. Standard errors treat events as independent, so they are optimistic.",
   "percolation_method": "20 random replicates per fraction on one realization of each graph; collapse is the first tested fraction leaving a largest component under 1% of original users",
   "growth": {

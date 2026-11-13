@@ -168,12 +168,35 @@ def fit_power_tail(sample, min_tail=MIN_TAIL):
     return best
 
 
+def discrete_power_draws(uniform, k_min, gamma):
+    """Exact draws from P(k) = k^-gamma / zeta(gamma, k_min) for k >= k_min.
+
+    Each draw is the largest k whose tail probability zeta(gamma, k) / zeta(gamma, k_min)
+    is at least 1 - u, found by doubling and then bisection (Clauset et al. 2009, App. D).
+    """
+    target = 1 - uniform
+    norm = special.zeta(gamma, k_min)
+    low = np.full(len(target), float(k_min))
+    high = low.copy()
+    while True:
+        above = special.zeta(gamma, high) / norm >= target
+        if not above.any():
+            break
+        low[above] = high[above]
+        high[above] *= 2
+    while (high - low > 1).any():
+        middle = np.floor((low + high) / 2)
+        above = special.zeta(gamma, middle) / norm >= target
+        low = np.where(above, middle, low)
+        high = np.where(above, high, middle)
+    return low
+
+
 def synthetic_sample(rng, sample, fit):
-    """Keep the observed body below k_min and draw the tail from the fitted power law."""
+    """Keep the observed body below k_min and draw the tail exactly from the fitted discrete power law."""
     body = sample[sample < fit["k_min"]]
     n_tail = rng.binomial(len(sample), fit["n_tail"] / len(sample))
-    draws = rng.random(n_tail)
-    tail = np.floor((fit["k_min"] - 0.5) * (1 - draws) ** (-1 / (fit["gamma"] - 1)) + 0.5)
+    tail = discrete_power_draws(rng.random(n_tail), fit["k_min"], fit["gamma"])
     resampled = rng.choice(body, len(sample) - n_tail) if len(body) else np.empty(0)
     return np.concatenate([resampled, tail])
 
@@ -701,7 +724,7 @@ def main():
         "return_ratings": reply_summary,
         "tail_method": "Discrete power-law maximum likelihood; k_min by smallest KS distance with at least "
                        f"{MIN_TAIL} tail nodes; {UNCERTAINTY_DRAWS} bootstrap draws; semi-parametric goodness of fit "
-                       f"with {FIT_TEST_DRAWS} draws; Vuong tests against lognormal and exponential, nested test against a cutoff",
+                       f"with {FIT_TEST_DRAWS} draws, tails drawn exactly from the discrete power law; Vuong tests against lognormal and exponential, nested test against a cutoff",
         "attachment_method": "Conditional logit: choice probability proportional to (k + 1) ** alpha among each event's "
                              "candidates. Standard errors treat events as independent, so they are optimistic.",
         "percolation_method": f"{REMOVAL_REPLICATES} random replicates per fraction on one realization of each graph; "

@@ -23,7 +23,7 @@ gamma_ci_high                          2.2381              2.2777               
 k_min_ci_low                              3.0                 2.0                  3.0           NaN                      NaN
 k_min_ci_high                            11.0               10.05               42.025           NaN                      NaN
 ks_distance                            0.0303              0.0381               0.0319           NaN                      NaN
-goodness_of_fit_p                       0.002                 0.0                  0.0           NaN                      NaN
+goodness_of_fit_p                         0.0                 0.0                  0.0           NaN                      NaN
 lr_vs_lognormal                      -10.6378              -9.067             -11.0276           NaN                      NaN
 p_vs_lognormal                         0.0037              0.0079               0.0036           NaN                      NaN
 lr_vs_exponential                    261.0684            127.6452             210.2295           NaN                      NaN
@@ -106,7 +106,7 @@ Observed              71.9120                 0.9859                            
     "median_days_to_return": 0.002600345256979819,
     "share_returned_within_7_days": 0.8730465843131419
   },
-  "tail_method": "Discrete power-law maximum likelihood; k_min by smallest KS distance with at least 50 tail nodes; 200 bootstrap draws; semi-parametric goodness of fit with 500 draws; Vuong tests against lognormal and exponential, nested test against a cutoff",
+  "tail_method": "Discrete power-law maximum likelihood; k_min by smallest KS distance with at least 50 tail nodes; 200 bootstrap draws; semi-parametric goodness of fit with 500 draws, tails drawn exactly from the discrete power law; Vuong tests against lognormal and exponential, nested test against a cutoff",
   "attachment_method": "Conditional logit: choice probability proportional to (k + 1) ** alpha among each event's candidates. Standard errors treat events as independent, so they are optimistic.",
   "percolation_method": "20 random replicates per fraction on one realization of each graph; collapse is the first tested fraction leaving a largest component under 1% of original users",
   "growth": {
