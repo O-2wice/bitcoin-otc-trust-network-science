@@ -274,9 +274,9 @@ footer b { color: var(--ink); }
     <div class="step" data-step="hubs" id="step-hubs">
       <div class="note">
         <h3>A few hubs</h3>
-        <p>Size now shows <b>degree</b>, the number of users someone is linked to. The average is</p>
+        <p>Size now shows <b>degree</b>, the number of users someone is linked to. Across all 5,881 users the average is</p>
         <span class="big">6.3 links</span>
-        <p>but user 35 has 788. Most users have one or two links and a handful have hundreds: the degree distribution is <b>heavy-tailed</b>.</p>
+        <p>(6.7 among the 5,551 drawn here), but user 35 has 788. Most users have one or two links and a handful have hundreds: the degree distribution is <b>heavy-tailed</b>.</p>
       </div>
     </div>
 
@@ -309,7 +309,7 @@ footer b { color: var(--ink); }
         <h3>Random failures</h3>
         <p>Remove a random 15% of users. Blue users can still reach one another, and they are still</p>
         <span class="big">75% of users</span>
-        <p>Random losses barely hurt a network held together by hubs.</p>
+        <p>Random losses rarely hit a hub, so most of the rest stays connected.</p>
       </div>
     </div>
 
@@ -346,6 +346,7 @@ footer b { color: var(--ink); }
         <div>
           <span class="big" id="lab-share">75%</span>
           <p id="lab-text">of all 5,881 users are still in one connected piece.</p>
+          <p class="small">Worked out on the 5,551 users drawn here, with the other 330 counted as cut off. Once the network has shattered, a small piece not drawn here can be slightly larger, so exact values are in the report.</p>
         </div>
         <div>
           <svg id="lab-curve" viewBox="0 0 320 190" role="img" aria-label="Share of users still connected as more are removed, for both strategies"></svg>
@@ -423,11 +424,11 @@ footer b { color: var(--ink); }
         <figcaption><b>Concentration over time.</b> The top 1% is chosen again at each date; the band shows the middle 95% of 1,000 equal-volume redraws.</figcaption>
       </figure>
       <h3>Who receives the next rating?</h3>
-      <p>A common way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare the user who received each new rating with the other candidates. Here the candidates are the users who had already appeared in a positive rating, except the rater and anyone the rater had already rated positively. Users with 32 or more earlier ratings received 12.7 times as many ratings as expected if every candidate were equally likely to be picked, and the fitted rule \(\Pi(k) \propto (k+1)^{\alpha}\), where the \(+1\) lets users with no ratings yet be chosen, has \(\alpha = 1.07\), close to BA's linear attachment.</p>
-      <p>That benchmark treats a dormant newcomer and an active user alike. Compared only with candidates of the same tenure and recent activity, these users received 1.65 times the expected number, and \(\alpha\) falls to a sublinear 0.68. Matching on recent activity alone gives a similar drop (1.71), and about half of the ratings to users already in the network return an earlier one, usually within minutes.</p>
+      <p>A common way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare the user who received each new rating with the other candidates. Here the candidates are the users who had already appeared in a positive rating, except the rater and anyone the rater had already rated positively. Users with 32 or more earlier ratings received 12.7 times as many ratings as expected if every candidate were equally likely to be picked, and the fitted rule \(\Pi(k) \propto (k+1)^{\alpha}\), where \(k\) counts positive ratings already received and the \(+1\) lets users with none yet be chosen, has \(\alpha = 1.07\): close to linear, the form of BA's rule, which uses total degree instead.</p>
+      <p>That benchmark treats a dormant newcomer and an active user alike. Compared only with candidates in the same tenure and recent-activity groups, these users received 1.65 times the expected number, and \(\alpha\) falls to a sublinear 0.68. Matching on recent activity alone gives a similar drop (1.71), and about half of the ratings to users already in the network return an earlier one, usually within minutes.</p>
       <figure>
         <img src="assets/attachment.svg" alt="Observed divided by expected ratings for users with 32 or more earlier ratings, under five comparison groups" loading="lazy">
-        <figcaption><b>A fairer comparison.</b> Users with 32 or more earlier ratings against all candidates, and against candidates with the same tenure or recent activity.</figcaption>
+        <figcaption><b>A fairer comparison.</b> Users with 32 or more earlier ratings against all candidates, and against candidates in the same tenure or activity group. Tenure groups: under 90 days, 90–364 days, a year or more since a user first appeared; activity groups: 0, 1–2, 3–9 or 10+ positive ratings given or received in the previous 90 days.</figcaption>
       </figure>
     </div>
   </section>
@@ -436,9 +437,9 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">Robustness</p>
       <h2>Robust to failures, fragile to attacks</h2>
-      <p>Percolation theory predicts when a network falls apart. A giant component exists while \(\kappa = \langle k^2\rangle / \langle k\rangle > 2\), the Molloy–Reed criterion, and for a random network with the same degrees, removing a random fraction \(f\) of the users destroys it at the critical threshold</p>
+      <p>Percolation theory predicts when a random network falls apart. For a random network with a given set of degrees, a giant component exists while \(\kappa = \langle k^2\rangle / \langle k\rangle > 2\), the Molloy–Reed criterion, and removing a random fraction \(f\) of the users destroys it at the critical threshold</p>
       <div class="formula">\(f_c = 1 - \dfrac{1}{\kappa - 1} = 0.986 \quad \text{for} \quad \kappa = 71.9\)</div>
-      <p>That is a benchmark, not a prediction for this clustered, finite network. In our simulation random removal barely matters: the largest component stays above 1% of users until about 93% are gone. Removing the most-connected users first breaks it after 15%. Randomized networks with the same degrees break at the same point, so the hubs are the weak spot.</p>
+      <p>That is a benchmark, not a prediction for this clustered, finite network. In our simulation random removal wears the network down gradually: with half the users removed, the largest component still holds about 32% of all users, and it falls below 1% only after about 93% are gone. Removing the most-connected users first breaks it after 15%. Randomized networks with the same degrees break at the same point, so the hubs are the weak spot.</p>
       <figure>
         <img src="assets/robustness.svg" alt="Share of users in the largest component as users are removed at random or by degree, for the observed network and an ER network" loading="lazy">
         <figcaption><b>Percolation.</b> The largest connected piece as users are removed at random or from the most connected down.</figcaption>
@@ -465,7 +466,7 @@ footer b { color: var(--ink); }
       <p><b>Reputation stays concentrated.</b> By 2015, 56 accounts held 23.5% of positive ratings. Old ratings stay in the record while new ones fell after 2013, so a high rating count can describe the past more than the present.</p>
       <p><b>A few accounts keep it connected.</b> In our simulation, removing the most-connected 1% of users disconnects far more of the rating network than removing the same number of users at random.</p>
       <p><b>Counts can overstate independent opinions.</b> About half of the ratings to users already in the network return an earlier one, often within minutes, so a rating count is not a count of independent endorsements.</p>
-      <p><b>Activity matters.</b> Highly rated users received 12.7 times the ratings expected if every candidate were equally likely, but only 1.65 times the expected number when compared with users of the same tenure and recent activity. This is an association: we cannot separate activity from trading volume, which the data do not record.</p>
+      <p><b>Activity matters.</b> Highly rated users received 12.7 times the ratings expected if every candidate were equally likely, but only 1.65 times the expected number when compared with users in the same tenure and recent-activity groups. This is an association: we cannot separate activity from trading volume, which the data do not record.</p>
       <p class="byline">Limits: ratings are opinions, not verified trades; the data have no registration dates or trade volumes; one person may hold several IDs.</p>
     </div>
   </section>
@@ -501,7 +502,7 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">Reproduce</p>
       <h2>Every number can be rebuilt</h2>
-      <p>The <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science">repository</a> has the analysis scripts, <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science/tree/main/notebooks">notebooks</a> that work through each method by hand, the stored results, and a checker that compares a new run with the recorded one. With Python 3.12:</p>
+      <p>The <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science">repository</a> has the analysis scripts, <a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science/tree/main/notebooks">notebooks</a> that work through each method by hand, the stored results, and a checker that tests the source file and key results against fixed values and confirms that the stored outputs, scripts and software match the run recorded in the manifest. With Python 3.12:</p>
 <pre><span class="c"># set up the environment</span>
 python3.12 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
