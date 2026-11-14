@@ -88,7 +88,7 @@ def knn():
 
 def attachment():
     table = pd.read_csv(ROOT / 'outputs/theory/attachment_benchmarks.csv').set_index('benchmark')
-    rows = [('Uniform', 'All possible recipients'), ('Tenure only', 'Same tenure'),
+    rows = [('Uniform', 'All earlier users'), ('Tenure only', 'Same tenure'),
             ('Activity only', 'Same recent activity'), ('Tenure and activity', 'Same tenure and activity'),
             ('Tenure and ratings given', 'Same tenure, ratings given')]
     values = [table.loc[key, 'ratio_32+'] for key, _ in rows]
@@ -100,8 +100,8 @@ def attachment():
         ax.text(value + 0.3, y, f'{value:.2f}×', va='center', fontsize=11.5, fontweight='bold', color=INK)
     ax.set_yticks(positions, [label for _, label in rows])
     ax.axvline(1, color=BRICK, lw=1.2, ls=(0, (3, 3)))
-    ax.text(1.2, len(rows) - 0.45, 'chance', color=BRICK, fontsize=10)
-    ax.set_xlabel('How often users with 32+ earlier ratings were chosen, relative to the comparison group')
+    ax.text(1.2, len(rows) - 0.45, 'expected', color=BRICK, fontsize=10)
+    ax.set_xlabel('Observed ÷ expected ratings for users with 32+ earlier ratings, by comparison group')
     ax.grid(axis='y', visible=False)
     ax.tick_params(axis='y', length=0, labelcolor=INK)
     save(fig, 'attachment')
