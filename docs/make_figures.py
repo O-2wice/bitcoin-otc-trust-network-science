@@ -36,17 +36,20 @@ plt.rcParams.update({
 })
 
 
-def save(fig, name):
-    fig.savefig(OUT / f'{name}.svg', bbox_inches='tight', transparent=True)
-    fig.savefig(OUT / f'{name}.png', bbox_inches='tight', dpi=220, facecolor='white')
+def save(fig, name, phone=False):
+    if phone:  # narrower copy for phones, so the text stays readable when the page scales it down
+        fig.savefig(OUT / f'{name}-phone.svg', bbox_inches='tight', transparent=True)
+    else:
+        fig.savefig(OUT / f'{name}.svg', bbox_inches='tight', transparent=True)
+        fig.savefig(OUT / f'{name}.png', bbox_inches='tight', dpi=220, facecolor='white')
     plt.close(fig)
 
 
-def concentration():
+def concentration(phone=False):
     cumulative = pd.read_csv(ROOT / 'outputs/temporal/annual_snapshots.csv').set_index('year_end')
     yearly = pd.read_csv(ROOT / 'outputs/sensitivity/annual_equal_volume_check.csv').set_index('year')
     years = list(range(2011, 2016))
-    fig, ax = plt.subplots(figsize=(7.2, 4.0))
+    fig, ax = plt.subplots(figsize=(4.0, 3.6) if phone else (7.2, 4.0))
     ax.fill_between(years, 100 * yearly.loc[years, 'equal_volume_share_low'],
                     100 * yearly.loc[years, 'equal_volume_share_high'], color=GREY, alpha=0.18, lw=0)
     lines = [(100 * cumulative.loc[years, 'top_1_percent_incoming_share'], BLUE, 'All ratings so far', 0),
@@ -58,20 +61,22 @@ def concentration():
                     va='center', color=colour, fontsize=11.5, fontweight='bold')
     ax.set_xticks(years)
     ax.set_ylim(0, 27)
-    ax.set_ylabel('Share of positive ratings held by the top 1%')
+    ax.set_ylabel('Top 1% share' if phone else 'Share of positive ratings held by the top 1%')
     ax.yaxis.set_major_formatter(lambda v, _: f'{v:.0f}%')
     ax.grid(axis='x', visible=False)
-    save(fig, 'concentration')
+    if phone:
+        ax.set_xticks(years, ["'11", "'12", "'13", "'14", "'15"])
+    save(fig, 'concentration', phone)
 
 
-def knn():
+def knn(phone=False):
     table = pd.read_csv(ROOT / 'outputs/correlations/knn_by_degree.csv')
     summary = pd.read_csv(ROOT / 'outputs/correlations/correlation_summary.csv').iloc[0]
     shown = table[table.users_with_degree >= 2]
-    fig, ax = plt.subplots(figsize=(7.2, 4.0))
+    fig, ax = plt.subplots(figsize=(4.4, 4.0) if phone else (7.2, 4.0))
     ax.fill_between(table.degree, table.knn_rewired_p2_5, table.knn_rewired_p97_5, color=GREY, alpha=0.25, lw=0)
-    ax.plot(table.degree, table.knn_rewired_mean, color=MUTED, lw=1.8, label=f'Degree-preserving rewires (r = {summary.r_rewired_mean:.3f})')
-    ax.scatter(shown.degree, shown.knn_observed, s=16, color=BRICK, zorder=3, label=f'Observed network (r = {summary.r_observed:.3f})')
+    ax.plot(table.degree, table.knn_rewired_mean, color=MUTED, lw=1.8, label=f'{"Rewires" if phone else "Degree-preserving rewires"} (r = {summary.r_rewired_mean:.3f})')
+    ax.scatter(shown.degree, shown.knn_observed, s=16, color=BRICK, zorder=3, label=f'{"Observed" if phone else "Observed network"} (r = {summary.r_observed:.3f})')
     ax.set_xscale('log')
     ax.set_yscale('log')
     ax.set_xticks([1, 10, 100, 1000], ['1', '10', '100', '1000'])
@@ -79,21 +84,22 @@ def knn():
     ax.yaxis.set_minor_formatter(NullFormatter())
     ax.set_xlabel('Degree k')
     ax.set_ylabel('Average degree of neighbours')
-    ax.legend(frameon=False, loc='lower left', fontsize=10.5)
+    ax.legend(frameon=False, loc='lower left', fontsize=9.5 if phone else 10.5)
     one = table.iloc[0]
-    ax.annotate(f'Users with one link: neighbours have\n{one.knn_observed:.0f} links on average ({one.knn_rewired_mean:.0f} after rewiring)',
-                (1, one.knn_observed), xytext=(18, -4), textcoords='offset points', fontsize=10.5, color=INK, va='top')
-    save(fig, 'knn')
+    note = (f'One-link users: neighbours\nhave {one.knn_observed:.0f} links ({one.knn_rewired_mean:.0f} rewired)' if phone else
+            f'Users with one link: neighbours have\n{one.knn_observed:.0f} links on average ({one.knn_rewired_mean:.0f} after rewiring)')
+    ax.annotate(note, (1, one.knn_observed), xytext=(18, -4), textcoords='offset points', fontsize=9.5 if phone else 10.5, color=INK, va='top')
+    save(fig, 'knn', phone)
 
 
-def attachment():
+def attachment(phone=False):
     table = pd.read_csv(ROOT / 'outputs/theory/attachment_benchmarks.csv').set_index('benchmark')
     rows = [('Uniform', 'All earlier users'), ('Tenure only', 'Same tenure'),
             ('Activity only', 'Same recent activity'), ('Tenure and activity', 'Same tenure and activity'),
             ('Tenure and ratings given', 'Same tenure, ratings given')]
     values = [table.loc[key, 'ratio_32+'] for key, _ in rows]
     colours = [GREY, GREY, BLUE, BLUE, BLUE]
-    fig, ax = plt.subplots(figsize=(7.2, 3.4))
+    fig, ax = plt.subplots(figsize=(3.0, 3.4) if phone else (7.2, 3.4))
     positions = list(range(len(rows)))[::-1]
     ax.barh(positions, values, color=colours, height=0.6)
     for y, value in zip(positions, values):
@@ -101,16 +107,19 @@ def attachment():
     ax.set_yticks(positions, [label for _, label in rows])
     ax.axvline(1, color=BRICK, lw=1.2, ls=(0, (3, 3)))
     ax.text(1.2, len(rows) - 0.45, 'expected', color=BRICK, fontsize=10)
-    ax.set_xlabel('Observed ÷ expected ratings for users with 32+ earlier ratings, by comparison group')
+    ax.set_xlabel('Observed ÷ expected ratings,\nusers with 32+ earlier ratings' if phone else
+                  'Observed ÷ expected ratings for users with 32+ earlier ratings, by comparison group')
     ax.grid(axis='y', visible=False)
     ax.tick_params(axis='y', length=0, labelcolor=INK)
-    save(fig, 'attachment')
+    if phone:
+        ax.set_xticks([0, 5, 10, 15])
+    save(fig, 'attachment', phone)
 
 
-def robustness():
+def robustness(phone=False):
     curves = pd.read_csv(ROOT / 'outputs/theory/percolation_curves.csv')
     thresholds = pd.read_csv(ROOT / 'outputs/theory/percolation_thresholds.csv').set_index('network')
-    fig, ax = plt.subplots(figsize=(7.2, 4.0))
+    fig, ax = plt.subplots(figsize=(4.0, 3.6) if phone else (7.2, 4.0))
     for network, strategy, colour, style, label in [
             ('ER', 'random', GREY, ':', 'ER, random failures'),
             ('ER', 'highest_degree_first', GREY, '--', 'ER, targeted attack'),
@@ -121,13 +130,16 @@ def robustness():
                 lw=2.4 if network == 'Observed' else 1.5, label=label)
     fc = thresholds.loc['Observed', 'molloy_reed_threshold']
     ax.axvline(fc, color=BLUE, lw=1, ls=(0, (2, 3)))
-    ax.text(fc - 0.01, 0.9, f'critical threshold {fc:.3f}', ha='right', color=BLUE, fontsize=10.5)
+    ax.text(fc - 0.01, 0.9, f'threshold {fc:.3f}' if phone else f'critical threshold {fc:.3f}', ha='right', color=BLUE, fontsize=10.5)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1.02)
     ax.set_xlabel('Fraction of users removed')
-    ax.set_ylabel('Share of users in the largest component')
-    ax.legend(frameon=False, fontsize=10.5, loc='upper right', bbox_to_anchor=(0.93, 0.82))
-    save(fig, 'robustness')
+    ax.set_ylabel('Share in largest component' if phone else 'Share of users in the largest component')
+    if phone:
+        ax.legend(frameon=False, fontsize=9.5, loc='upper center', bbox_to_anchor=(0.45, -0.2), ncol=2, columnspacing=1.0, handlelength=1.6)
+    else:
+        ax.legend(frameon=False, fontsize=10.5, loc='upper right', bbox_to_anchor=(0.93, 0.82))
+    save(fig, 'robustness', phone)
 
 
 def community_layout(graph, community):
@@ -251,10 +263,11 @@ if __name__ == '__main__':
     OUT.mkdir(parents=True, exist_ok=True)
     for old in ('network.jpg',):
         (OUT / old).unlink(missing_ok=True)
-    concentration()
-    knn()
-    attachment()
-    robustness()
+    for phone in (False, True):
+        concentration(phone)
+        knn(phone)
+        attachment(phone)
+        robustness(phone)
     network_data()
     media()
     print('Wrote charts, network data and media to', OUT.relative_to(ROOT))

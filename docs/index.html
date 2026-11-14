@@ -158,7 +158,11 @@ td.num { font-family: var(--serif); font-size: 19px; font-weight: 600; color: va
 .models td, .models th { text-align: right; }
 .models td:first-child, .models th:first-child { text-align: left; }
 .models td:nth-child(2) { font-weight: 700; color: var(--ink); }
-.formula { margin: 22px 0; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); text-align: center; font-size: 20px; color: var(--ink); }
+.formula { margin: 22px 0; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); text-align: center; font-size: 20px; color: var(--ink); overflow-x: auto; overflow-y: hidden; }
+.wide { overflow-x: auto; }
+.swipe { display: none; }
+.byline a { display: inline-block; padding: 6px 0; }
+.slider input { height: 32px; }
 .findings p { padding-left: 0; }
 .findings b { color: var(--ink); }
 pre { background: var(--wash); color: var(--ink); padding: 20px 22px; overflow-x: auto; font: 14.5px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; margin: 22px 0; border-left: 3px solid var(--ink); }
@@ -221,24 +225,34 @@ footer b { color: var(--ink); }
 @media (max-width: 899px) {
   body { font-size: 18px; }
   .step { align-items: flex-end; padding: 0 max(var(--gutter), calc((100% - var(--column)) / 2)) 5vh; }
-  .models th, .models td { padding-right: 5px; font-size: 14px; }
+  .models th, .models td { padding-right: 5px; padding-left: 8px; font-size: 14px; }
+  .models td:first-child, .models th:first-child { padding-left: 0; }
   .models thead th { letter-spacing: .03em; }
   #lab { height: min(70vw, 460px); }
   .lab-side { grid-template-columns: 1fr; gap: 6px; }
   .lab-side .big { font-size: 52px; }
   .step.tall { align-items: flex-start; }
-  .step.tall .note { top: 58vh; }
+  /* each panel waits in the lower half while its step is active, so the network above stays visible */
+  .step:not(#top) { align-items: flex-start; padding-bottom: 0; }
+  .step:not(#top) .note { position: sticky; top: 54vh; padding: 12px 16px 2px; opacity: 0; pointer-events: none; transition: opacity .25s; }
+  .step:not(#top).is-active .note { opacity: 1; pointer-events: auto; }
+  .note h3 { font-size: 20px; margin-bottom: 6px; }
+  .note .big { font-size: 32px; margin: 2px 0 8px; }
+  .note .small { font-size: 12.5px; }
+  .formula { font-size: 16px; }
   .note, .opening { width: 100%; }
   .opening { background: rgba(255, 255, 255, 0.95); padding: 18px 2px 4px; }
   .opening h1 { font-size: 40px; }
   .standfirst { font-size: 19px; }
-  .note p { font-size: 17px; }
+  .note p { font-size: 15.5px; line-height: 1.5; margin-bottom: 10px; }
   .legend { left: var(--gutter); right: var(--gutter); top: 12px; text-align: left; font-size: 12.5px; }
   .legend span { margin: 0 12px 0 0; }
   .year { bottom: auto; top: 44vh; right: var(--gutter); font-size: 52px; }
   h2 { font-size: 29px; }
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media (max-width: 899px) and (max-height: 720px) { .note p { font-size: 14.5px; margin-bottom: 8px; } .note .big { font-size: 28px; } .note h3 { font-size: 19px; } }
+@media (max-width: 600px) { .wide img { width: 680px; max-width: none; } .swipe { display: inline; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .note { transition: none !important; } }
 </style>
 </head>
 <body>
@@ -329,7 +343,7 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">Try it</p>
       <h2>Break the network yourself</h2>
-      <p>Remove users and see what is left. <b>Random failures</b> take users at random; a <b>targeted attack</b> removes the most-connected users first. Blue users can still reach one another through the network; grey users have been cut off.</p>
+      <p><b>Guess first:</b> at the same percentage, will random failures or a targeted attack cut off more users? Then try both. <b>Random failures</b> take users at random; a <b>targeted attack</b> removes the most-connected users first. Blue users can still reach one another through the network; grey users have been cut off.</p>
     <div class="lab">
       <div class="lab-controls">
         <div class="toggle" role="group" aria-label="How users are removed">
@@ -402,13 +416,13 @@ footer b { color: var(--ink); }
       <div class="formula">\(\gamma = 2 + \dfrac{m}{m + 2n} = 2.17\)</div>
       <p>The fitting method reads low on simulated networks, though: it gives 2.74 for BA, whose true value is 3, and 1.88 for the internal-link model. The observed 2.09 sits between them, so internal links move the model toward the data without fully accounting for the tail.</p>
       <figure>
-        <img src="assets/degree-ccdf.jpg" alt="Degree distributions on log-log axes with fitted power-law and lognormal tails and the BA slope" loading="lazy">
-        <figcaption><b>Degree distributions.</b> Share of users with at least \(k\) links, for undirected, in- and out-degree, with the fitted tails and BA's slope.</figcaption>
+        <div class="wide"><img src="assets/degree-ccdf.jpg" alt="Degree distributions on log-log axes with fitted power-law and lognormal tails and the BA slope" loading="lazy"></div>
+        <figcaption><b>Degree distributions.</b> Share of users with at least \(k\) links, for undirected, in- and out-degree, with the fitted tails and BA's slope. <span class="swipe">Swipe to see all three panels.</span></figcaption>
       </figure>
       <h3>Hubs and the structural cutoff</h3>
       <p>The negative assortativity is partly forced. In a simple network a hub cannot find enough other hubs to link to, and above the <b>structural cutoff</b> \(k_s = \sqrt{\langle k\rangle N} \approx 193\) that alone pushes \(r\) below zero. Randomizations that keep every degree already give \(r = -0.114\). The real network goes a little further: users with a single link are attached to neighbours with 181 links on average, against 93 after randomizing.</p>
       <figure>
-        <img src="assets/knn.svg" alt="Average degree of a user's neighbours against the user's degree, for the observed network and for degree-preserving randomizations" loading="lazy">
+        <picture><source media="(max-width: 600px)" srcset="assets/knn-phone.svg"><img src="assets/knn.svg" alt="Average degree of a user's neighbours against the user's degree, for the observed network and for degree-preserving randomizations" loading="lazy"></picture>
         <figcaption><b>Degree correlations.</b> Average degree of a user's neighbours, \(k_{nn}(k)\), against the user's own degree.</figcaption>
       </figure>
     </div>
@@ -420,14 +434,14 @@ footer b { color: var(--ink); }
       <h2>How reputation concentrated</h2>
       <p>Counting all ratings received so far, the top 1% of users held 15.5% of positive ratings at the end of 2011 and 23.5% by 2015, and the rise also holds within the users present in 2011. The share of each year's new ratings seems to fall after 2013, but ratings collapsed from 11,138 to 929 a year. Redrawn to the same 743 ratings every year, the share still edges down from 12.1% in 2013 to 10.0% in 2015, but the ranges overlap, and the four largest recipients in each redrawn year hold 7.8% and 11.6%, the opposite pattern. The yearly trend is sensitive to rating volume and to how the top group is defined, so it is unclear whether new ratings became less concentrated.</p>
       <figure>
-        <img src="assets/concentration.svg" alt="Share of positive ratings held by the top 1% from 2011 to 2015, for all ratings so far, for each year's new ratings, and at equal volume" loading="lazy">
+        <picture><source media="(max-width: 600px)" srcset="assets/concentration-phone.svg"><img src="assets/concentration.svg" alt="Share of positive ratings held by the top 1% from 2011 to 2015, for all ratings so far, for each year's new ratings, and at equal volume" loading="lazy"></picture>
         <figcaption><b>Concentration over time.</b> The top 1% is chosen again at each date; the band shows the middle 95% of 1,000 equal-volume redraws.</figcaption>
       </figure>
       <h3>Who receives the next rating?</h3>
       <p>A common way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare the user who received each new rating with the other candidates. Here the candidates are the users who had already appeared in a positive rating, except the rater and anyone the rater had already rated positively. Users with 32 or more earlier ratings received 12.7 times as many ratings as expected if every candidate were equally likely to be picked, and the fitted rule \(\Pi(k) \propto (k+1)^{\alpha}\), where \(k\) counts positive ratings already received and the \(+1\) lets users with none yet be chosen, has \(\alpha = 1.07\): close to linear, the form of BA's rule, which uses total degree instead.</p>
       <p>That benchmark treats a dormant newcomer and an active user alike. Compared only with candidates in the same tenure and recent-activity groups, these users received 1.65 times the expected number, and \(\alpha\) falls to a sublinear 0.68. Matching on recent activity alone gives a similar drop (1.71), and about half of the ratings to users already in the network return an earlier one, usually within minutes.</p>
       <figure>
-        <img src="assets/attachment.svg" alt="Observed divided by expected ratings for users with 32 or more earlier ratings, under five comparison groups" loading="lazy">
+        <picture><source media="(max-width: 600px)" srcset="assets/attachment-phone.svg"><img src="assets/attachment.svg" alt="Observed divided by expected ratings for users with 32 or more earlier ratings, under five comparison groups" loading="lazy"></picture>
         <figcaption><b>A fairer comparison.</b> Users with 32 or more earlier ratings against all candidates, and against candidates in the same tenure or activity group. Tenure groups: under 90 days, 90–364 days, a year or more since a user first appeared; activity groups: 0, 1–2, 3–9 or 10+ positive ratings given or received in the previous 90 days.</figcaption>
       </figure>
     </div>
@@ -441,7 +455,7 @@ footer b { color: var(--ink); }
       <div class="formula">\(f_c = 1 - \dfrac{1}{\kappa - 1} = 0.986 \quad \text{for} \quad \kappa = 71.9\)</div>
       <p>That is a benchmark, not a prediction for this clustered, finite network. In our simulation random removal wears the network down gradually: with half the users removed, the largest component still holds about 32% of all users, and it falls below 1% only after about 93% are gone. Removing the most-connected users first breaks it after 15%. Randomized networks with the same degrees break at the same point, so the hubs are the weak spot.</p>
       <figure>
-        <img src="assets/robustness.svg" alt="Share of users in the largest component as users are removed at random or by degree, for the observed network and an ER network" loading="lazy">
+        <picture><source media="(max-width: 600px)" srcset="assets/robustness-phone.svg"><img src="assets/robustness.svg" alt="Share of users in the largest component as users are removed at random or by degree, for the observed network and an ER network" loading="lazy"></picture>
         <figcaption><b>Percolation.</b> The largest connected piece as users are removed at random or from the most connected down.</figcaption>
       </figure>
     </div>
@@ -792,8 +806,9 @@ python3.12 -m venv .venv
     return 2010.85 + progress * (2016.1 - 2010.85);
   }
   function update() {
-    const middle = innerHeight / 2;
+    const middle = innerHeight * (innerWidth < 900 ? 0.94 : 0.5);  // on narrow screens the panels sit below the network
     const current = steps.find(s => { const r = s.getBoundingClientRect(); return r.top <= middle && r.bottom > middle; });
+    for (const s of steps) s.classList.toggle('is-active', s === current);
     const name = current ? current.dataset.step : (steps[0].getBoundingClientRect().top > middle ? 'intro' : 'attack');
     if (name === 'growth') { const t = growthTime(); if (step !== 'growth' || Math.abs(t - growthT) > 0.004) scene('growth', t); }
     else if (name !== step) scene(name);
