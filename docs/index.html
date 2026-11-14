@@ -40,18 +40,51 @@
   "datePublished": "2026-11-09",
   "dateModified": "2026-11-14",
   "isAccessibleForFree": true,
-  "keywords": ["network science", "trust network", "signed network", "preferential attachment", "degree correlations", "percolation", "community detection"],
+  "keywords": [
+    "network science",
+    "trust network",
+    "signed network",
+    "preferential attachment",
+    "degree correlations",
+    "percolation",
+    "community detection"
+  ],
   "isBasedOn": {
     "@type": "Dataset",
     "name": "Bitcoin OTC trust weighted signed network",
+    "description": "Who-trusts-whom network of Bitcoin OTC users, published by the Stanford Network Analysis Project (SNAP). Members rated each other from -10 (total distrust) to +10 (total trust); the network has 5,881 accounts and 35,592 directed, timestamped ratings.",
     "url": "https://snap.stanford.edu/data/soc-sign-bitcoinotc.html",
-    "creator": {"@type": "Organization", "name": "Stanford Network Analysis Project (SNAP)"}
+    "sameAs": "https://snap.stanford.edu/data/soc-sign-bitcoinotc.html",
+    "creator": {
+      "@type": "Organization",
+      "name": "Stanford Network Analysis Project (SNAP)",
+      "url": "https://snap.stanford.edu/"
+    },
+    "includedInDataCatalog": {
+      "@type": "DataCatalog",
+      "name": "SNAP Datasets: Stanford Large Network Dataset Collection",
+      "url": "https://snap.stanford.edu/data/"
+    },
+    "citation": "S. Kumar, F. Spezzano, V. S. Subrahmanian, C. Faloutsos. Edge Weight Prediction in Weighted Signed Networks. IEEE International Conference on Data Mining (ICDM), 2016. https://doi.org/10.1109/ICDM.2016.0033"
   },
-  "codeRepository": "https://github.com/O-2wice/bitcoin-otc-trust-network-science",
+  "citation": [
+    "S. Kumar, F. Spezzano, V. S. Subrahmanian, C. Faloutsos. Edge Weight Prediction in Weighted Signed Networks. IEEE International Conference on Data Mining (ICDM), 2016. https://doi.org/10.1109/ICDM.2016.0033",
+    "S. Kumar, B. Hooi, D. Makhija, M. Kumar, C. Faloutsos, V. S. Subrahmanian. REV2: Fraudulent User Prediction in Rating Platforms. ACM International Conference on Web Search and Data Mining (WSDM), 2018. https://doi.org/10.1145/3159652.3159729"
+  ],
+  "relatedLink": "https://github.com/O-2wice/bitcoin-otc-trust-network-science",
   "author": [
-    {"@type": "Person", "url": "https://github.com/O-2wice"},
-    {"@type": "Person", "url": "https://github.com/shishi177-cpu"},
-    {"@type": "Person", "url": "https://github.com/Abdak-Yussuf"}
+    {
+      "@type": "Person",
+      "url": "https://github.com/O-2wice"
+    },
+    {
+      "@type": "Person",
+      "url": "https://github.com/shishi177-cpu"
+    },
+    {
+      "@type": "Person",
+      "url": "https://github.com/Abdak-Yussuf"
+    }
   ]
 }
 </script>
@@ -251,6 +284,7 @@ footer b { color: var(--ink); }
       <div class="note">
         <h3>Communities</h3>
         <p>Colours mark the five largest <b>communities</b> found by the Louvain method, which looks for groups with more links inside than random wiring would give. Their <b>modularity</b> is 0.504, against about 0.33 for random networks with the same degrees.</p>
+        <p class="small">The layout also pulls users in the same community closer together, so the visible clusters are partly a drawing choice, not separate evidence of communities.</p>
       </div>
     </div>
 
@@ -326,7 +360,7 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">The measures</p>
       <h2>A sparse small world</h2>
-      <p>We turned the ratings into a network: users are nodes, and a positive rating from one user to another is a directed link. Most classic network models are for undirected networks, so we also join two users with one link when either rated the other, which gives 18,591 links among 5,881 users. These are its basic measures.</p>
+      <p>We turned the ratings into a network: users are nodes, and a positive rating from one user to another is a directed link. Ratings run from −10 to +10; we keep the positive ones, and every kept link counts once. Scores are not used as weights in the measures, so a +2 and a +9 count the same; they are used to pick the positive ratings, for a check using only ratings of +5 or more, and for colour and line width in the Cytoscape drawing. Most classic network models are for undirected networks, so we also join two users with one link when either rated the other, which gives 18,591 links among 5,881 users. These are its basic measures.</p>
       <table>
         <thead><tr><th>Measure</th><th>Value</th><th>What it says</th></tr></thead>
         <tbody>
@@ -358,12 +392,14 @@ footer b { color: var(--ink); }
           <tr><td>Modularity</td><td>0.504</td><td>0.369</td><td>0.388</td><td>0.334</td></tr>
         </tbody>
       </table>
+      <p>The observed mean distance is exact. The ER, BA and rewired values are averages over 10, 10 and 8 simulated networks, with their path lengths estimated from 32 sampled starting users.</p>
       <p>Keeping the degrees reproduces the short paths but not the clustering or the communities, so the degrees alone do not explain those. The randomization does not show what does.</p>
 
       <h3>Heavy-tailed, but not strictly scale-free</h3>
       <p>A scale-free network has a degree distribution \(P(k) \propto k^{-\gamma}\). Fitted properly, by maximum likelihood rather than a straight line on a log–log plot, the tail gives \(\gamma = 2.09\): heavier than the \(\gamma = 3\) of the BA model. Yet approximate tests favour a lognormal tail, and above about 100 links the data bend down.</p>
       <p>Most links, 70.5%, join two users who had already appeared in an earlier rating. That alone does not rule out BA's growth rule, because a newcomer's later links count too. Barabási's internal-link model allows such links, and for the measured \(m = 0.99\) new and \(n = 2.35\) internal links per new user it predicts a value inside the fitted range:</p>
       <div class="formula">\(\gamma = 2 + \dfrac{m}{m + 2n} = 2.17\)</div>
+      <p>The fitting method reads low on simulated networks, though: it gives 2.74 for BA, whose true value is 3, and 1.88 for the internal-link model. The observed 2.09 sits between them, so internal links move the model toward the data without fully accounting for the tail.</p>
       <figure>
         <img src="assets/degree-ccdf.jpg" alt="Degree distributions on log-log axes with fitted power-law and lognormal tails and the BA slope" loading="lazy">
         <figcaption><b>Degree distributions.</b> Share of users with at least \(k\) links, for undirected, in- and out-degree, with the fitted tails and BA's slope.</figcaption>
@@ -381,17 +417,17 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">The focused question</p>
       <h2>How reputation concentrated</h2>
-      <p>Counting all ratings received so far, the top 1% of users held 15.5% of positive ratings at the end of 2011 and 23.5% by 2015, and the rise also holds within the users present in 2011. The share of each year's new ratings seems to fall after 2013, but ratings collapsed from 11,138 to 929 a year. Redrawn to the same 743 ratings every year, 2013 and 2015 overlap, so the apparent fall is sensitive to volume: the data do not show that new ratings became less concentrated.</p>
+      <p>Counting all ratings received so far, the top 1% of users held 15.5% of positive ratings at the end of 2011 and 23.5% by 2015, and the rise also holds within the users present in 2011. The share of each year's new ratings seems to fall after 2013, but ratings collapsed from 11,138 to 929 a year. Redrawn to the same 743 ratings every year, the share still edges down from 12.1% in 2013 to 10.0% in 2015, but the ranges overlap, and the four largest recipients in each redrawn year hold 7.8% and 11.6%, the opposite pattern. The yearly trend is sensitive to rating volume and to how the top group is defined, so it is unclear whether new ratings became less concentrated.</p>
       <figure>
         <img src="assets/concentration.svg" alt="Share of positive ratings held by the top 1% from 2011 to 2015, for all ratings so far, for each year's new ratings, and at equal volume" loading="lazy">
         <figcaption><b>Concentration over time.</b> The top 1% is chosen again at each date; the band shows the middle 95% of 1,000 equal-volume redraws.</figcaption>
       </figure>
       <h3>Who receives the next rating?</h3>
-      <p>The standard way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare, for every new rating, the user who received it with everyone who could have. Users with 32 or more earlier ratings were chosen 12.7 times as often as chance, and the fitted rule \(\Pi(k) \propto (k+1)^{\alpha}\), where the \(+1\) lets users with no ratings yet be chosen, has \(\alpha = 1.07\), close to BA's linear attachment.</p>
-      <p>That compares a dormant newcomer with an active user. Against users with the same tenure and recent activity the ratio falls to 1.65, and \(\alpha\) to a sublinear 0.68. Matching on recent activity alone gives a similar drop (1.71), and about half of the ratings to users already in the network return an earlier one, usually within minutes.</p>
+      <p>A common way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare the user who received each new rating with the other candidates. Here the candidates are the users who had already appeared in a positive rating, except the rater and anyone the rater had already rated. Users with 32 or more earlier ratings received 12.7 times as many ratings as expected if every candidate were equally likely to be picked, and the fitted rule \(\Pi(k) \propto (k+1)^{\alpha}\), where the \(+1\) lets users with no ratings yet be chosen, has \(\alpha = 1.07\), close to BA's linear attachment.</p>
+      <p>That benchmark treats a dormant newcomer and an active user alike. Compared only with candidates of the same tenure and recent activity, these users received 1.65 times the expected number, and \(\alpha\) falls to a sublinear 0.68. Matching on recent activity alone gives a similar drop (1.71), and about half of the ratings to users already in the network return an earlier one, usually within minutes.</p>
       <figure>
-        <img src="assets/attachment.svg" alt="How often users with 32 or more earlier ratings were chosen, relative to five comparison groups" loading="lazy">
-        <figcaption><b>A fairer comparison.</b> Users with 32 or more earlier ratings against everyone who could have been rated, and against users with the same tenure or recent activity.</figcaption>
+        <img src="assets/attachment.svg" alt="Observed divided by expected ratings for users with 32 or more earlier ratings, under five comparison groups" loading="lazy">
+        <figcaption><b>A fairer comparison.</b> Users with 32 or more earlier ratings against all candidates, and against candidates with the same tenure or recent activity.</figcaption>
       </figure>
     </div>
   </section>
@@ -426,10 +462,10 @@ footer b { color: var(--ink); }
     <div class="col">
       <p class="kicker">What it means</p>
       <h2>Lessons for a web of trust</h2>
-      <p><b>Reputation stays concentrated.</b> By 2015, 56 accounts held 23.5% of positive ratings. Old ratings stay in the record while new ones fell after 2013, so a high score can describe the past more than the present.</p>
-      <p><b>A few accounts keep it connected.</b> In our simulation, removing a handful of hubs disconnects far more of the rating network than removing the same number of users at random.</p>
+      <p><b>Reputation stays concentrated.</b> By 2015, 56 accounts held 23.5% of positive ratings. Old ratings stay in the record while new ones fell after 2013, so a high rating count can describe the past more than the present.</p>
+      <p><b>A few accounts keep it connected.</b> In our simulation, removing the most-connected 1% of users disconnects far more of the rating network than removing the same number of users at random.</p>
       <p><b>Counts can overstate independent opinions.</b> About half of the ratings to users already in the network return an earlier one, often within minutes, so a rating count is not a count of independent endorsements.</p>
-      <p><b>Activity matters.</b> Comparing users with the same tenure and recent activity shrinks the pull of highly rated users from 12.7 times chance to 1.65 times the rate for similar users. This is an association: we cannot separate activity from trading volume, which the data do not record.</p>
+      <p><b>Activity matters.</b> Highly rated users received 12.7 times the ratings expected if every candidate were equally likely, but only 1.65 times the expected number when compared with users of the same tenure and recent activity. This is an association: we cannot separate activity from trading volume, which the data do not record.</p>
       <p class="byline">Limits: ratings are opinions, not verified trades; the data have no registration dates or trade volumes; one person may hold several IDs.</p>
     </div>
   </section>
@@ -484,7 +520,7 @@ python3.12 -m venv .venv
         <a href="https://github.com/shishi177-cpu"><img src="https://github.com/shishi177-cpu.png?size=96" alt="" width="40" height="40" loading="lazy">@shishi177-cpu</a>
         <a href="https://github.com/Abdak-Yussuf"><img src="https://github.com/Abdak-Yussuf.png?size=96" alt="" width="40" height="40" loading="lazy">@Abdak-Yussuf</a>
       </div>
-      <p>Data: the <a href="https://snap.stanford.edu/data/soc-sign-bitcoinotc.html">SNAP Bitcoin OTC trust network</a>. S. Kumar, F. Spezzano, V. S. Subrahmanian and C. Faloutsos, <i>Edge Weight Prediction in Weighted Signed Networks</i>, IEEE ICDM 2016; S. Kumar, B. Hooi, D. Makhija, M. Kumar, C. Faloutsos and V. S. Subrahmanian, <i>REV2: Fraudulent User Prediction in Rating Platforms</i>, ACM WSDM 2018.</p>
+      <p>Data: the <a href="https://snap.stanford.edu/data/soc-sign-bitcoinotc.html">Bitcoin OTC trust network</a> from J. Leskovec and A. Krevl, <i>SNAP Datasets: Stanford Large Network Dataset Collection</i>, 2014. As SNAP asks, we cite S. Kumar, F. Spezzano, V. S. Subrahmanian and C. Faloutsos, <i>Edge Weight Prediction in Weighted Signed Networks</i>, IEEE ICDM 2016. We also cite S. Kumar, B. Hooi, D. Makhija, M. Kumar, C. Faloutsos and V. S. Subrahmanian, <i>REV2: Fraudulent User Prediction in Rating Platforms</i>, ACM WSDM 2018.</p>
     </div>
   </footer>
 </main>
@@ -903,7 +939,7 @@ python3.12 -m venv .venv
   const titles = ['The Bitcoin OTC Trust Network', 'Why study Bitcoin OTC ratings?', 'A rating becomes a directed link',
     'The network at a glance', 'Communities: weak, but clearly present', 'Compared with ER, BA and degree-preserving networks',
     'Heavy-tailed, but not strictly scale-free', 'Degree correlations: hubs link to small users',
-    'How strong ratings among top users built up', 'Accumulated ratings concentrate; yearly ratings do not',
+    'How strong ratings among top users built up', 'Accumulated ratings concentrate; the yearly trend is unclear',
     'Who receives the next positive rating?', 'A fair comparison: recent activity matters',
     'Robust to random failures, fragile to attacks', 'Checks and limits', 'Findings and code demonstration'];
   const VIDEO_SLIDE = 9;
