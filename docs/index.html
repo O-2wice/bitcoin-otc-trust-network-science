@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Bitcoin OTC Trust Network</title>
-<meta name="description" content="How 5,881 Bitcoin OTC traders built a web of trust from 35,592 ratings, and how reputation came to rest on a few accounts. A network science study with an interactive network.">
+<meta name="description" content="How 5,881 Bitcoin OTC users built a web of trust from 35,592 ratings, and how reputation came to rest on a few accounts. A network science study with an interactive network.">
 <meta name="color-scheme" content="light">
 <meta property="og:title" content="The Bitcoin OTC Trust Network">
-<meta property="og:description" content="How 5,881 traders built a web of trust from 35,592 ratings, and how reputation came to rest on a few accounts. Scroll the story, then break the network yourself.">
+<meta property="og:description" content="How 5,881 users built a web of trust from 35,592 ratings, and how reputation came to rest on a few accounts. Scroll the story, then break the network yourself.">
 <meta property="og:image" content="https://o-2wice.github.io/bitcoin-otc-trust-network-science/assets/social.png">
 <meta property="og:url" content="https://o-2wice.github.io/bitcoin-otc-trust-network-science/">
 <meta property="og:type" content="website">
@@ -19,7 +19,7 @@
 <meta property="og:image:alt" content="The Bitcoin OTC trust network drawn as dots and lines beside the page title">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Bitcoin OTC Trust Network">
-<meta name="twitter:description" content="How 5,881 traders built a web of trust from 35,592 ratings, and how reputation came to rest on a few accounts.">
+<meta name="twitter:description" content="How 5,881 users built a web of trust from 35,592 ratings, and how reputation came to rest on a few accounts.">
 <meta name="twitter:image" content="https://o-2wice.github.io/bitcoin-otc-trust-network-science/assets/social.png">
 <meta name="twitter:image:alt" content="The Bitcoin OTC trust network drawn as dots and lines beside the page title">
 <meta name="keywords" content="network science, complex networks, trust network, signed network, Bitcoin OTC, degree distribution, preferential attachment, degree correlations, assortativity, percolation, robustness, community detection, small world">
@@ -34,11 +34,11 @@
   "@type": "WebPage",
   "name": "The Bitcoin OTC Trust Network",
   "url": "https://o-2wice.github.io/bitcoin-otc-trust-network-science/",
-  "description": "A network science study of 35,592 trust ratings between 5,881 Bitcoin OTC traders: structure, network models, degree correlations, robustness, and how reputation concentrated from 2010 to 2016.",
+  "description": "A network science study of 35,592 trust ratings between 5,881 Bitcoin OTC users: structure, network models, degree correlations, robustness, and how reputation concentrated from 2010 to 2016.",
   "inLanguage": "en",
   "image": "https://o-2wice.github.io/bitcoin-otc-trust-network-science/assets/social.png",
   "datePublished": "2026-11-09",
-  "dateModified": "2026-11-13",
+  "dateModified": "2026-11-14",
   "isAccessibleForFree": true,
   "keywords": ["network science", "trust network", "signed network", "preferential attachment", "degree correlations", "percolation", "community detection"],
   "isBasedOn": {
@@ -224,7 +224,7 @@ footer b { color: var(--ink); }
       <div class="opening">
         <p class="kicker">A network science story</p>
         <h1>The Bitcoin OTC Trust Network</h1>
-        <p class="standfirst">Between 2010 and 2016, traders on Bitcoin OTC left 35,592 ratings about each other. This is the web of trust they built, and how reputation came to rest on a few accounts.</p>
+        <p class="standfirst">Between 2010 and 2016, users of Bitcoin OTC left 35,592 ratings about each other. This is the web of trust they built, and how reputation came to rest on a few accounts.</p>
         <p class="byline"><a href="https://github.com/O-2wice/bitcoin-otc-trust-network-science">Code and data on GitHub</a> &nbsp;·&nbsp; <a href="#break">Break the network yourself</a></p>
         <p class="cue">Scroll</p>
       </div>
@@ -232,7 +232,7 @@ footer b { color: var(--ink); }
 
     <div class="step" data-step="dots" id="step-dots">
       <div class="note">
-        <h3>Every dot is a trader</h3>
+        <h3>Every dot is a user</h3>
         <p>Each of these 5,551 dots is a user, and a line joins two users when either gave the other a positive rating. Linked users are pulled together by the layout; the position itself means nothing.</p>
         <p class="small">Shown: the largest connected part of the network. 308 users with no positive rating and 22 users in small separate pieces are left out.</p>
       </div>
@@ -337,7 +337,7 @@ footer b { color: var(--ink); }
           <tr><td>Largest component</td><td class="num">94.4%</td><td>Users who can reach each other</td></tr>
           <tr><td>Mean distance \(\langle d\rangle\)</td><td class="num">3.76</td><td>Links on a shortest path, inside the largest component</td></tr>
           <tr><td>Diameter</td><td class="num">14</td><td>The longest shortest path</td></tr>
-          <tr><td>Modularity</td><td class="num">0.504</td><td>Strong community structure</td></tr>
+          <tr><td>Modularity</td><td class="num">0.504</td><td>Clear community structure</td></tr>
         </tbody>
       </table>
       <p>Paths are shorter than in a random network of the same size, while clustering is about 150 times higher: together that is a <b>small world</b>. All five largest communities are <b>weak communities</b> in the sense of Barabási's <i>Network Science</i>, with more of their members' link ends inside the group than outside, although which users land in which group changes when the algorithm is rerun.</p>
@@ -387,8 +387,8 @@ footer b { color: var(--ink); }
         <figcaption><b>Concentration over time.</b> The top 1% is chosen again at each date; the band shows the middle 95% of 1,000 equal-volume redraws.</figcaption>
       </figure>
       <h3>Who receives the next rating?</h3>
-      <p>The standard way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare, for every new rating, the user who received it with everyone who could have. Users with 32 or more earlier ratings were chosen 12.7 times as often as chance, and the fitted rule \(\Pi(k) \propto (k+1)^{\alpha}\), where the \(+1\) lets users with no ratings yet be chosen, has \(\alpha = 1.07\), almost exactly BA's linear attachment.</p>
-      <p>That compares a dormant newcomer with an active trader. Against users with the same tenure and recent activity the ratio falls to 1.65, and \(\alpha\) to a sublinear 0.68. Matching on recent activity alone gives a similar drop (1.71), and about half of the ratings to users already in the network return an earlier one, usually within minutes.</p>
+      <p>The standard way to measure <b>preferential attachment</b> from data (Barabási, <i>Network Science</i>, ch. 5) is to compare, for every new rating, the user who received it with everyone who could have. Users with 32 or more earlier ratings were chosen 12.7 times as often as chance, and the fitted rule \(\Pi(k) \propto (k+1)^{\alpha}\), where the \(+1\) lets users with no ratings yet be chosen, has \(\alpha = 1.07\), close to BA's linear attachment.</p>
+      <p>That compares a dormant newcomer with an active user. Against users with the same tenure and recent activity the ratio falls to 1.65, and \(\alpha\) to a sublinear 0.68. Matching on recent activity alone gives a similar drop (1.71), and about half of the ratings to users already in the network return an earlier one, usually within minutes.</p>
       <figure>
         <img src="assets/attachment.svg" alt="How often users with 32 or more earlier ratings were chosen, relative to five comparison groups" loading="lazy">
         <figcaption><b>A fairer comparison.</b> Users with 32 or more earlier ratings against everyone who could have been rated, and against users with the same tenure or recent activity.</figcaption>
@@ -429,7 +429,7 @@ footer b { color: var(--ink); }
       <p><b>Reputation stays concentrated.</b> By 2015, 56 accounts held 23.5% of positive ratings. Old ratings stay in the record while new ones fell after 2013, so a high score can describe the past more than the present.</p>
       <p><b>A few accounts keep it connected.</b> In our simulation, removing a handful of hubs disconnects far more of the rating network than removing the same number of users at random.</p>
       <p><b>Counts can overstate independent opinions.</b> About half of the ratings to users already in the network return an earlier one, often within minutes, so a rating count is not a count of independent endorsements.</p>
-      <p><b>Activity matters.</b> Comparing users with the same tenure and recent activity shrinks the pull of highly rated users from 12.7 to 1.65 times chance. This is an association: we cannot separate activity from trading volume, which the data do not record.</p>
+      <p><b>Activity matters.</b> Comparing users with the same tenure and recent activity shrinks the pull of highly rated users from 12.7 times chance to 1.65 times the rate for similar users. This is an association: we cannot separate activity from trading volume, which the data do not record.</p>
       <p class="byline">Limits: ratings are opinions, not verified trades; the data have no registration dates or trade volumes; one person may hold several IDs.</p>
     </div>
   </section>
