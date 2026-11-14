@@ -344,9 +344,9 @@ footer b { color: var(--ink); }
       <canvas id="lab" role="img" aria-label="The network after removing users; connected users in blue"></canvas>
       <div class="lab-side">
         <div>
-          <span class="big" id="lab-share">75%</span>
+          <span class="big" id="lab-share">76%</span>
           <p id="lab-text">of all 5,881 users are still in one connected piece.</p>
-          <p class="small">Worked out on the 5,551 users drawn here, with the other 330 counted as cut off. Once the network has shattered, a small piece not drawn here can be slightly larger, so exact values are in the report.</p>
+          <p class="small">Worked out on all 5,881 users, removed in the same order as the analysis; the drawing shows the 5,551 in the largest connected part.</p>
         </div>
         <div>
           <svg id="lab-curve" viewBox="0 0 320 190" role="img" aria-label="Share of users still connected as more are removed, for both strategies"></svg>
@@ -822,7 +822,10 @@ python3.12 -m venv .venv
   const lab = document.getElementById('lab'), lctx = lab.getContext('2d');
   const slider = document.getElementById('lab-f'), sliderValue = document.getElementById('lab-fv');
   const shareLabel = document.getElementById('lab-share'), curveSvg = document.getElementById('lab-curve');
-  const total = data.total;  // all 5,881 users; the 330 outside the drawn part count but are not shown
+  const total = data.total;  // all 5,881 users; the 330 outside the drawn part are computed but not shown
+  // Indices 0..N-1 are the drawn users, N..total-1 the others, so removal runs on the whole network.
+  const ids = nodes.id.concat(data.others.id), degrees = nodes.k.concat(data.others.k);
+  const links = {s: edges.s.concat(data.other_edges.s), t: edges.t.concat(data.other_edges.t)};
   let mode = 'random';
 
   // Removal orders, as in the analysis: a seeded random order, or highest degree first (ties: lower ID).
@@ -836,23 +839,23 @@ python3.12 -m venv .venv
     };
     const order = Array.from({length: total}, (_, i) => i);
     for (let i = total - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
-    return order;  // numbers of N or more stand for users who are not drawn
+    return order;
   }
   const orders = {
     random: shuffled(2026),
-    attack: Array.from({length: N}, (_, i) => i).sort((a, b) => nodes.k[b] - nodes.k[a] || nodes.id[a] - nodes.id[b]),
+    attack: Array.from({length: total}, (_, i) => i).sort((a, b) => degrees[b] - degrees[a] || ids[a] - ids[b]),
   };
 
   // Largest connected piece after removing a share of users (union-find over the remaining links).
-  const parent = new Int32Array(N), members = new Int32Array(N), removed = new Uint8Array(N);
+  const parent = new Int32Array(total), members = new Int32Array(total), removed = new Uint8Array(total);
   function find(i) { while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; } return i; }
   function largest(name, percent) {
     removed.fill(0);
     const count = Math.round(percent / 100 * total), order = orders[name];
-    for (let r = 0; r < count && r < order.length; r++) if (order[r] < N) removed[order[r]] = 1;
-    for (let i = 0; i < N; i++) { parent[i] = i; members[i] = 1; }
-    for (let e = 0; e < E; e++) {
-      const s = edges.s[e], t = edges.t[e];
+    for (let r = 0; r < count; r++) removed[order[r]] = 1;
+    for (let i = 0; i < total; i++) { parent[i] = i; members[i] = 1; }
+    for (let e = 0; e < links.s.length; e++) {
+      const s = links.s[e], t = links.t[e];
       if (removed[s] || removed[t]) continue;
       let a = find(s), b = find(t);
       if (a === b) continue;
@@ -860,7 +863,7 @@ python3.12 -m venv .venv
       parent[b] = a; members[a] += members[b];
     }
     let root = -1, best = 0;
-    for (let i = 0; i < N; i++) if (!removed[i] && parent[i] === i && members[i] > best) { best = members[i]; root = i; }
+    for (let i = 0; i < total; i++) if (!removed[i] && parent[i] === i && members[i] > best) { best = members[i]; root = i; }
     return {root, size: best};
   }
   const curves = {random: [], attack: []};

@@ -197,6 +197,13 @@ def network_data():
             edges['s'].append(index[u]); edges['t'].append(index[v]); edges['y'].append(round(t, 3))
             node_year[u] = min(node_year[u], t); node_year[v] = min(node_year[v], t)
 
+    # Users outside the drawn component, with their links, so the removal tool works on the whole network.
+    others = sorted(set(graph) - set(nodes))
+    other_index = {v: len(nodes) + i for i, v in enumerate(others)}
+    other_edges = {'s': [], 't': []}
+    for u, v in sorted(graph.subgraph(others).edges()):
+        other_edges['s'].append(other_index[u]); other_edges['t'].append(other_index[v])
+
     def state(v, removed, lcc):
         return 0 if v in removed else (2 if v in lcc else 1)  # 0 removed, 1 cut off, 2 still connected
 
@@ -213,6 +220,8 @@ def network_data():
             'random': [state(v, randomly, random_lcc) for v in nodes],
         },
         'edges': edges,
+        'others': {'id': [int(v) for v in others], 'k': [degree[v] for v in others]},
+        'other_edges': other_edges,
         'hubs': [index[v] for v in hubs if v in index],
         'total': graph.number_of_nodes(),  # all 5,881 users, the denominator used in the analysis
         'aspect': round((x1 - x0) / (y1 - y0), 4),
