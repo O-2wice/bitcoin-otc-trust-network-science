@@ -4,8 +4,8 @@ The spotlight shows the **25 users with the most positive ratings received** in 
 
 | Output | Use |
 | --- | --- |
-| `outputs/cytoscape/bitcoin_otc_spotlight.png` | Dark figure for slides and the website |
-| `outputs/cytoscape/bitcoin_otc_spotlight_light.png` | Light figure for the report (Fig. 3) |
+| `outputs/cytoscape/bitcoin_otc_spotlight.png` | Dark version of the figure |
+| `outputs/cytoscape/bitcoin_otc_spotlight_light.png` | Light figure for the report (Fig. 3) and the website |
 | `outputs/cytoscape/bitcoin_otc_spotlight_timeline.mp4` | CyAnimator video, 1920×1080, about 21 s |
 | `outputs/cytoscape/bitcoin_otc_spotlight_timeline_poster.png` | Still of the last frame, used as the video poster |
 | `outputs/cytoscape/cyanimator_provenance.json` | Keyframes, chosen frames, omitted frames and file hashes |

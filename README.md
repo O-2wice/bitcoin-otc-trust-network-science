@@ -76,7 +76,7 @@ CODE_WALKTHROUGH.md Plain-language explanation of each script
 
 Use Python 3.12. Install the packages in `requirements.txt`, download the source file as described above, start Jupyter from the repository root, and open the notebooks in `notebooks/`. Jupyter runs each notebook inside `notebooks/`, so the notebooks reach the project folder as `Path('..')`. The current environment was tested with Python 3.12.13; package versions and execution details are recorded in `outputs/reproduction/run_manifest.json`. The [first notebook](notebooks/01_network_concepts_and_data.ipynb) explains the data and graph definitions and performs source checks.
 
-Run `python scripts/reproduce.py` to execute the eight numerical analyses in order (about 30 minutes on a laptop), then `python scripts/verify_reproduction.py --check-manifest` to validate the stored headline values and the recorded script, environment, and output hashes. The manifest check needs exactly Python 3.12.13 and the pinned packages, because it compares them with the recorded run. The manifest covers the current numerical run; the network layout, Cytoscape media, report, and slides have separate build steps.
+Run `python scripts/reproduce.py` to execute the eight numerical analyses in order (about 30 minutes on a laptop), then `python scripts/verify_reproduction.py --check-manifest` to validate the stored headline values and the recorded script, environment, and output hashes. The manifest check needs exactly Python 3.12.13 and the pinned packages, because it compares them with the recorded run. The manifest covers the current numerical run; the network layout, Cytoscape media, and report have separate build steps.
 
 The [structure notebook](notebooks/02_structure_and_models.ipynb), [temporal notebook](notebooks/03_temporal_rating_accumulation.ipynb), [follow-up checks notebook](notebooks/04_follow_up_checks.ipynb), and [theory notebook](notebooks/05_theory_comparison.ipynb) contain small worked calculations as well as the recorded results. The [degree-correlation notebook](notebooks/06_degree_correlations.ipynb) defines assortativity, k_nn(k), and the structural cutoff, and interprets the stored results. Numerical outputs are in `outputs/structure/`, `outputs/temporal/`, `outputs/robustness/`, `outputs/follow_up/`, `outputs/sensitivity/`, `outputs/theory/`, and `outputs/correlations/`. Run `python scripts/full_network_layout.py` after the structural script to regenerate the seeded network layout; coordinates and layout parameters are saved alongside its figure. Run `python scripts/export_cytoscape.py` to generate signed, directed GraphML files locally. GraphML files are not distributed in the repository.
 
@@ -101,12 +101,6 @@ py -3.12 -m venv .venv
 ```
 
 Starting Jupyter through `python -m` also works where Windows Application Control blocks the `jupyter.exe` launcher.
-
-## Presentation
-
-The slides of the talk can be viewed on the [project website](https://o-2wice.github.io/bitcoin-otc-trust-network-science/#talk). The PowerPoint with speaker notes is kept by the team for the presentation.
-
-The [compiled report](report/bitcoin_otc_report.pdf) is 15 pages. The [Overleaf source ZIP](overleaf/bitcoin_otc_report_overleaf.zip) contains the LaTeX report, bibliography, template files, and figures. See the [build instructions](overleaf/README.md).
 
 ## Team
 
