@@ -18,3 +18,5 @@ outputs/cytoscape/*_raw.png
 .codex-finalizer/
 .chart-data-*/
 outputs/structure/.fuse_hidden*
+ai/
+turnitin/
